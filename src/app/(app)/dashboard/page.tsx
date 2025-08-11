@@ -83,7 +83,7 @@ export default function DashboardPage() {
                             <h2 className="text-xl font-semibold text-white">Cursos Recentes</h2>
                             <button
                                 onClick={() => setShowAddModal(true)}
-                                className="flex text-sm items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200"
+                                className="cursor-pointer flex text-sm items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200"
                             >
                                 <Plus className="h-4 w-4" />
                                 Novo Curso

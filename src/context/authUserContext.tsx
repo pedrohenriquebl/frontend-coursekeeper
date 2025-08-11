@@ -57,11 +57,9 @@ export const AuthUserProvider = ({ children }: { children: React.ReactNode }) =>
     }
   }
 
-  function logoutUser() {
-    setIsLoadingUser(true);
+  async function logoutUser() {
     sessionStorage.removeItem("auth_token");
     setUser(null);
-    setIsLoadingUser(false);
   }
 
   return (
