@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthUser } from "@/context/authUserContext";
+import { PageLoader } from "@/components/ui/PageLoader";
 
 export default function Home() {
   const { user, isLoadingUser } = useAuthUser();
@@ -18,5 +19,5 @@ export default function Home() {
     }
   }, [user, isLoadingUser, router]);
 
-  return <p>Carregando...</p>;
+  return <PageLoader />;
 }

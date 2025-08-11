@@ -6,11 +6,11 @@ import { User, Mail } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-import { Input } from "./Input";
-import { PasswordInput } from "./PasswordInput";
-import { ErrorMessage } from "./ErrorMessage";
+import { Input } from "./ui/Input";
+import { PasswordInput } from "./ui/PasswordInput";
+import { ErrorMessage } from "./ui/ErrorMessage";
 import { DemoCredentials } from "./DemoCredentials";
-import { Spinner } from "./Spinner";
+import { Spinner } from "./ui/Spinner";
 
 type AuthMode = "login" | "register";
 

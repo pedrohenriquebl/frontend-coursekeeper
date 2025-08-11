@@ -1,4 +1,4 @@
-import { apiInstance } from "@/services/api/axios/instance";
+import { apiInstance, isAxiosError } from "@/services/api/axios/instance";
 
 export interface User {
   id: string;
@@ -17,7 +17,10 @@ export interface LoginResponse {
 
 export const userService = {
   login: async (email: string, password: string): Promise<LoginResponse> => {
-    const response = await apiInstance.post("/users/login", { email, password });
+    const response = await apiInstance.post("/users/login", {
+      email,
+      password,
+    });
     return response.data;
   },
 
@@ -29,12 +32,19 @@ export const userService = {
     password: string;
     profileImage?: string;
     description?: string;
-  }): Promise<User> => {
-    const response = await apiInstance.post("/users/register", data);
-    return response.data;
+  }): Promise<User | undefined> => {
+    try {
+      const response = await apiInstance.post("/users/register", data);
+      return response.data;
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        const message = error.response?.data?.message || "Erro desconhecido";
+        throw new Error(message);
+      }
+    }
   },
 
   getMe: async (): Promise<User> => {
     return apiInstance.get("/users/me").then((response) => response.data);
-  }
+  },
 };
