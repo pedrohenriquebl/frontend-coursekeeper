@@ -47,7 +47,7 @@ export const EditCourseModal = ({
                         <h2 className="text-xl font-semibold text-white">Editar Curso</h2>
                         <button
                             onClick={onClose}
-                            className="text-gray-400 hover:text-white transition-colors duration-200"
+                            className="cursor-pointer text-gray-400 hover:text-white transition-colors duration-200"
                         >
                             <X className="h-6 w-6" />
                         </button>

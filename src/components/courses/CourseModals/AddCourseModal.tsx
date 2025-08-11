@@ -72,7 +72,7 @@ export default function AddCourseModal({
                         </h2>
                         <button
                             onClick={onClose}
-                            className="text-gray-400 hover:text-white transition-colors duration-200"
+                            className="cursor-pointer text-gray-400 hover:text-white transition-colors duration-200"
                         >
                             <X className="h-6 w-6" />
                         </button>
@@ -102,6 +102,7 @@ export default function AddCourseModal({
                                     required: platform === "Outro" ? "Nome da plataforma é obrigatório" : false
                                 })}
                                 error={errors.platformCustom?.message}
+                                className="md:col-span-2"
                             />
 
                             <FormInput
@@ -129,6 +130,7 @@ export default function AddCourseModal({
                                     required: topic === "Outro" ? "Nome do tópico é obrigatório" : false
                                 })}
                                 error={errors.topicCustom?.message}
+                                className="md:col-span-2"
                             />
 
                             <FormSelect
@@ -144,6 +146,7 @@ export default function AddCourseModal({
                                     required: language === "Outro" ? "Nome do idioma é obrigatório" : false
                                 })}
                                 error={errors.languageCustom?.message}
+                                className="md:col-span-2"
                             />
 
                             <FormInput
