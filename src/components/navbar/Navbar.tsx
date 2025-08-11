@@ -81,7 +81,7 @@ export default function NavBar() {
                                     setIsMobileMenuOpen(false);
                                     logoutUser();
                                 }}
-                                className="flex items-center space-x-2 text-gray-300 hover:text-red-400 transition-colors duration-200"
+                                className="cursor-pointer flex items-center space-x-2 text-gray-300 hover:text-red-400 transition-colors duration-200"
                             >
                                 <LogOut className="h-4 w-4" />
                                 <span className="text-sm font-medium">Sair</span>
@@ -130,7 +130,7 @@ export default function NavBar() {
                                     setIsMobileMenuOpen(false);
                                     logoutUser();
                                 }}
-                                className="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:text-red-400 transition-colors duration-200"
+                                className="cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:text-red-400 transition-colors duration-200"
                             >
                                 <LogOut className="h-5 w-5" />
                                 <span>Sair</span>
