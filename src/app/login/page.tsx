@@ -1,6 +1,7 @@
 'use client';
 
 import { Auth } from '@/components/Auth';
+import { PageLoader } from '@/components/ui/PageLoader';
 import { useAuthUser } from '@/context/authUserContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -15,6 +16,9 @@ export default function LoginPage() {
     }
   }, [user, isLoadingUser, router]);
   
+  if (isLoadingUser) {
+    return <PageLoader message="Carregando..." />;
+  }
   if (user) {
     return null;
   }

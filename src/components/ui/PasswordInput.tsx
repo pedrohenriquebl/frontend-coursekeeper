@@ -30,6 +30,7 @@ export function PasswordInput({
           value={value}
           onChange={onChange}
           disabled={disabled}
+          autoComplete="current-password"
           className={cn(
             "w-full pl-10 pr-12 py-3 bg-gray-700/50 border rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200",
             error ? "border-red-500 bg-red-500/10" : "border-gray-600 hover:border-gray-500"

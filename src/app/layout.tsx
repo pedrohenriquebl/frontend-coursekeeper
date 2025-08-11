@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable}
-        antialiased bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800`}
+        antialiased bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen`}
       >
         <AuthUserProvider>
           {children}

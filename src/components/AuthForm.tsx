@@ -127,6 +127,7 @@ export function AuthForm({
                                 id="cpf"
                                 type="text"
                                 placeholder="Seu CPF"
+                                autoComplete="cpf"
                                 icon={<User />}
                                 value={formData.cpf}
                                 onChange={(e) => {
@@ -142,6 +143,7 @@ export function AuthForm({
                     <Input
                         id="email"
                         type="email"
+                        autoComplete="email"
                         placeholder="seu@email.com"
                         icon={<Mail />}
                         value={formData.email}

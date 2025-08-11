@@ -1,0 +1,225 @@
+'use client'
+
+import { useForm } from "react-hook-form";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Spinner } from "../../../components/ui/Spinner";
+import { CreateCourseData, Language, Platform, Topic } from "./types";
+import { getLanguageSymbol } from "./CourseIcons";
+import { FormInput, FormSelect, FormTextarea, CustomFieldWrapper } from "./FormControls";
+import { LANGUAGES, PLATFORMS, TOPICS } from "./constants";
+
+interface AddCourseModalProps {
+    show: boolean;
+    onClose: () => void;
+    onSave: (course: CreateCourseData) => void;
+    loading: boolean;
+}
+
+export default function AddCourseModal({
+    show,
+    onClose,
+    onSave,
+    loading,
+}: AddCourseModalProps) {
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateCourseData>({
+        defaultValues: {
+            topic: "Frontend",
+            language: "Português",
+            startDate: new Date().toISOString().split("T")[0],
+            status: "Não Iniciado",
+            progress: 0,
+            rating: 0,
+            comment: ""
+        }
+    });
+
+    const topic = watch("topic");
+    const platform = watch("platform");
+    const language = watch("language");
+    const name = watch("name");
+
+    const onSubmit = (data: Omit<CreateCourseData, 'platform' | 'topic' | 'language'> & {
+        platform: string;
+        topic: string;
+        language: string;
+        platformCustom?: string;
+        topicCustom?: string;
+        languageCustom?: string;
+    }) => {
+        const courseData: CreateCourseData = {
+            ...data,
+            topic: (data.topic === "Outro" ? data.topicCustom || "" : data.topic) as Topic,
+            platform: (data.platform === "Outro" ? data.platformCustom || "" : data.platform) as Platform,
+            language: (data.language === "Outro" ? data.languageCustom || "" : data.language) as Language,
+            progress: 0,
+            rating: 0,
+            comment: "",
+            status: "Não Iniciado"
+        };
+        onSave(courseData);
+    };
+
+    if (!show) return null;
+
+    return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-800 rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="p-6">
+                    <div className="flex items-center justify-between mb-6 gap-1">
+                        <h2 className="text-xl font-semibold text-white">
+                            Adicionar Novo Curso
+                        </h2>
+                        <button
+                            onClick={onClose}
+                            className="text-gray-400 hover:text-white transition-colors duration-200"
+                        >
+                            <X className="h-6 w-6" />
+                        </button>
+                    </div>
+
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <FormInput
+                                label="Nome do Curso *"
+                                {...register("name", { required: "Nome do curso é obrigatório" })}
+                                error={errors.name?.message}
+                                className="md:col-span-2"
+                                placeholder="Ex: React 18 Completo - Do Zero ao Avançado"
+                            />
+
+                            <FormSelect
+                                label="Plataforma *"
+                                {...register("platform", { required: "Plataforma é obrigatória" })}
+                                options={PLATFORMS}
+                                error={errors.platform?.message}
+                            />
+
+                            <CustomFieldWrapper
+                                show={platform === "Outro"}
+                                label="Nome da Plataforma *"
+                                register={register("platformCustom", {
+                                    required: platform === "Outro" ? "Nome da plataforma é obrigatório" : false
+                                })}
+                                error={errors.platformCustom?.message}
+                            />
+
+                            <FormInput
+                                label="Duração (horas) *"
+                                type="number"
+                                {...register("duration", {
+                                    required: "Duração é obrigatória",
+                                    min: { value: 1, message: "Duração mínima de 1 hora" }
+                                })}
+                                error={errors.duration?.message}
+                                placeholder="Ex: 42"
+                            />
+
+                            <FormSelect
+                                label="Tópico *"
+                                {...register("topic", { required: "Tópico é obrigatório" })}
+                                options={TOPICS}
+                                error={errors.topic?.message}
+                            />
+
+                            <CustomFieldWrapper
+                                show={topic === "Outro"}
+                                label="Nome do Tópico *"
+                                register={register("topicCustom", {
+                                    required: topic === "Outro" ? "Nome do tópico é obrigatório" : false
+                                })}
+                                error={errors.topicCustom?.message}
+                            />
+
+                            <FormSelect
+                                label="Idioma"
+                                {...register("language")}
+                                options={LANGUAGES}
+                            />
+
+                            <CustomFieldWrapper
+                                show={language === "Outro"}
+                                label="Nome do Idioma *"
+                                register={register("languageCustom", {
+                                    required: language === "Outro" ? "Nome do idioma é obrigatório" : false
+                                })}
+                                error={errors.languageCustom?.message}
+                            />
+
+                            <FormInput
+                                label="Data de Início"
+                                type="date"
+                                {...register("startDate")}
+                            />
+
+                            <FormInput
+                                label="Instrutor"
+                                {...register("instructor")}
+                                placeholder="Nome do instrutor"
+                            />
+
+                            <FormTextarea
+                                label="Descrição"
+                                {...register("description")}
+                                className="md:col-span-2"
+                                rows={3}
+                                placeholder="Descrição do curso e objetivos de aprendizado..."
+                            />
+                        </div>
+
+                        {name && (
+                            <div className="bg-gray-700/30 rounded-lg p-4">
+                                <h3 className="text-sm font-medium text-gray-400 mb-2">
+                                    Preview do Curso:
+                                </h3>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-2xl">
+                                        {getLanguageSymbol(topic, name)}
+                                    </span>
+                                    <div>
+                                        <div className="font-medium text-white">{name}</div>
+                                        <div className="text-sm text-gray-400">
+                                            {platform} • {watch("duration")}h • {topic}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="flex gap-3 pt-4">
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                className="flex-1 bg-gray-600 hover:bg-gray-500 text-white py-3 rounded-lg transition-colors duration-200"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className={cn(
+                                    "flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
+                                    loading
+                                        ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                                        : "bg-emerald-600 hover:bg-emerald-700 text-white",
+                                )}
+                            >
+                                {loading ? (
+                                    <>
+                                        <Spinner
+                                            size="sm"
+                                            className="border-gray-300 border-t-transparent"
+                                        />
+                                        Adicionando...
+                                    </>
+                                ) : (
+                                    "Adicionar Curso"
+                                )}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+};

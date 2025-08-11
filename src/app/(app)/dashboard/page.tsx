@@ -1,6 +1,6 @@
 'use client'
 
-import CourseModals from "@/components/Modal/CourseModal";
+import { CourseModals } from "@/components/courses/CourseModals/CourseModals";
 import { useAuthUser } from "@/context/authUserContext";
 import { CreateCourseData } from "@/types";
 import { BookOpen, Clock, Target, Plus, Calendar, Award } from "lucide-react";

@@ -49,11 +49,13 @@ export const AuthUserProvider = ({ children }: { children: React.ReactNode }) =>
       if (loginResponse?.access_token) {
         sessionStorage.setItem("auth_token", loginResponse.access_token);
         setUser(loginResponse.user);
+        
+        await new Promise((resolve) => setTimeout(resolve, 50));
         return true;
       }
       return false;
     } finally {
-      setIsLoadingUser(false);
+      setTimeout(() => setIsLoadingUser(false), 0);
     }
   }
 
