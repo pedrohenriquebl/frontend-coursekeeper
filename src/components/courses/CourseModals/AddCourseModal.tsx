@@ -15,11 +15,13 @@ import { useCourse } from "./hooks/useCourse";
 interface AddCourseModalProps {
     show: boolean;
     onClose: () => void;
+    onCourseCreated?: () => void;
 }
 
 export default function AddCourseModal({
     show,
     onClose,
+    onCourseCreated
 }: AddCourseModalProps) {
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<CreateCourseData>({
         defaultValues: {
@@ -33,15 +35,16 @@ export default function AddCourseModal({
         }
     });
 
-    const { createCourse, isLoadingCreateCourse, success, resetSuccess } = useCourse();
+    const { createCourse, isLoadingCourse, success, resetSuccess } = useCourse();
 
     useEffect(() => {
         if (success) {
             reset();
             onClose();
             resetSuccess();
+            onCourseCreated?.();
         }
-    }, [success, reset, onClose, resetSuccess]);
+    }, [success, reset, onClose, resetSuccess, onCourseCreated]);
 
     const topic = watch("topic");
     const platform = watch("platform");
@@ -211,15 +214,15 @@ export default function AddCourseModal({
                             </button>
                             <button
                                 type="submit"
-                                disabled={isLoadingCreateCourse}
+                                disabled={isLoadingCourse}
                                 className={cn(
                                     "cursor-pointer flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
-                                    isLoadingCreateCourse
+                                    isLoadingCourse
                                         ? "bg-gray-600 text-gray-300 cursor-not-allowed"
                                         : "bg-emerald-600 hover:bg-emerald-700 text-white",
                                 )}
                             >
-                                {isLoadingCreateCourse ? (
+                                {isLoadingCourse ? (
                                     <>
                                         <Spinner
                                             size="sm"

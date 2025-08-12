@@ -16,6 +16,7 @@ interface CourseModalsProps {
     onCloseDetails: () => void;
     onSaveCourse: (course: CreateCourseData) => void;
     onUpdateCourse: (course: Course) => void;
+    onCourseCreated: () => void;
 }
 
 export function CourseModals({
@@ -28,12 +29,14 @@ export function CourseModals({
     onCloseEdit,
     onCloseDetails,
     onUpdateCourse,
+    onCourseCreated
 }: CourseModalsProps) {
     return (
         <>
             <AddCourseModal
                 show={showAddModal}
                 onClose={onCloseAdd}
+                onCourseCreated={onCourseCreated}
             />
 
             {editingCourse && (

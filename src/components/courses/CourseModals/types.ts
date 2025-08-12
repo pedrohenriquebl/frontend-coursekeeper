@@ -40,20 +40,23 @@ export interface BaseCourseData {
   instructor: string;
   language: Language;
   languageCustom?: string;
-}
-
-export interface CreateCourseData extends BaseCourseData {
-  progress: number;
-  rating: number;
-  comment: string;
   status: Status;
 }
 
-export interface UpdateCourseData extends BaseCourseData, Omit<CreateCourseData, 'status'> {
+export interface CreateCourseData extends BaseCourseData {
+  rating: number;
+  comment: string;
+  endDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface UpdateCourseData
+  extends BaseCourseData,
+    Omit<CreateCourseData, "status"> {
   rating: number;
   comment: string;
 }
-
 
 export interface Course extends CreateCourseData {
   id: number;
