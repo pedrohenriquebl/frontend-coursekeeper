@@ -6,7 +6,7 @@ import { DashboardHeader } from "./components/DashboardHeader";
 import { StatsCards } from "./components/StatsCards";
 import { RecentCourses } from "./components/RecentCourses";
 import { Sidebar } from "./components/Sidebar";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Spinner } from "@/components/ui/Spinner";
 import { useAuthUser } from "@/context/authUserContext";
 
