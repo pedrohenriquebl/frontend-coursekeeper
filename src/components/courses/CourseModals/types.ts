@@ -1,13 +1,38 @@
-export type Topic = "Frontend" | "Backend" | "Design" | "Data Science" | "DevOps" | "Mobile" | "Full Stack" | "Outro";
-export type Platform = "Udemy" | "Coursera" | "YouTube" | "edX" | "Pluralsight" | "LinkedIn Learning" | "Vue Mastery" | "Rocketseat" | "Outro";
-export type Language = "Português" | "English" | "Español" | "Français" | "Outro";
-export type Status = "Não Iniciado" | "Em Progresso" | "Concluído";
+export type Platform =
+  | "UDEMY"
+  | "COURSERA"
+  | "YOUTUBE"
+  | "EDX"
+  | "VUE MASTERY"
+  | "ROCKETSEAT"
+  | "ALURA"
+  | "OUTROS";
+export type Language =
+  | "PORTUGUES"
+  | "INGLES"
+  | "ESPANHOL"
+  | "FRANCES"
+  | "OUTROS";
+export type Topic =
+  | "FRONTEND"
+  | "BACKEND"
+  | "DESIGN"
+  | "DATA SCIENCE"
+  | "DEVOPS"
+  | "MOBILE"
+  | "FULL STACK"
+  | "OUTROS"
+  | string;
+export type Status = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO";
 
 export interface BaseCourseData {
+  id: number;
   name: string;
   platform: Platform;
   platformCustom?: string;
-  duration: string;
+  duration: number;
+  studiedHours: number;
+  progress: number;
   topic: Topic;
   topicCustom?: string;
   startDate: string;
@@ -24,8 +49,14 @@ export interface CreateCourseData extends BaseCourseData {
   status: Status;
 }
 
+export interface UpdateCourseData extends BaseCourseData, Omit<CreateCourseData, 'status'> {
+  rating: number;
+  comment: string;
+}
+
+
 export interface Course extends CreateCourseData {
-  id: string;
+  id: number;
   endDate?: string;
 }
 
@@ -50,14 +81,26 @@ export interface CourseDetailsModalProps extends CourseModalProps {
 }
 
 export interface CourseModalsProps {
-    showAddModal: boolean;
-    showEditModal: boolean;
-    showDetailsModal: boolean;
-    editingCourse: Course | null;
-    detailsCourse: Course | null;
-    onCloseAdd: () => void;
-    onCloseEdit: () => void;
-    onCloseDetails: () => void;
-    onSaveCourse: (course: CreateCourseData) => void;
-    onUpdateCourse: (course: Course) => void;
+  showAddModal: boolean;
+  showEditModal: boolean;
+  showDetailsModal: boolean;
+  editingCourse: Course | null;
+  detailsCourse: Course | null;
+  onCloseAdd: () => void;
+  onCloseEdit: () => void;
+  onCloseDetails: () => void;
+  onSaveCourse: (course: CreateCourseData) => void;
+  onUpdateCourse: (course: Course) => void;
+}
+
+export interface CreateCoursePayload {
+  name: string;
+  duration: number;
+  studiedHours?: number;
+  topic: string;
+  platform: string;
+  language: string;
+  description?: string;
+  instructor?: string;
+  startDate?: string;
 }

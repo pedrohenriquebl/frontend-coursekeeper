@@ -1,63 +1,75 @@
 'use client'
 
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Spinner } from "../../../components/ui/Spinner";
-import { CreateCourseData, Language, Platform, Topic } from "./types";
+import { CreateCourseData, Status } from "./types";
 import { getLanguageSymbol } from "./CourseIcons";
 import { FormInput, FormSelect, FormTextarea, CustomFieldWrapper } from "./FormControls";
 import { LANGUAGES, PLATFORMS, TOPICS } from "./constants";
+import { useCourse } from "./hooks/useCourse";
+
 
 interface AddCourseModalProps {
     show: boolean;
     onClose: () => void;
-    onSave: (course: CreateCourseData) => void;
-    loading: boolean;
 }
 
 export default function AddCourseModal({
     show,
     onClose,
-    onSave,
-    loading,
 }: AddCourseModalProps) {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateCourseData>({
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<CreateCourseData>({
         defaultValues: {
-            topic: "Frontend",
-            language: "Português",
+            topic: "FRONTEND",
+            language: "PORTUGUES",
             startDate: new Date().toISOString().split("T")[0],
-            status: "Não Iniciado",
+            status: "NAO_INICIADO",
             progress: 0,
             rating: 0,
             comment: ""
         }
     });
 
+    const { createCourse, isLoadingCreateCourse, success, resetSuccess } = useCourse();
+
+    useEffect(() => {
+        if (success) {
+            reset();
+            onClose();
+            resetSuccess();
+        }
+    }, [success, reset, onClose, resetSuccess]);
+
     const topic = watch("topic");
     const platform = watch("platform");
     const language = watch("language");
     const name = watch("name");
 
-    const onSubmit = (data: Omit<CreateCourseData, 'platform' | 'topic' | 'language'> & {
+    const onSubmit = (data: Omit<CreateCourseData, 'id' | 'platform' | 'topic' | 'language' | 'progress' | 'studiedHours'> & {
         platform: string;
         topic: string;
         language: string;
         platformCustom?: string;
         topicCustom?: string;
         languageCustom?: string;
+        studiedHours?: string | number;
     }) => {
-        const courseData: CreateCourseData = {
-            ...data,
-            topic: (data.topic === "Outro" ? data.topicCustom || "" : data.topic) as Topic,
-            platform: (data.platform === "Outro" ? data.platformCustom || "" : data.platform) as Platform,
-            language: (data.language === "Outro" ? data.languageCustom || "" : data.language) as Language,
-            progress: 0,
-            rating: 0,
-            comment: "",
-            status: "Não Iniciado"
+        const courseData = {
+            name: data.name,
+            duration: Number(data.duration),
+            studiedHours: Number(data.studiedHours) || 0,
+            topic: data.topic === "Outro" ? data.topicCustom || "" : data.topic,
+            platform: data.platform === "Outro" ? data.platformCustom || "" : data.platform,
+            language: data.language === "Outro" ? data.languageCustom || "" : data.language,
+            description: data.description,
+            instructor: data.instructor,
+            startDate: data.startDate,
+            status: 'NAO_INICIADO' as Status
         };
-        onSave(courseData);
+        createCourse(courseData);
     };
 
     if (!show) return null;
@@ -96,10 +108,10 @@ export default function AddCourseModal({
                             />
 
                             <CustomFieldWrapper
-                                show={platform === "Outro"}
+                                show={platform === "OUTROS"}
                                 label="Nome da Plataforma *"
                                 register={register("platformCustom", {
-                                    required: platform === "Outro" ? "Nome da plataforma é obrigatório" : false
+                                    required: platform === "OUTROS" ? "Nome da plataforma é obrigatório" : false
                                 })}
                                 error={errors.platformCustom?.message}
                                 className="md:col-span-2"
@@ -124,10 +136,10 @@ export default function AddCourseModal({
                             />
 
                             <CustomFieldWrapper
-                                show={topic === "Outro"}
+                                show={topic === "OUTROS"}
                                 label="Nome do Tópico *"
                                 register={register("topicCustom", {
-                                    required: topic === "Outro" ? "Nome do tópico é obrigatório" : false
+                                    required: topic === "OUTROS" ? "Nome do tópico é obrigatório" : false
                                 })}
                                 error={errors.topicCustom?.message}
                                 className="md:col-span-2"
@@ -140,10 +152,10 @@ export default function AddCourseModal({
                             />
 
                             <CustomFieldWrapper
-                                show={language === "Outro"}
+                                show={language === "OUTROS"}
                                 label="Nome do Idioma *"
                                 register={register("languageCustom", {
-                                    required: language === "Outro" ? "Nome do idioma é obrigatório" : false
+                                    required: language === "OUTROS" ? "Nome do idioma é obrigatório" : false
                                 })}
                                 error={errors.languageCustom?.message}
                                 className="md:col-span-2"
@@ -199,15 +211,15 @@ export default function AddCourseModal({
                             </button>
                             <button
                                 type="submit"
-                                disabled={loading}
+                                disabled={isLoadingCreateCourse}
                                 className={cn(
-                                    "flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
-                                    loading
+                                    "cursor-pointer flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
+                                    isLoadingCreateCourse
                                         ? "bg-gray-600 text-gray-300 cursor-not-allowed"
                                         : "bg-emerald-600 hover:bg-emerald-700 text-white",
                                 )}
                             >
-                                {loading ? (
+                                {isLoadingCreateCourse ? (
                                     <>
                                         <Spinner
                                             size="sm"

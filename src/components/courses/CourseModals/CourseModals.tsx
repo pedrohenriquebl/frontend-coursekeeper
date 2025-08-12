@@ -27,7 +27,6 @@ export function CourseModals({
     onCloseAdd,
     onCloseEdit,
     onCloseDetails,
-    onSaveCourse,
     onUpdateCourse,
 }: CourseModalsProps) {
     return (
@@ -35,8 +34,6 @@ export function CourseModals({
             <AddCourseModal
                 show={showAddModal}
                 onClose={onCloseAdd}
-                onSave={onSaveCourse}
-                loading={false}
             />
 
             {editingCourse && (

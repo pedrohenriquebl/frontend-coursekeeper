@@ -1,4 +1,4 @@
-export type CourseStatus = "Em Progresso" | "Concluído" | "Não Iniciado";
+export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO";
 
 type GoalType =
   | "Horas_totais"
@@ -21,7 +21,7 @@ export interface Course {
   name: string;
   platform: string;
   platformCustom?: string;
-  duration: string;
+  duration: number;
   topic: string;
   topicCustom?: string;
   progress: number;

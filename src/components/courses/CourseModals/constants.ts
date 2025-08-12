@@ -1,38 +1,37 @@
 import { Topic, Platform, Language } from "./types";
 
 export const TOPICS: Topic[] = [
-  "Frontend",
-  "Backend",
-  "Design",
-  "Data Science",
-  "DevOps",
-  "Mobile",
-  "Full Stack",
-  "Outro"
+  "FRONTEND",
+  "BACKEND",
+  "DESIGN",
+  "DATA SCIENCE",
+  "DEVOPS",
+  "MOBILE",
+  "FULL STACK",
+  "OUTROS"
 ];
 
 export const PLATFORMS: Platform[] = [
-  "Udemy",
-  "Coursera",
-  "YouTube",
-  "edX",
-  "Pluralsight",
-  "LinkedIn Learning",
-  "Vue Mastery",
-  "Rocketseat",
-  "Outro"
+  "UDEMY",
+  "COURSERA",
+  "YOUTUBE",
+  "EDX",
+  "ALURA",
+  "VUE MASTERY",
+  "ROCKETSEAT",
+  "OUTROS"
 ];
 
 export const LANGUAGES: Language[] = [
-  "Português",
-  "English",
-  "Español",
-  "Français",
-  "Outro"
+  "PORTUGUES",
+  "INGLES",
+  "ESPANHOL",
+  "FRANCES",
+  "OUTROS"
 ];
 
 export const STATUS_OPTIONS = [
-  { value: "Não Iniciado", label: "Não Iniciado" },
-  { value: "Em Progresso", label: "Em Progresso" },
-  { value: "Concluído", label: "Concluído" }
+  { value: "NAO_INICIADO", label: "Não Iniciado" },
+  { value: "EM_PROGRESSO", label: "Em Progresso" },
+  { value: "CONCLUIDO", label: "Concluído" }
 ];
