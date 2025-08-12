@@ -63,9 +63,7 @@ export const courseService = {
     }
 
     try {
-      const response = await apiInstance.delete(`/courses/${userId}`, {
-        data: { courseId },
-      });
+      const response = await apiInstance.delete(`/courses/${userId}/${courseId}`);
       return response.data;
     } catch (error) {
       if (isAxiosError(error)) {

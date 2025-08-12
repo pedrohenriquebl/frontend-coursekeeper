@@ -6,12 +6,14 @@ import { DashboardHeader } from "./components/DashboardHeader";
 import { StatsCards } from "./components/StatsCards";
 import { RecentCourses } from "./components/RecentCourses";
 import { Sidebar } from "./components/Sidebar";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/Spinner";
+import { useAuthUser } from "@/context/authUserContext";
 
 export default function DashboardPage() {
     const { recentCourses, isLoadingCourse, getRecentCourses } = useCourse();
     const [showAddModal, setShowAddModal] = useState(false);
+    const { user } = useAuthUser();
 
     const refreshCourses = useCallback(async () => {
         try {
@@ -22,10 +24,10 @@ export default function DashboardPage() {
     }, [getRecentCourses]);
 
     const stats = {
-        totalCourses: recentCourses.length,
-        completedCourses: recentCourses.filter(course => course.status === "CONCLUIDO").length,
-        studyHours: recentCourses.reduce((acc, course) => acc + (course.studiedHours || 0), 0),
-        currentGoalPercent: 75,
+        totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
+        completedCourses: user?.generalCoursesInfo?.completedCourses || 0,
+        studyHours: user?.generalCoursesInfo?.totalStudiedHours || 0,
+        currentGoalPercent: user?.generalCoursesInfo?.currentGoalPercent || 0,
     };
 
     const addCourse = () => setShowAddModal(true);

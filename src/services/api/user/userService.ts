@@ -1,5 +1,12 @@
 import { apiInstance, isAxiosError } from "@/services/api/axios/instance";
 
+interface GeneralCoursesInfo {
+  totalCourses: number;
+  completedCourses: number;
+  totalStudiedHours: number;
+  currentGoalPercent: number;
+}
+
 export interface User {
   id: string;
   firstName: string;
@@ -8,6 +15,7 @@ export interface User {
   cpf: string;
   profileImage?: string;
   description?: string;
+  generalCoursesInfo?: GeneralCoursesInfo;
 }
 
 export interface LoginResponse {
