@@ -81,18 +81,28 @@ export default function CoursesPage() {
                 onDelete={handleDeleteCourse}
                 onViewDetails={handleViewDetails}
             />
-
             <CourseModals
                 showAddModal={showAddModal}
                 showEditModal={showEditModal}
                 showDetailsModal={showDetailsModal}
-                editingCourse={null}
-                detailsCourse={null}
+                editingCourse={editingCourse} // Agora passando o valor real do estado
+                detailsCourse={detailsCourse} // Agora passando o valor real do estado
                 onCloseAdd={closeAddModal}
-                onCloseEdit={() => setShowEditModal(false)}
-                onCloseDetails={() => setShowDetailsModal(false)}
+                onCloseEdit={() => {
+                    setShowEditModal(false);
+                    setEditingCourse(null);
+                }}
+                onCloseDetails={() => {
+                    setShowDetailsModal(false);
+                    setDetailsCourse(null);
+                }}
                 onSaveCourse={() => { }}
-                onUpdateCourse={() => { }}
+                onUpdateCourse={async (updatedCourse) => {
+                    // Implemente a lógica de atualização aqui
+                    console.log("Curso atualizado:", updatedCourse);
+                    await refreshCourses();
+                    setShowEditModal(false);
+                }}
                 onCourseCreated={refreshCourses}
             />
         </div>

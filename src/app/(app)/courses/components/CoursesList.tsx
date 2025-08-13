@@ -31,6 +31,12 @@ export function CoursesList({
     const platforms = ["all", "Udemy", "Coursera", "YouTube", "Alura", "edX", "Pluralsight"];
     const statuses = ["all", "Não Iniciado", "Em Progresso", "Concluído"];
 
+    const status: Record<string, string> = {
+        "CONCLUIDO": "Concluído",
+        "EM_PROGRESSO": "Em Progresso",
+        "NAO_INICIADO": "Não Iniciado"
+    }
+
     const filteredCourses = courses.filter((course) => {
         const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             course.description?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -44,17 +50,16 @@ export function CoursesList({
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case "Concluído":
+            case "CONCLUIDO":
                 return "bg-green-600/20 text-green-400";
-            case "Em Progresso":
+            case "EM_PROGRESSO":
                 return "bg-emerald-600/20 text-emerald-400";
-            case "Não Iniciado":
+            case "NAO_INICIADO":
                 return "bg-gray-600/20 text-gray-400";
             default:
                 return "bg-gray-600/20 text-gray-400";
         }
     };
-
 
     if (isLoading) {
         return (
@@ -157,21 +162,21 @@ export function CoursesList({
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={() => onViewDetails(course)}
-                                    className="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+                                    className="cursor-pointer p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
                                     title="Ver detalhes"
                                 >
                                     <Eye className="h-4 w-4" />
                                 </button>
                                 <button
                                     onClick={() => onEdit(course)}
-                                    className="p-2 text-gray-400 hover:text-emerald-400 hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+                                    className="cursor-pointer p-2 text-gray-400 hover:text-emerald-400 hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
                                     title="Editar curso"
                                 >
                                     <Edit2 className="h-4 w-4" />
                                 </button>
                                 <button
                                     onClick={() => onDelete(course.id)}
-                                    className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
+                                    className="cursor-pointer p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
                                     title="Deletar curso"
                                 >
                                     <Trash2 className="h-4 w-4" />
@@ -202,15 +207,15 @@ export function CoursesList({
                                         <Star
                                             key={i}
                                             className={`h-4 w-4 ${i < Math.round(course.rating || 0)
-                                                    ? "text-yellow-400 fill-current"
-                                                    : "text-gray-600"
+                                                ? "text-yellow-400 fill-current"
+                                                : "text-gray-600"
                                                 }`}
                                         />
                                     ))}
                                 </div>
-                                {course.rating > 0 && (
+                                {(course.rating ?? 0 )> 0 && (
                                     <span className="text-sm text-gray-400 ml-1">
-                                        ({course.rating.toFixed(1)})
+                                        ({(course.rating ?? 0).toFixed(1)})
                                     </span>
                                 )}
                             </div>
@@ -226,7 +231,7 @@ export function CoursesList({
                             <span
                                 className={`text-xs px-2 py-1 rounded-full ${getStatusColor(course.status || "Não Iniciado")}`}
                             >
-                                {course.status}
+                                {status[course.status]}
                             </span>
                             <div className="text-xs text-gray-500">
                                 {course.startDate && (
@@ -235,7 +240,7 @@ export function CoursesList({
                                         {new Date(course.startDate).toLocaleDateString("pt-BR")}
                                     </>
                                 )}
-                                {course.endDate && (
+                                {course.endDate && course.status === "CONCLUIDO" && (
                                     <span>
                                         {" "}
                                         • Concluído:{" "}

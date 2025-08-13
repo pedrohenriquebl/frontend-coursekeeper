@@ -9,7 +9,7 @@ interface CourseCardProps {
 export function CourseCard({ course }: CourseCardProps) {
   const status: Record<string, string> = {
     "CONCLUIDO": "Concluído",
-    "EM_ANDAMENTO": "Em Andamento",
+    "EM_PROGRESSO": "Em Progresso",
     "NAO_INICIADO": "Não Iniciado"
   }
 
@@ -35,7 +35,7 @@ export function CourseCard({ course }: CourseCardProps) {
           {[...Array(5)].map((_, i) => (
             <Star
               key={i}
-              className={`h-4 w-4 ${i < course.rating ? "text-yellow-400 fill-current" : "text-slate-300"}`}
+              className={`h-4 w-4 ${i < (course.rating ?? 0) ? "text-yellow-400 fill-current" : "text-slate-300"}`}
             />
           ))}
         </div>

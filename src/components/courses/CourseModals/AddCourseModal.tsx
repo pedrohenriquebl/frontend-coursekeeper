@@ -5,12 +5,26 @@ import { useEffect } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Spinner } from "../../../components/ui/Spinner";
-import { CreateCourseData, Status } from "./types";
 import { getLanguageSymbol } from "./CourseIcons";
 import { FormInput, FormSelect, FormTextarea, CustomFieldWrapper } from "./FormControls";
 import { LANGUAGES, PLATFORMS, TOPICS } from "./constants";
 import { useCourse } from "./hooks/useCourse";
+import { CourseStatus, CreateCourseData, CreateCoursePayload } from "@/types";
 
+type AddCourseFormData = {
+    name: string;
+    duration: number | string;
+    studiedHours?: number | string;
+    topic: string;
+    topicCustom?: string;
+    platform: string;
+    platformCustom?: string;
+    language: string;
+    languageCustom?: string;
+    description?: string;
+    instructor?: string;
+    startDate?: string;
+};
 
 interface AddCourseModalProps {
     show: boolean;
@@ -23,15 +37,12 @@ export default function AddCourseModal({
     onClose,
     onCourseCreated
 }: AddCourseModalProps) {
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<CreateCourseData>({
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<AddCourseFormData>({
         defaultValues: {
             topic: "FRONTEND",
+            platform: "UDEMY",
             language: "PORTUGUES",
-            startDate: new Date().toISOString().split("T")[0],
-            status: "NAO_INICIADO",
-            progress: 0,
-            rating: 0,
-            comment: ""
+            startDate: new Date().toISOString().split("T")[0]
         }
     });
 
@@ -51,28 +62,24 @@ export default function AddCourseModal({
     const language = watch("language");
     const name = watch("name");
 
-    const onSubmit = (data: Omit<CreateCourseData, 'id' | 'platform' | 'topic' | 'language' | 'progress' | 'studiedHours'> & {
-        platform: string;
-        topic: string;
-        language: string;
-        platformCustom?: string;
-        topicCustom?: string;
-        languageCustom?: string;
-        studiedHours?: string | number;
-    }) => {
-        const courseData = {
+    const onSubmit = (data: AddCourseFormData) => {
+        const payload: CreateCourseData = {
             name: data.name,
             duration: Number(data.duration),
-            studiedHours: Number(data.studiedHours) || 0,
-            topic: data.topic === "Outro" ? data.topicCustom || "" : data.topic,
-            platform: data.platform === "Outro" ? data.platformCustom || "" : data.platform,
-            language: data.language === "Outro" ? data.languageCustom || "" : data.language,
+            studiedHours: data.studiedHours ? Number(data.studiedHours) : 0,
+            topic: topic === "OUTROS" ? "OUTROS" : topic,
+            topicCustom: topic === "OUTROS" ? data.topicCustom : undefined,
+            platform: platform === "OUTROS" ? "OUTROS" : platform,
+            platformCustom: platform === "OUTROS" ? data.platformCustom : undefined,
+            language: language === "OUTROS" ? "OUTROS" : language,
+            languageCustom: language === "OUTROS" ? data.languageCustom : undefined,
             description: data.description,
             instructor: data.instructor,
-            startDate: data.startDate,
-            status: 'NAO_INICIADO' as Status
+            startDate: data.startDate || new Date().toISOString().split("T")[0],
+            status: "NAO_INICIADO" as CourseStatus
         };
-        createCourse(courseData);
+
+        createCourse(payload);
     };
 
     if (!show) return null;

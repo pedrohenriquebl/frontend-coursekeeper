@@ -1,5 +1,5 @@
+import { Course } from "@/types";
 import { useState } from "react";
-import { Course } from "../types";
 
 export const useCourseProgress = (initialCourse: Course) => {
   const [course, setCourse] = useState<Course>(initialCourse);

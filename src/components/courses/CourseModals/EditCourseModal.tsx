@@ -4,11 +4,11 @@ import { useState } from "react";
 import { X, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Spinner } from "../../../components/ui/Spinner";
-import { EditCourseModalProps } from "./types";
 import { getLanguageSymbol } from "./CourseIcons";
 import { STATUS_OPTIONS } from "./constants";
 import { useCourseProgress } from "./hooks/useCourseProgress";
 import { FormInput, FormSelect, FormTextarea } from "./FormControls";
+import { EditCourseModalProps } from "@/types";
 
 export const EditCourseModal = ({
   show,
@@ -24,8 +24,8 @@ export const EditCourseModal = ({
     addStudyHours,
   } = useCourseProgress(course);
 
-  const [editRating, setEditRating] = useState(course.rating);
-  const [editComment, setEditComment] = useState(course.comment);
+  const [editRating, setEditRating] = useState(course.rating ?? 0);
+  const [editComment, setEditComment] = useState(course.comment ?? "");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

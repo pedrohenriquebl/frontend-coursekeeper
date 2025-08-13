@@ -2,8 +2,8 @@
 
 import { X, Calendar, Clock, Monitor, Award, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Course } from "./types";
 import { getTopicIcon, getLanguageSymbol, getStatusColor } from "./CourseIcons";
+import { Course } from "@/types";
 
 interface CourseDetailsModalProps {
   show: boolean;
@@ -117,7 +117,7 @@ export const CourseDetailsModal = ({
             </div>
 
             {/* Avaliação */}
-            {course.rating > 0 && (
+            {(course.rating ?? 0) > 0 && (
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-sm text-gray-400">Sua Avaliação:</span>
@@ -127,7 +127,7 @@ export const CourseDetailsModal = ({
                         key={i}
                         className={cn(
                           "h-4 w-4",
-                          i < course.rating
+                          i < (course.rating ?? 0)
                             ? "text-yellow-400 fill-current"
                             : "text-gray-600"
                         )}
@@ -157,7 +157,7 @@ export const CourseDetailsModal = ({
             )}
 
             {/* Data de Conclusão */}
-            {course.endDate && (
+            {course.endDate && course.status === "CONCLUIDO" && (
               <div className="bg-green-600/20 border border-green-600/50 rounded-lg p-3">
                 <div className="flex items-center gap-2">
                   <Award className="h-5 w-5 text-green-400" />

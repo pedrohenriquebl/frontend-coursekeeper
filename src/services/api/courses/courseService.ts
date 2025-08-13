@@ -1,6 +1,5 @@
-import { CreateCourseData } from "@/types";
+import { CreateCourseData, UpdateCourseData } from "@/types";
 import { apiInstance, isAxiosError } from "../axios/instance";
-import { UpdateCourseData } from "@/components/courses/CourseModals/types";
 
 export const courseService = {
   createCourse: async (course: CreateCourseData, userId: number) => {

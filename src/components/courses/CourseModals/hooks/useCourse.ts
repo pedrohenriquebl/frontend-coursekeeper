@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { courseService } from "@/services/api/courses/courseService";
-import { CreateCourseData } from "@/types";
+import { Course, CreateCourseData } from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
-import { Course } from "../types";
-
 
 
 export function useCourse() {

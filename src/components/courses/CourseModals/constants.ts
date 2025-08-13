@@ -1,4 +1,4 @@
-import { Topic, Platform, Language } from "./types";
+import { Language, Platform, Topic } from "@/types";
 
 export const TOPICS: Topic[] = [
   "FRONTEND",

@@ -3,7 +3,7 @@
 import AddCourseModal from "./AddCourseModal";
 import { EditCourseModal } from "./EditCourseModal";
 import { CourseDetailsModal } from "./CourseDetailsModal";
-import { Course, CreateCourseData } from "./types";
+import { CreateCourseData, Course } from "@/types";
 
 interface CourseModalsProps {
     showAddModal: boolean;
@@ -28,6 +28,7 @@ export function CourseModals({
     onCloseAdd,
     onCloseEdit,
     onCloseDetails,
+    onSaveCourse,
     onUpdateCourse,
     onCourseCreated
 }: CourseModalsProps) {
@@ -39,7 +40,7 @@ export function CourseModals({
                 onCourseCreated={onCourseCreated}
             />
 
-            {editingCourse && (
+            {showEditModal && editingCourse && (
                 <EditCourseModal
                     show={showEditModal}
                     course={editingCourse}
@@ -49,7 +50,7 @@ export function CourseModals({
                 />
             )}
 
-            {detailsCourse && (
+            {showDetailsModal && detailsCourse && (
                 <CourseDetailsModal
                     show={showDetailsModal}
                     course={detailsCourse}
