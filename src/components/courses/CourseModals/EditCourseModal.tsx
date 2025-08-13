@@ -30,6 +30,17 @@ export const EditCourseModal = ({
 
   if (!show || !editCourse) return null;
 
+  const hasChanges = () => {
+    if (!editCourse || !course) return false;
+
+    return (
+      editCourse.studiedHours !== (course.studiedHours || 0) ||
+      editCourse.progress !== (course.progress || 0) ||
+      editRating !== (course.rating || 0) ||
+      editComment !== (course.comment || "")
+    );
+  };
+
   const addStudyHours = (hours: number) => {
     if (!hours || !editCourse) return;
 
@@ -263,12 +274,14 @@ export const EditCourseModal = ({
               </button>
               <button
                 type="submit"
-                disabled={isSaving}
+                disabled={!hasChanges() || isSaving}
                 className={cn(
                   "flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
-                  isSaving
+                  !hasChanges()
                     ? "bg-gray-600 text-gray-300 cursor-not-allowed"
-                    : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                    : isSaving
+                      ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                      : "bg-emerald-600 hover:bg-emerald-700 text-white"
                 )}
               >
                 {isSaving ? (
