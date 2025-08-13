@@ -16,6 +16,7 @@ interface CourseModalsProps {
     onCloseDetails: () => void;
     onUpdateCourse: (course: UpdateCoursePayload) => void; 
     onCourseCreated: () => void;
+    isLoadingCourse?: boolean;
 }
 
 export function CourseModals({
@@ -28,7 +29,8 @@ export function CourseModals({
     onCloseEdit,
     onCloseDetails,
     onUpdateCourse,
-    onCourseCreated
+    onCourseCreated,
+    isLoadingCourse = false
 }: CourseModalsProps) {
     return (
         <>
@@ -44,7 +46,7 @@ export function CourseModals({
                     course={editingCourse}
                     onClose={onCloseEdit}
                     onUpdate={onUpdateCourse}
-                    loading={false}
+                    loading={isLoadingCourse}
                 />
             )}
 

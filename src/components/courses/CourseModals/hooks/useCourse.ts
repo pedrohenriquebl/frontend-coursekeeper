@@ -8,6 +8,7 @@ export function useCourse() {
   const { user } = useAuthUser();
   const userId = Number(user?.id);
   const [isLoadingCourse, setIsLoadingCourse] = useState(false);
+  const [isUpdatingCourse, setIsUpdatingCourse] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [recentCourses, setRecentCourses] = useState<Course[]>([]);
@@ -76,19 +77,18 @@ export function useCourse() {
   const updateCourse = useCallback(async (course: UpdateCoursePayload) => {
     if (!userId) return null;
 
-    setIsLoadingCourse(true);
+    setIsUpdatingCourse(true);
     setError(null);
-    setSuccess(false);
     try {
       if (!userId) throw new Error("Usuário não autenticado");
 
       await courseService.updateCourse(course as UpdateCoursePayload, userId);
-      setSuccess(true);
       await getAllCourses();
     } catch (error: unknown) {
       setError((error as Error).message || "Erro ao atualizar curso");
     } finally {
       setIsLoadingCourse(false);
+      setIsUpdatingCourse(false);
     }
   }, [userId, getAllCourses]);
 
@@ -110,6 +110,7 @@ export function useCourse() {
     allCourses,
     getAllCourses,
     deleteCourse,
-    updateCourse
+    updateCourse,
+    isUpdatingCourse
   };
 }

@@ -14,12 +14,12 @@ export const EditCourseModal = ({
   course,
   onClose,
   onUpdate,
-  loading,
 }: EditCourseModalProps) => {
   const [editCourse, setEditCourse] = useState(course);
   const [studyHours, setStudyHours] = useState(0);
   const [editRating, setEditRating] = useState(course.rating ?? 0);
   const [editComment, setEditComment] = useState(course.comment ?? "");
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     setEditCourse(course);
@@ -51,12 +51,14 @@ export const EditCourseModal = ({
       endDate: newProgress === 100 ? new Date().toISOString() : editCourse.endDate,
     });
 
-    setStudyHours(0); // limpa input
+    setStudyHours(0);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editCourse) return;
+
+    setIsSaving(true);
 
     const studiedHours = Math.round((editCourse.progress / 100) * (editCourse.duration || 1) * 10) / 10;
 
@@ -69,7 +71,11 @@ export const EditCourseModal = ({
       endDate: editCourse.progress === 100 ? new Date().toISOString() : editCourse.endDate,
     };
 
-    onUpdate(payload);
+    await onUpdate(payload);
+    await new Promise(res => setTimeout(res, 700));
+
+    setIsSaving(false);
+    onClose();
   };
 
   return (
@@ -120,6 +126,7 @@ export const EditCourseModal = ({
                     onClick={() =>
                       setEditCourse({
                         ...editCourse,
+                        studiedHours: editCourse.duration || 0,
                         progress: percent,
                         status: "EM_PROGRESSO",
                       })
@@ -256,15 +263,15 @@ export const EditCourseModal = ({
               </button>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={isSaving}
                 className={cn(
                   "flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
-                  loading
+                  isSaving
                     ? "bg-gray-600 text-gray-300 cursor-not-allowed"
                     : "bg-emerald-600 hover:bg-emerald-700 text-white"
                 )}
               >
-                {loading ? (
+                {isSaving ? (
                   <>
                     <Spinner size="sm" className="border-gray-300 border-t-transparent" />
                     Salvando...

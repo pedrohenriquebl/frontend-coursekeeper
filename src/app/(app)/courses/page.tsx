@@ -96,6 +96,7 @@ export default function CoursesPage() {
                     setDetailsCourse(null);
                 }}
                 onUpdateCourse={async (updatedCourse: UpdateCoursePayload) => {
+                    console.log(updatedCourse);
                     updateCourse(updatedCourse);
                     await refreshCourses();
                     setShowEditModal(false);

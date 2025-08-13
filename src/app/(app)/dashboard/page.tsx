@@ -11,7 +11,7 @@ import { Spinner } from "@/components/ui/Spinner";
 import { useAuthUser } from "@/context/authUserContext";
 
 export default function DashboardPage() {
-    const { recentCourses, isLoadingCourse, getRecentCourses } = useCourse();
+    const { recentCourses, isUpdatingCourse, getRecentCourses, isLoadingCourse } = useCourse();
     const [showAddModal, setShowAddModal] = useState(false);
     const { user } = useAuthUser();
 
@@ -68,6 +68,7 @@ export default function DashboardPage() {
                 onCloseDetails={() => { }}
                 onUpdateCourse={() => { }}
                 onCourseCreated={refreshCourses}
+                isLoadingCourse={isUpdatingCourse}
             />
         </div>
     );
