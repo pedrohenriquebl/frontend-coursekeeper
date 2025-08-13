@@ -59,6 +59,20 @@ export function useCourse() {
     }
   }, [userId]);
 
+  const deleteCourse = useCallback( async (courseId: number) => {
+    if (!userId) return null;
+
+    try {
+      setIsLoadingCourse(true);
+      await courseService.deleteCourse(courseId, userId);
+      await getAllCourses();
+    } catch (error) {
+      setError((error as Error).message || "Erro ao deletar curso");
+    } finally {
+      setIsLoadingCourse(false);
+    }
+  }, [userId, getAllCourses]);
+
   useEffect(() => {
     getRecentCourses();
     getAllCourses();
@@ -75,6 +89,7 @@ export function useCourse() {
     recentCourses,
     getRecentCourses,
     allCourses,
-    getAllCourses
+    getAllCourses,
+    deleteCourse
   };
 }

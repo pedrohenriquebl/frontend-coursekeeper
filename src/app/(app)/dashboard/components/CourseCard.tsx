@@ -1,18 +1,13 @@
 import { Course } from "@/types";
 import { getLanguageSymbol } from "@/components/courses/CourseModals/CourseIcons";
 import { Star } from "lucide-react";
+import { handleStatusLabel } from "@/utils/handleStatusLabel";
 
 interface CourseCardProps {
   course: Course;
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  const status: Record<string, string> = {
-    "CONCLUIDO": "Concluído",
-    "EM_PROGRESSO": "Em Progresso",
-    "NAO_INICIADO": "Não Iniciado"
-  }
-
   return (
     <div className="p-4 border border-gray-600/50 rounded-lg hover:border-emerald-500/50 transition-colors duration-200 bg-gray-700/30">
       <div className="flex items-start flex-wrap gap-4 justify-between mb-3 sm:no-wrap sm:gap-0">
@@ -56,7 +51,7 @@ export function CourseCard({ course }: CourseCardProps) {
             ? "bg-green-600/20 text-green-400"
             : "bg-emerald-600/20 text-emerald-400"
         }`}>
-          {status[course.status]}
+          {handleStatusLabel(course.status)}
         </span>
       </div>
     </div>

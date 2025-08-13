@@ -5,7 +5,8 @@ import { useState } from "react";
 import { Course } from "@/types";
 import { Spinner } from "@/components/ui/Spinner";
 import { getLanguageSymbol } from "@/components/courses/CourseModals/CourseIcons";
-
+import ConfirmDeleteModal from "@/components/courses/CourseModals/ConfirmDeleteModal";
+import { handleStatusLabel } from "@/utils/handleStatusLabel";
 interface CoursesListProps {
     courses: Course[];
     onEdit: (course: Course) => void;
@@ -25,17 +26,11 @@ export function CoursesList({
     const [selectedTopic, setSelectedTopic] = useState("all");
     const [selectedPlatform, setSelectedPlatform] = useState("all");
     const [selectedStatus, setSelectedStatus] = useState("all");
-    console.log('COURSES -> ', courses)
+    const [courseToDelete, setCourseToDelete] = useState<Course | null>(null);
 
     const topics = ["all", "Frontend", "Backend", "Design", "Mobile", "Data Science", "DevOps"];
     const platforms = ["all", "Udemy", "Coursera", "YouTube", "Alura", "edX", "Pluralsight"];
     const statuses = ["all", "Não Iniciado", "Em Progresso", "Concluído"];
-
-    const status: Record<string, string> = {
-        "CONCLUIDO": "Concluído",
-        "EM_PROGRESSO": "Em Progresso",
-        "NAO_INICIADO": "Não Iniciado"
-    }
 
     const filteredCourses = courses.filter((course) => {
         const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -60,6 +55,19 @@ export function CoursesList({
                 return "bg-gray-600/20 text-gray-400";
         }
     };
+
+    const handleDeleteClick = (course: Course) => {
+        setCourseToDelete(course);
+    };
+
+    const handleConfirmDelete = () => {
+        if (courseToDelete) {
+            onDelete(courseToDelete.id);
+            setCourseToDelete(null);
+        }
+    };
+
+    const handleCancelDelete = () => setCourseToDelete(null);
 
     if (isLoading) {
         return (
@@ -175,7 +183,7 @@ export function CoursesList({
                                     <Edit2 className="h-4 w-4" />
                                 </button>
                                 <button
-                                    onClick={() => onDelete(course.id)}
+                                    onClick={() => handleDeleteClick(course)}
                                     className="cursor-pointer p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700/50 rounded-lg transition-colors duration-200"
                                     title="Deletar curso"
                                 >
@@ -213,7 +221,7 @@ export function CoursesList({
                                         />
                                     ))}
                                 </div>
-                                {(course.rating ?? 0 )> 0 && (
+                                {(course.rating ?? 0) > 0 && (
                                     <span className="text-sm text-gray-400 ml-1">
                                         ({(course.rating ?? 0).toFixed(1)})
                                     </span>
@@ -231,7 +239,7 @@ export function CoursesList({
                             <span
                                 className={`text-xs px-2 py-1 rounded-full ${getStatusColor(course.status || "Não Iniciado")}`}
                             >
-                                {status[course.status]}
+                                {handleStatusLabel(course.status)}
                             </span>
                             <div className="text-xs text-gray-500">
                                 {course.startDate && (
@@ -251,6 +259,13 @@ export function CoursesList({
                         </div>
                     </div>
                 ))}
+
+                <ConfirmDeleteModal
+                    show={!!courseToDelete}
+                    courseName={courseToDelete?.name}
+                    onConfirm={handleConfirmDelete}
+                    onCancel={handleCancelDelete}
+                />
             </div>
 
             {filteredCourses.length === 0 && !isLoading && (

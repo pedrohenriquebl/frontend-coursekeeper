@@ -4,6 +4,7 @@ import { X, Calendar, Clock, Monitor, Award, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getTopicIcon, getLanguageSymbol, getStatusColor } from "./CourseIcons";
 import { Course } from "@/types";
+import { handleStatusLabel } from "@/utils/handleStatusLabel";
 
 interface CourseDetailsModalProps {
   show: boolean;
@@ -54,7 +55,7 @@ export const CourseDetailsModal = ({
                     getStatusColor(course.status)
                   )}
                 >
-                  {course.status}
+                  {handleStatusLabel(course.status)}
                 </span>
               </div>
             </div>

@@ -11,7 +11,7 @@ import { Course } from "@/types";
 
 export default function CoursesPage() {
     const { user } = useAuthUser();
-    const { allCourses, getAllCourses } = useCourse();
+    const { allCourses, getAllCourses, deleteCourse } = useCourse();
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -35,8 +35,7 @@ export default function CoursesPage() {
 
     const handleDeleteCourse = async (courseId: number) => {
         try {
-            //await deleteCourse(courseId);
-            console.log('Deletando o curso id ', courseId);
+            await deleteCourse(courseId);
             await refreshCourses();
         } catch (error) {
             console.error("Erro ao deletar curso:", error);
