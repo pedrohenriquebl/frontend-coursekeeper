@@ -130,7 +130,10 @@ export function useAuthForm(initialMode: AuthMode = "login") {
 
     try {
       if (mode === "login") {
-        const authenticated = await loginUser(formData.email, formData.password);
+        const authenticated = await loginUser(
+          formData.email,
+          formData.password
+        );
         if (!authenticated) throw new Error("Email ou senha incorretos");
       } else {
         const onlyNumbersCpf = formData.cpf.replace(/\D/g, "").slice(0, 11);
@@ -147,13 +150,12 @@ export function useAuthForm(initialMode: AuthMode = "login") {
         if (!newUser)
           throw new Error("Erro ao criar conta. Email pode já estar em uso.");
 
-        const authenticated = await loginUser(formData.email, formData.password);
+        const authenticated = await loginUser(
+          formData.email,
+          formData.password
+        );
         if (!authenticated)
           throw new Error("Erro ao autenticar após registro.");
-
-        console.log(
-          `Usuário criado: ${newUser.firstName} ${newUser.lastName} (${newUser.email})`
-        );
       }
 
       onSuccess();

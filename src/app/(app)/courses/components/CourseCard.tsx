@@ -27,7 +27,8 @@ export function CourseCard({ course, onEdit, onDelete, onViewDetails }: CourseCa
 
     return (
         <div
-            className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50 hover:border-emerald-500/50 transition-all duration-200"
+            className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border hover:scale-105
+             border-gray-700/50 hover:border-emerald-500/50 transition-all duration-200"
         >
             {/* Cabeçalho */}
             <div className="flex items-start justify-between mb-4 flex-wrap sm:no-wrap">

@@ -8,7 +8,6 @@ export const courseService = {
     }
 
     try {
-      console.log(course)
       const response = await apiInstance.post(`/courses/${userId}`, course);
       return response.data;
     } catch (error) {

@@ -6,6 +6,7 @@ import { Course } from "@/types";
 import { Spinner } from "@/components/ui/Spinner";
 import ConfirmDeleteModal from "@/components/courses/CourseModals/ConfirmDeleteModal";
 import { CourseCard } from "./CourseCard";
+import { handleStatusLabel } from "@/utils/handleStatusLabel";
 
 interface CoursesListProps {
     courses: Course[];
@@ -26,13 +27,18 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
     const platforms = ["all", "Udemy", "Coursera", "YouTube", "Alura", "edX", "Pluralsight"];
     const statuses = ["all", "Não Iniciado", "Em Progresso", "Concluído"];
 
-    const filteredCourses = courses.filter((course) => {
-        const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.description?.toLowerCase().includes(searchTerm.toLowerCase());
+    const statusMap: Record<string, string> = {
+        "Não Iniciado": "NAO_INICIADO",
+        "Em Progresso": "EM_PROGRESSO",
+        "Concluído": "CONCLUIDO",
+        "all": "all"
+    };
 
-        const matchesTopic = selectedTopic === "all" || course.topic === selectedTopic;
-        const matchesPlatform = selectedPlatform === "all" || course.platform === selectedPlatform;
-        const matchesStatus = selectedStatus === "all" || course.status === selectedStatus;
+    const filteredCourses = courses.filter((course) => {
+        const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesTopic = selectedTopic === "all" || course.topic === selectedTopic.toUpperCase();
+        const matchesPlatform = selectedPlatform === "all" || course.platform === selectedPlatform.toUpperCase();
+        const matchesStatus = selectedStatus === "all" || course.status === statusMap[selectedStatus];
 
         return matchesSearch && matchesTopic && matchesPlatform && matchesStatus;
     });
@@ -59,15 +65,15 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
                         />
                     </div>
 
-                    <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
                         {topics.map(t => <option key={t} value={t}>{t === "all" ? "Todos os tópicos" : t}</option>)}
                     </select>
 
-                    <select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
                         {platforms.map(p => <option key={p} value={p}>{p === "all" ? "Todas as plataformas" : p}</option>)}
                     </select>
 
-                    <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
                         {statuses.map(s => <option key={s} value={s}>{s === "all" ? "Todos os status" : s}</option>)}
                     </select>
                 </div>
