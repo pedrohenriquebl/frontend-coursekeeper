@@ -19,7 +19,7 @@ export const FormSelect = forwardRef(
       <select
         ref={ref}
         className={cn(
-          "w-full px-4 py-3 bg-gray-700/50 border rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500",
+          "lowercase w-full px-4 py-3 bg-gray-700/50 border rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500",
           error ? "border-red-500" : "border-gray-600"
         )}
         {...props}

@@ -4,6 +4,8 @@ import { CreateCourseData } from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
 import { Course } from "../types";
 
+
+
 export function useCourse() {
   const { user } = useAuthUser();
   const userId = Number(user?.id);
@@ -11,6 +13,7 @@ export function useCourse() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [recentCourses, setRecentCourses] = useState<Course[]>([]);
+  const [allCourses, setAllCourses] = useState<Course[]>([]);
 
   const getRecentCourses = useCallback(async () => {
     if (!userId) return null;
@@ -44,9 +47,24 @@ export function useCourse() {
     }
   }, [userId, getRecentCourses]);
 
+  const getAllCourses = useCallback(async () => {
+    if (!userId) return null;
+
+    try {
+      setIsLoadingCourse(true);
+      const courses = await courseService.getCourses(userId);
+      setAllCourses(courses as Course[]);
+    } catch (error) {
+      setError((error as Error).message || "Erro ao obter cursos");
+    } finally {
+      setIsLoadingCourse(false);
+    }
+  }, [userId]);
+
   useEffect(() => {
     getRecentCourses();
-  }, [getRecentCourses]);
+    getAllCourses();
+  }, [getRecentCourses, getAllCourses]);
 
   const resetSuccess = useCallback(() => setSuccess(false), []);
 
@@ -57,6 +75,8 @@ export function useCourse() {
     success, 
     resetSuccess, 
     recentCourses,
-    getRecentCourses 
+    getRecentCourses,
+    allCourses,
+    getAllCourses
   };
 }

@@ -23,10 +23,10 @@ export default function NavBar() {
 
     const navigation = [
         { name: "Dashboard", href: "/dashboard", icon: Home },
-        { name: "Cursos", href: "/cursos", icon: BookOpen },
-        { name: "Metas", href: "/metas", icon: Target },
-        { name: "Relatórios", href: "/relatorios", icon: BarChart3 },
-        { name: "Perfil", href: "/perfil", icon: User },
+        { name: "Cursos", href: "/courses", icon: BookOpen },
+        { name: "Metas", href: "/goals", icon: Target },
+        { name: "Relatórios", href: "/reports", icon: BarChart3 },
+        { name: "Perfil", href: "/profile", icon: User },
     ];
 
     const isActive = (href: string) => {
@@ -61,10 +61,10 @@ export default function NavBar() {
                                         key={item.name}
                                         href={item.href}
                                         className={cn(
-                                            "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                                            "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border border-transparent",
                                             isActive(item.href)
-                                                ? "bg-emerald-900/50 text-emerald-400 shadow-sm"
-                                                : "text-gray-300 hover:text-emerald-400 hover:bg-gray-700/50",
+                                                ? "bg-emerald-900/50 text-emerald-400 shadow-sm border-emerald-900/50"
+                                                : "text-gray-300 hover:text-emerald-400 hover:bg-gray-700/50"
                                         )}
                                     >
                                         <Icon className="h-4 w-4" />

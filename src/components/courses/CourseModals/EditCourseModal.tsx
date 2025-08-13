@@ -30,13 +30,10 @@ export const EditCourseModal = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Enviar estudiedHours, rating, comment e demais dados que mudam
-    // NÃO enviar progress (calcula backend)
     onUpdate({
       ...editCourse,
       rating: editRating,
       comment: editComment,
-      // progress: REMOVIDO
     });
   };
 

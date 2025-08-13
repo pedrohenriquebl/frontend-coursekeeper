@@ -22,6 +22,7 @@ export interface Course {
   platform: string;
   platformCustom?: string;
   duration: number;
+  studiedHours: number;
   topic: string;
   topicCustom?: string;
   progress: number;
@@ -58,3 +59,4 @@ export interface Goal {
   createdAt: string;
   completedAt?: string;
 }
+

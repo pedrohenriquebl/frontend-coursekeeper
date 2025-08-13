@@ -196,7 +196,7 @@ export default function AddCourseModal({
                                     </span>
                                     <div>
                                         <div className="font-medium text-white">{name}</div>
-                                        <div className="text-sm text-gray-400">
+                                        <div className="text-sm text-gray-400 lowercase">
                                             {platform} • {watch("duration")}h • {topic}
                                         </div>
                                     </div>
