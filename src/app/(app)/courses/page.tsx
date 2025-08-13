@@ -7,11 +7,11 @@ import { useAuthUser } from "@/context/authUserContext";
 import { CourseModals } from "@/components/courses/CourseModals/CourseModals";
 import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
 import { CoursesList } from "./components/CoursesList";
-import { Course } from "@/types";
+import { Course, UpdateCoursePayload } from "@/types";
 
 export default function CoursesPage() {
     const { user } = useAuthUser();
-    const { allCourses, getAllCourses, deleteCourse } = useCourse();
+    const { allCourses, getAllCourses, deleteCourse, updateCourse } = useCourse();
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -84,8 +84,8 @@ export default function CoursesPage() {
                 showAddModal={showAddModal}
                 showEditModal={showEditModal}
                 showDetailsModal={showDetailsModal}
-                editingCourse={editingCourse} // Agora passando o valor real do estado
-                detailsCourse={detailsCourse} // Agora passando o valor real do estado
+                editingCourse={editingCourse}
+                detailsCourse={detailsCourse}
                 onCloseAdd={closeAddModal}
                 onCloseEdit={() => {
                     setShowEditModal(false);
@@ -95,10 +95,8 @@ export default function CoursesPage() {
                     setShowDetailsModal(false);
                     setDetailsCourse(null);
                 }}
-                onSaveCourse={() => { }}
-                onUpdateCourse={async (updatedCourse) => {
-                    // Implemente a lógica de atualização aqui
-                    console.log("Curso atualizado:", updatedCourse);
+                onUpdateCourse={async (updatedCourse: UpdateCoursePayload) => {
+                    updateCourse(updatedCourse);
                     await refreshCourses();
                     setShowEditModal(false);
                 }}

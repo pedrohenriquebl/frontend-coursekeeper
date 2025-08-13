@@ -69,6 +69,27 @@ export interface CreateCoursePayload {
   startDate?: string;
 }
 
+export type UpdateCoursePayload = {
+  id: number;
+  name?: string;
+  platform?: Platform | string;
+  platformCustom?: string;
+  duration?: number;
+  studiedHours?: number;
+  topic?: Topic | string;
+  topicCustom?: string;
+  progress?: number;
+  rating?: number;
+  comment?: string;
+  status?: CourseStatus;
+  endDate?: string;
+  description?: string;
+  instructor?: string;
+  language?: Language | string;
+  languageCustom?: string;
+  startDate?: string;
+};
+
 export type UpdateCourseData = Course;
 
 export interface CourseModalProps {
@@ -83,7 +104,7 @@ export interface AddCourseModalProps extends CourseModalProps {
 
 export interface EditCourseModalProps extends CourseModalProps {
   course: Course;
-  onUpdate: (course: Course) => void;
+  onUpdate: (course: UpdateCoursePayload) => void;
   loading: boolean;
 }
 
@@ -100,8 +121,7 @@ export interface CourseModalsProps {
   onCloseAdd: () => void;
   onCloseEdit: () => void;
   onCloseDetails: () => void;
-  onSaveCourse: (course: CreateCourseData) => void;
-  onUpdateCourse: (course: Course) => void;
+  onUpdateCourse: (course: UpdateCoursePayload) => void;
 }
 
 type GoalType =

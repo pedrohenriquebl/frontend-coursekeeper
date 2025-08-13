@@ -3,7 +3,7 @@
 import AddCourseModal from "./AddCourseModal";
 import { EditCourseModal } from "./EditCourseModal";
 import { CourseDetailsModal } from "./CourseDetailsModal";
-import { CreateCourseData, Course } from "@/types";
+import { CreateCourseData, Course, UpdateCoursePayload } from "@/types";
 
 interface CourseModalsProps {
     showAddModal: boolean;
@@ -14,8 +14,7 @@ interface CourseModalsProps {
     onCloseAdd: () => void;
     onCloseEdit: () => void;
     onCloseDetails: () => void;
-    onSaveCourse: (course: CreateCourseData) => void;
-    onUpdateCourse: (course: Course) => void;
+    onUpdateCourse: (course: UpdateCoursePayload) => void; 
     onCourseCreated: () => void;
 }
 
@@ -28,7 +27,6 @@ export function CourseModals({
     onCloseAdd,
     onCloseEdit,
     onCloseDetails,
-    onSaveCourse,
     onUpdateCourse,
     onCourseCreated
 }: CourseModalsProps) {

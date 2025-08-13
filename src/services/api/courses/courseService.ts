@@ -1,4 +1,4 @@
-import { CreateCourseData, UpdateCourseData } from "@/types";
+import { CreateCourseData, UpdateCoursePayload } from "@/types";
 import { apiInstance, isAxiosError } from "../axios/instance";
 
 export const courseService = {
@@ -8,6 +8,7 @@ export const courseService = {
     }
 
     try {
+      console.log(course)
       const response = await apiInstance.post(`/courses/${userId}`, course);
       return response.data;
     } catch (error) {
@@ -34,19 +35,13 @@ export const courseService = {
     }
   },
 
-  updateCourse: async (course: UpdateCourseData, userId: number) => {
+  updateCourse: async (course: UpdateCoursePayload, userId: number) => {
     if (!userId) {
       throw new Error("User ID is required");
     }
 
     try {
-      const response = await apiInstance.put(`/courses/${userId}`, {
-        data: {
-          userId: userId,
-          courseId: course.id,
-          course: course,
-        },
-      });
+      const response = await apiInstance.put(`/courses/${userId}`, course);
       return response.data;
     } catch (error) {
       if (isAxiosError(error)) {

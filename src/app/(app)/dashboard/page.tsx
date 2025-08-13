@@ -66,7 +66,6 @@ export default function DashboardPage() {
                 onCloseAdd={closeModal}
                 onCloseEdit={() => { }}
                 onCloseDetails={() => { }}
-                onSaveCourse={() => { }}
                 onUpdateCourse={() => { }}
                 onCourseCreated={refreshCourses}
             />

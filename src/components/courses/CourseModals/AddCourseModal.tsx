@@ -9,7 +9,7 @@ import { getLanguageSymbol } from "./CourseIcons";
 import { FormInput, FormSelect, FormTextarea, CustomFieldWrapper } from "./FormControls";
 import { LANGUAGES, PLATFORMS, TOPICS } from "./constants";
 import { useCourse } from "./hooks/useCourse";
-import { CourseStatus, CreateCourseData, CreateCoursePayload } from "@/types";
+import { CourseStatus, CreateCourseData } from "@/types";
 
 type AddCourseFormData = {
     name: string;

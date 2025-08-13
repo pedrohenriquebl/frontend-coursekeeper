@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { courseService } from "@/services/api/courses/courseService";
-import { Course, CreateCourseData } from "@/types";
+import { Course, CreateCourseData, UpdateCoursePayload } from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
 
 
@@ -73,6 +73,25 @@ export function useCourse() {
     }
   }, [userId, getAllCourses]);
 
+  const updateCourse = useCallback(async (course: UpdateCoursePayload) => {
+    if (!userId) return null;
+
+    setIsLoadingCourse(true);
+    setError(null);
+    setSuccess(false);
+    try {
+      if (!userId) throw new Error("Usuário não autenticado");
+
+      await courseService.updateCourse(course as UpdateCoursePayload, userId);
+      setSuccess(true);
+      await getAllCourses();
+    } catch (error: unknown) {
+      setError((error as Error).message || "Erro ao atualizar curso");
+    } finally {
+      setIsLoadingCourse(false);
+    }
+  }, [userId, getAllCourses]);
+
   useEffect(() => {
     getRecentCourses();
     getAllCourses();
@@ -90,6 +109,7 @@ export function useCourse() {
     getRecentCourses,
     allCourses,
     getAllCourses,
-    deleteCourse
+    deleteCourse,
+    updateCourse
   };
 }
