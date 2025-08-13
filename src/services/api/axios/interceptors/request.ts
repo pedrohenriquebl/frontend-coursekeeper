@@ -21,7 +21,10 @@ export const requestInterceptor = (instance: AxiosInstance) => {
       return config;
     },
     (error) => {
-      console.error("Request error: ", error);
+      if (error.response?.status === 401) {
+        window.location.href = "/login";
+      }
+      
       return Promise.reject(error);
     }
   );
