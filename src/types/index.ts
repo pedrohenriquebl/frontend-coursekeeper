@@ -27,6 +27,8 @@ export type Topic =
 
 export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO";
 
+export type GoalStatus = "ATIVA" | "CONCLUIDA" | "VENCIDA";
+
 export interface Course {
   id: number;
   name: string;

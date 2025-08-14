@@ -81,7 +81,7 @@ export function useCourse() {
     setError(null);
     try {
       if (!userId) throw new Error("Usuário não autenticado");
-
+      
       await courseService.updateCourse(course as UpdateCoursePayload, userId);
       await getAllCourses();
     } catch (error: unknown) {

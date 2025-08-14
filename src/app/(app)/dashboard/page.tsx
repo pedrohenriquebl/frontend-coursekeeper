@@ -27,7 +27,7 @@ export default function DashboardPage() {
         totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
         completedCourses: user?.generalCoursesInfo?.completedCourses || 0,
         studyHours: user?.generalCoursesInfo?.totalStudiedHours || 0,
-        currentGoalPercent: user?.generalCoursesInfo?.currentGoalPercent || 0,
+        currentGoalPercent: user?.goalsStats?.goalsProgressPercent || 0,
     };
 
     const addCourse = () => setShowAddModal(true);

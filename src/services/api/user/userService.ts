@@ -1,10 +1,22 @@
 import { apiInstance, isAxiosError } from "@/services/api/axios/instance";
+import { GoalStatus } from "@/types";
 
 interface GeneralCoursesInfo {
   totalCourses: number;
   completedCourses: number;
-  totalStudiedHours: number;
-  currentGoalPercent: number;
+  totalStudiedHours: number;  
+}
+
+interface LatestGoalInfo {
+  title: string;
+  target: number;
+  current: number;
+  status: GoalStatus
+}
+
+interface GeneralGoalsInfo {
+  goalsProgressPercent: number;
+  latestGoal: LatestGoalInfo;
 }
 
 export interface User {
@@ -16,6 +28,7 @@ export interface User {
   profileImage?: string;
   description?: string;
   generalCoursesInfo?: GeneralCoursesInfo;
+  goalsStats?: GeneralGoalsInfo;
 }
 
 export interface LoginResponse {

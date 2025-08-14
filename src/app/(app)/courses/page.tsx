@@ -45,13 +45,13 @@ export default function CoursesPage() {
     const handleViewDetails = (course: Course) => {
         setDetailsCourse(course);
         setShowDetailsModal(true);
-    };
+    };    
 
     const stats = {
         totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
         completedCourses: user?.generalCoursesInfo?.completedCourses || 0,
         studyHours: user?.generalCoursesInfo?.totalStudiedHours || 0,
-        currentGoalPercent: user?.generalCoursesInfo?.currentGoalPercent || 0,
+        currentGoalPercent: user?.goalsStats?.goalsProgressPercent || 0,
     };
 
     return (
