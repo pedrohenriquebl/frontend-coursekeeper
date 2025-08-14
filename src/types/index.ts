@@ -126,6 +126,8 @@ export interface CourseModalsProps {
   onUpdateCourse: (course: UpdateCoursePayload) => void;
 }
 
+type GoalUnit = "HORAS" | "CURSOS" | "DIAS";
+
 type GoalType =
   | "HORAS_TOTAIS"
   | "HORAS_TOPICO"
@@ -145,4 +147,22 @@ export interface Goal {
   status: CourseStatus;
   createdAt: string;
   completedAt?: string;
+}
+
+export interface CreateGoalData {
+  title: string;
+  type: GoalType;
+  topic?: Topic | null;
+  target: number;
+  unit: GoalUnit;
+  deadline: Date;
+  description?: string | null;
+}
+
+export interface OverviewGoals {
+  activeGoals: number;
+  goalsCompleted: number;
+  goalsRating: number;
+  totalProgressInHours: number;
+  totalGoalInHours: number;
 }

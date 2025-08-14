@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { AxiosError, AxiosInstance } from 'axios';
-import { requestInterceptor } from './interceptors/request';
+import { requestInterceptor, responseInterceptor } from './interceptors/request';
 
 const BASE_URL = "http://localhost:3000";
 
@@ -17,3 +17,4 @@ export const apiInstance: AxiosInstance = axios.create({
 });
 
 requestInterceptor(apiInstance);
+responseInterceptor(apiInstance);

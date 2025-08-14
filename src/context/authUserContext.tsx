@@ -57,7 +57,7 @@ export const AuthUserProvider = ({ children }: { children: React.ReactNode }) =>
       }
       return false;
     } finally {
-      setTimeout(() => setIsLoadingUser(false), 0);
+      setIsLoadingUser(false);
     }
   }
 

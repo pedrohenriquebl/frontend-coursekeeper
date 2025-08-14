@@ -29,3 +29,16 @@ export const requestInterceptor = (instance: AxiosInstance) => {
     }
   );
 };
+
+export const responseInterceptor = (instance: AxiosInstance) => {
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
+        sessionStorage.removeItem('auth_token');
+        window.location.href = '/login';
+      }
+      return Promise.reject(error);
+    }
+  );
+};
