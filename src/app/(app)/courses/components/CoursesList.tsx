@@ -6,7 +6,6 @@ import { Course } from "@/types";
 import { Spinner } from "@/components/ui/Spinner";
 import ConfirmDeleteModal from "@/components/courses/CourseModals/ConfirmDeleteModal";
 import { CourseCard } from "./CourseCard";
-import { handleStatusLabel } from "@/utils/handleStatusLabel";
 
 interface CoursesListProps {
     courses: Course[];

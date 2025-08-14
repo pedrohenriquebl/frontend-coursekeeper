@@ -3,7 +3,7 @@
 import AddCourseModal from "./AddCourseModal";
 import { EditCourseModal } from "./EditCourseModal";
 import { CourseDetailsModal } from "./CourseDetailsModal";
-import { CreateCourseData, Course, UpdateCoursePayload } from "@/types";
+import { Course, UpdateCoursePayload } from "@/types";
 
 interface CourseModalsProps {
     showAddModal: boolean;
