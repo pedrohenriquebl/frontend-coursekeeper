@@ -58,7 +58,7 @@ export function AuthForm({
 }: AuthFormProps) {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 flex items-center justify-center p-4">
-            <div className="w-full max-w-md">
+            <div className="w-full max-w-md lg:min-h-[733px]">
                 <div className="text-center mb-8">
                     <div className="bg-gradient-to-r from-emerald-600 to-green-600 p-3 rounded-xl inline-block mb-4">
                         <User className="h-8 w-8 text-white" />

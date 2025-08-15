@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
 interface GoalTypeButtonProps {
-  value: string;
   label: string;
   icon: LucideIcon;
   unit: string;
@@ -11,7 +10,6 @@ interface GoalTypeButtonProps {
 }
 
 export function GoalTypeButton({
-  value,
   label,
   icon: Icon,
   unit,
