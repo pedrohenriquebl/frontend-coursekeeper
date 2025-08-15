@@ -1,6 +1,6 @@
 'use client'
 
-import { Plus } from "lucide-react";
+import { BookAlertIcon, Plus } from "lucide-react";
 import { useCallback, useState } from "react";
 import { StatsCards } from "../dashboard/components/StatsCards";
 import { useAuthUser } from "@/context/authUserContext";
@@ -9,10 +9,11 @@ import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
 import { CoursesList } from "./components/CoursesList";
 import { Course, UpdateCoursePayload } from "@/types";
 import { userService } from "@/services/api/user/userService";
+import { Spinner } from "@/components/ui/Spinner";
 
 export default function CoursesPage() {
     const { user } = useAuthUser();
-    const { allCourses, getAllCourses, deleteCourse, updateCourse } = useCourse();
+    const { allCourses, getAllCourses, deleteCourse, updateCourse, isLoadingCourse } = useCourse();
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
@@ -20,6 +21,7 @@ export default function CoursesPage() {
     const [detailsCourse, setDetailsCourse] = useState<Course | null>(null);
 
     const closeAddModal = () => setShowAddModal(false);
+    const hasCourses = Array.isArray(allCourses) && allCourses.length > 0;
 
     const refreshCourses = useCallback(async () => {
         try {
@@ -47,7 +49,7 @@ export default function CoursesPage() {
     const handleViewDetails = (course: Course) => {
         setDetailsCourse(course);
         setShowDetailsModal(true);
-    };    
+    };
 
     const stats = {
         totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
@@ -76,34 +78,48 @@ export default function CoursesPage() {
 
             <StatsCards {...stats} />
 
-            <CoursesList
-                courses={allCourses}
-                onEdit={handleEditCourse}
-                onDelete={handleDeleteCourse}
-                onViewDetails={handleViewDetails}
-            />
-            <CourseModals
-                showAddModal={showAddModal}
-                showEditModal={showEditModal}
-                showDetailsModal={showDetailsModal}
-                editingCourse={editingCourse}
-                detailsCourse={detailsCourse}
-                onCloseAdd={closeAddModal}
-                onCloseEdit={() => {
-                    setShowEditModal(false);
-                    setEditingCourse(null);
-                }}
-                onCloseDetails={() => {
-                    setShowDetailsModal(false);
-                    setDetailsCourse(null);
-                }}
-                onUpdateCourse={async (updatedCourse: UpdateCoursePayload) => {
-                    updateCourse(updatedCourse);
-                    await refreshCourses();
-                    setShowEditModal(false);
-                }}
-                onCourseCreated={refreshCourses}
-            />
+            {
+                hasCourses ? (
+                    <>
+                        <CoursesList
+                            courses={allCourses}
+                            onEdit={handleEditCourse}
+                            onDelete={handleDeleteCourse}
+                            onViewDetails={handleViewDetails}
+                        />
+                        <CourseModals
+                            showAddModal={showAddModal}
+                            showEditModal={showEditModal}
+                            showDetailsModal={showDetailsModal}
+                            editingCourse={editingCourse}
+                            detailsCourse={detailsCourse}
+                            onCloseAdd={closeAddModal}
+                            onCloseEdit={() => {
+                                setShowEditModal(false);
+                                setEditingCourse(null);
+                            }}
+                            onCloseDetails={() => {
+                                setShowDetailsModal(false);
+                                setDetailsCourse(null);
+                            }}
+                            onUpdateCourse={async (updatedCourse: UpdateCoursePayload) => {
+                                updateCourse(updatedCourse);
+                                await refreshCourses();
+                                setShowEditModal(false);
+                            }}
+                            onCourseCreated={refreshCourses}
+                        />
+                    </>
+
+                ) : (
+                    <div className="text-center py-12">
+                        <div className="bg-gray-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <BookAlertIcon className="h-8 w-8 text-gray-400" />
+                        </div>
+                        <h3 className="text-lg font-medium text-white mb-2">Nenhum curso cadatrado</h3>
+                    </div>
+                )}
+
         </div>
     );
 }

@@ -12,6 +12,10 @@ export const courseService = {
       return response.data;
     } catch (error) {
       if (isAxiosError(error)) {
+        if (error.response?.status === 404) {
+          return [];
+        }
+
         const message = error.response?.data?.message || "Erro desconhecido";
         throw new Error(message);
       }
@@ -25,9 +29,13 @@ export const courseService = {
 
     try {
       const response = await apiInstance.get(`/courses/${userId}`);
-      return response.data;
+      return response.data || [];
     } catch (error) {
       if (isAxiosError(error)) {
+        if (error.response?.status === 404) {
+          return [];
+        }
+
         const message = error.response?.data?.message || "Erro desconhecido";
         throw new Error(message);
       }
@@ -56,7 +64,9 @@ export const courseService = {
     }
 
     try {
-      const response = await apiInstance.delete(`/courses/${userId}/${courseId}`);
+      const response = await apiInstance.delete(
+        `/courses/${userId}/${courseId}`
+      );
       return response.data;
     } catch (error) {
       if (isAxiosError(error)) {
@@ -80,5 +90,5 @@ export const courseService = {
         throw new Error(message);
       }
     }
-  }
+  },
 };
