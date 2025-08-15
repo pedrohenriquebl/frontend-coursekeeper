@@ -3,7 +3,7 @@ import { GoalStatus } from "@/types";
 
 interface GeneralCoursesInfo {
   totalCourses: number;
-  completedCourses: number;
+  totalCompletedCourses: number;
   totalStudiedHours: number;  
 }
 

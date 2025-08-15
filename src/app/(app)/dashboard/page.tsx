@@ -9,6 +9,7 @@ import { Sidebar } from "./components/Sidebar";
 import { useCallback, useState } from "react";
 import { Spinner } from "@/components/ui/Spinner";
 import { useAuthUser } from "@/context/authUserContext";
+import { userService } from "@/services/api/user/userService";
 
 export default function DashboardPage() {
     const { recentCourses, isUpdatingCourse, getRecentCourses, isLoadingCourse } = useCourse();
@@ -18,6 +19,7 @@ export default function DashboardPage() {
     const refreshCourses = useCallback(async () => {
         try {
             await getRecentCourses();
+            await userService.getMe();
         } catch (error) {
             console.error("Failed to refresh courses:", error);
         }
@@ -25,7 +27,7 @@ export default function DashboardPage() {
 
     const stats = {
         totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
-        completedCourses: user?.generalCoursesInfo?.completedCourses || 0,
+        completedCourses: user?.generalCoursesInfo?.totalCompletedCourses || 0,
         studyHours: user?.generalCoursesInfo?.totalStudiedHours || 0,
         currentGoalPercent: user?.goalsStats?.goalsProgressPercent || 0,
     };

@@ -8,6 +8,7 @@ import { CourseModals } from "@/components/courses/CourseModals/CourseModals";
 import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
 import { CoursesList } from "./components/CoursesList";
 import { Course, UpdateCoursePayload } from "@/types";
+import { userService } from "@/services/api/user/userService";
 
 export default function CoursesPage() {
     const { user } = useAuthUser();
@@ -23,6 +24,7 @@ export default function CoursesPage() {
     const refreshCourses = useCallback(async () => {
         try {
             await getAllCourses();
+            await userService.getMe();
         } catch (error) {
             console.error("Erro ao atualizar cursos:", error);
         }
@@ -49,7 +51,7 @@ export default function CoursesPage() {
 
     const stats = {
         totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
-        completedCourses: user?.generalCoursesInfo?.completedCourses || 0,
+        completedCourses: user?.generalCoursesInfo?.totalCompletedCourses || 0,
         studyHours: user?.generalCoursesInfo?.totalStudiedHours || 0,
         currentGoalPercent: user?.goalsStats?.goalsProgressPercent || 0,
     };

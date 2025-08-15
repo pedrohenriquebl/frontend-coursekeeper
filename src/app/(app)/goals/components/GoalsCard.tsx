@@ -37,7 +37,7 @@ export function GoalsCard({
                 icon={TrendingUp}
                 iconColor="text-purple-400"
                 bgColor="bg-purple-600/20"
-                value={goalsRating}
+                value={`${goalsRating.toFixed(2)}%`}
                 label="Taxa de Sucesso"
             />
             <GoalCard

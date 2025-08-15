@@ -4,9 +4,11 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useGoals } from "./hooks/useGoals";
 import { GoalsCard } from "./components/GoalsCard";
+import { CreateGoalData } from "@/types";
+import { GoalModal } from "./components/GoalModal";
 
 export default function PageGoals() {
-    const { overviewGoals } = useGoals();
+    const { overviewGoals, createGoal } = useGoals();
     const [showAddModal, setShowAddModal] = useState(false);
 
     const goalStats = {
@@ -16,6 +18,15 @@ export default function PageGoals() {
         totalProgressInHours: overviewGoals?.totalProgressInHours || 0,
         totalGoalInHours: overviewGoals?.totalGoalInHours || 0,
     }
+
+    const handleCreateGoal = async (goalData: CreateGoalData) => {
+        try {
+            await createGoal(goalData);
+            setShowAddModal(false);
+        } catch (error) {
+            console.error("Error creating goal:", error);
+        }
+    };
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
@@ -36,6 +47,12 @@ export default function PageGoals() {
             </div>
 
             <GoalsCard {...goalStats} />
+
+            <GoalModal
+                showModal={showAddModal}
+                onClose={() => setShowAddModal(false)}
+                onSave={handleCreateGoal}
+            />
         </div>
     )
 }

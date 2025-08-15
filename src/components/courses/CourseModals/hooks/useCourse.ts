@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { courseService } from "@/services/api/courses/courseService";
 import { Course, CreateCourseData, UpdateCoursePayload } from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
+import { userService } from "@/services/api/user/userService";
 
 
 export function useCourse() {
@@ -39,6 +40,7 @@ export function useCourse() {
       await courseService.createCourse(course, userId);
       setSuccess(true);
       await getRecentCourses();
+      await userService.getMe();
     } catch (error: unknown) {
       setError((error as Error).message || "Erro ao criar curso");
     } finally {
