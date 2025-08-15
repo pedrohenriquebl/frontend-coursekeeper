@@ -29,6 +29,8 @@ export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO";
 
 export type GoalStatus = "ATIVA" | "CONCLUIDA" | "VENCIDA";
 
+export type TabType = "ATIVA" | "CONCLUIDA" | "TODAS";
+
 export interface Course {
   id: number;
   name: string;
@@ -144,7 +146,7 @@ export interface Goal {
   unit: string;
   topic: Topic;
   deadline: string;
-  status: CourseStatus;
+  status: GoalStatus;
   createdAt: string;
   completedAt?: string;
 }

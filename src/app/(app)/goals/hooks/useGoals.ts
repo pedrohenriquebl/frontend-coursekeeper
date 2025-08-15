@@ -3,8 +3,8 @@
 import { useAuthUser } from "@/context/authUserContext";
 import { goalService } from "@/services/api/goals/goalsService";
 import { userService } from "@/services/api/user/userService";
-import { CreateGoalData, OverviewGoals } from "@/types";
-import { useCallback, useEffect, useState } from "react";
+import { CreateGoalData, Goal, OverviewGoals } from "@/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export function useGoals() {
   const { user, setUser } = useAuthUser();
@@ -12,6 +12,7 @@ export function useGoals() {
   const [overviewGoals, setOverviewGoals] = useState<OverviewGoals | null>(
     null
   );
+  const [allGoals, setAllGoals] = useState<Goal[]>([]);
 
   const recentGoals = useCallback(async () => {
     if (!userId) return null;
@@ -44,13 +45,45 @@ export function useGoals() {
     [userId, recentGoals, setUser]
   );
 
+  const getAllGoals = useCallback(async () => {
+    if (!userId) return null;
+
+    try {
+      const goals = await goalService.getAllGoals(userId);
+      setAllGoals(goals ?? []);
+    } catch (error) {
+      console.error("Erro ao obter todas as metas:", error);
+      throw new Error(
+        (error as Error).message || "Erro ao obter todas as metas"
+      );
+    }
+  }, [userId]);
+
+  const activeGoalsSize = useMemo(
+    () => allGoals.filter((goal) => goal.status === "ATIVA").length,
+    [allGoals]
+  );
+
+  const completedGoalsSize = useMemo(
+    () => allGoals.filter((goal) => goal.status === "CONCLUIDA").length,
+    [allGoals]
+  );
+
+  const allGoalsSize = allGoals.length;
+
   useEffect(() => {
     recentGoals();
-  }, [recentGoals]);
+    getAllGoals();
+  }, [recentGoals, getAllGoals]);
 
   return {
     recentGoals,
     overviewGoals,
     createGoal,
+    getAllGoals,
+    allGoals,
+    activeGoalsSize,
+    completedGoalsSize,
+    allGoalsSize,
   };
 }

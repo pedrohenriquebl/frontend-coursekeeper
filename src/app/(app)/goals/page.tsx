@@ -4,20 +4,27 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useGoals } from "./hooks/useGoals";
 import { GoalsCard } from "./components/GoalsCard";
-import { CreateGoalData } from "@/types";
+import { CreateGoalData, TabType } from "@/types";
 import { GoalModal } from "./components/GoalModal";
+import GoalsTab from "./components/GoalsTab";
+import GoalsList from "./components/GoalsList";
 
 export default function PageGoals() {
-    const { overviewGoals, createGoal } = useGoals();
-    const [showAddModal, setShowAddModal] = useState(false);
+    const {
+        overviewGoals,
+        createGoal,
+        allGoals,
+        activeGoalsSize,
+        completedGoalsSize,
+        allGoalsSize
+    } = useGoals();
 
-    const goalStats = {
-        activeGoals: overviewGoals?.activeGoals || 0,
-        goalsCompleted: overviewGoals?.goalsCompleted || 0,
-        goalsRating: overviewGoals?.goalsRating || 0,
-        totalProgressInHours: overviewGoals?.totalProgressInHours || 0,
-        totalGoalInHours: overviewGoals?.totalGoalInHours || 0,
-    }
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [selectedTab, setSelectedTab] = useState<TabType>("ATIVA");
+
+    const handleChangeSelect = (tab: TabType) => {
+        setSelectedTab(tab);
+    };
 
     const handleCreateGoal = async (goalData: CreateGoalData) => {
         try {
@@ -27,6 +34,19 @@ export default function PageGoals() {
             console.error("Error creating goal:", error);
         }
     };
+
+    const filteredGoals = allGoals.filter(goal => {
+        if (selectedTab === "TODAS") return true;
+        return goal.status === selectedTab;
+    });
+
+    const goalStats = {
+        activeGoals: overviewGoals?.activeGoals || 0,
+        goalsCompleted: overviewGoals?.goalsCompleted || 0,
+        goalsRating: overviewGoals?.goalsRating || 0,
+        totalProgressInHours: overviewGoals?.totalProgressInHours || 0,
+        totalGoalInHours: overviewGoals?.totalGoalInHours || 0,
+    }
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
@@ -47,6 +67,18 @@ export default function PageGoals() {
             </div>
 
             <GoalsCard {...goalStats} />
+
+            <GoalsTab
+                selectedTab={selectedTab}
+                setSelectedTab={handleChangeSelect}
+                activeGoals={activeGoalsSize}
+                completedGoals={completedGoalsSize}
+                allGoals={allGoalsSize}
+            />
+
+            <div className="h-[600px] overflow-auto">
+                <GoalsList filteredGoals={filteredGoals} />
+            </div>
 
             <GoalModal
                 showModal={showAddModal}

@@ -1,5 +1,6 @@
 'use client'
 
+import { Goal } from "@/types";
 import {
     Monitor,
     Code,
@@ -8,6 +9,10 @@ import {
     BarChart,
     Globe,
     Smartphone,
+    CheckCircle,
+    Clock,
+    AlertCircle,
+    Target,
 } from "lucide-react";
 
 export const getTopicIcon = (topic: string) => {
@@ -31,7 +36,7 @@ export const getTopicIcon = (topic: string) => {
 
 export const getLanguageSymbol = (topic: string, name: string): string => {
     const courseName = name.toLowerCase();
-    const topicLower = topic.toLowerCase();    
+    const topicLower = topic.toLowerCase();
 
     if (courseName.includes("react") || courseName.includes("javascript"))
         return "⚛️";
@@ -65,4 +70,21 @@ export const getStatusColor = (status: string) => {
         default:
             return "bg-gray-600/20 text-gray-400";
     }
+};
+
+export const getStatusIcon = (status: string) => {
+    switch (status) {
+        case "CONCLUIDA":
+            return <CheckCircle className="h-4 w-4" />;
+        case "ATIVA":
+            return <Clock className="h-4 w-4" />;
+        case "VENCIDA":
+            return <AlertCircle className="h-4 w-4" />;
+        default:
+            return <Target className="h-4 w-4" />;
+    }
+};
+
+export const getGoalProgress = (goal: Goal) => {
+    return Math.min((goal.current / goal.target) * 100, 100);
 };
