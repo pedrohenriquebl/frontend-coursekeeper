@@ -5,6 +5,7 @@ interface GoalsTabProps {
     activeGoals: number;
     completedGoals: number;
     allGoals: number;
+    missedGoals: number;
     selectedTab: TabType;
     setSelectedTab: (tab: TabType) => void;
 }
@@ -13,9 +14,12 @@ export default function GoalsTab({
     activeGoals,
     completedGoals,
     allGoals,
+    missedGoals,
     selectedTab,
     setSelectedTab
 }: GoalsTabProps) {
+    
+
     return (
         <div className="flex space-x-1 mb-6 bg-gray-800/60 backdrop-blur-sm rounded-lg p-1">
             <button
@@ -39,6 +43,17 @@ export default function GoalsTab({
                 )}
             >
                 Concluídas ({completedGoals})
+            </button>
+            <button
+                onClick={() => setSelectedTab("VENCIDA")}
+                className={cn(
+                    "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
+                    selectedTab === "VENCIDA"
+                        ? "bg-emerald-600 text-white"
+                        : "text-gray-400 hover:text-white hover:bg-gray-700/50",
+                )}
+            >
+                Vencidas ({missedGoals})
             </button>
             <button
                 onClick={() => setSelectedTab("TODAS")}

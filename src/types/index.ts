@@ -29,7 +29,7 @@ export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO";
 
 export type GoalStatus = "ATIVA" | "CONCLUIDA" | "VENCIDA";
 
-export type TabType = "ATIVA" | "CONCLUIDA" | "TODAS";
+export type TabType = GoalStatus | "TODAS";
 
 export interface Course {
   id: number;

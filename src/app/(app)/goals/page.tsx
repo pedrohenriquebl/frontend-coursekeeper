@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useGoals } from "./hooks/useGoals";
-import { GoalsCard } from "./components/GoalsCard";
+import { GoalsOverviewCard } from "./components/GoalsOverviewCard";
 import { CreateGoalData, TabType } from "@/types";
 import { GoalModal } from "./components/GoalModal";
 import GoalsTab from "./components/GoalsTab";
@@ -40,12 +40,14 @@ export default function PageGoals() {
         return goal.status === selectedTab;
     });
 
+    const missedGoals = allGoals.filter(goal => goal.status === "VENCIDA").length || 0;
+
     const goalStats = {
         activeGoals: overviewGoals?.activeGoals || 0,
         goalsCompleted: overviewGoals?.goalsCompleted || 0,
         goalsRating: overviewGoals?.goalsRating || 0,
         totalProgressInHours: overviewGoals?.totalProgressInHours || 0,
-        totalGoalInHours: overviewGoals?.totalGoalInHours || 0,
+        totalGoalInHours: overviewGoals?.totalGoalInHours || 0,        
     }
 
     return (
@@ -66,7 +68,7 @@ export default function PageGoals() {
                 </button>
             </div>
 
-            <GoalsCard {...goalStats} />
+            <GoalsOverviewCard {...goalStats} />
 
             <GoalsTab
                 selectedTab={selectedTab}
@@ -74,9 +76,10 @@ export default function PageGoals() {
                 activeGoals={activeGoalsSize}
                 completedGoals={completedGoalsSize}
                 allGoals={allGoalsSize}
+                missedGoals={missedGoals}
             />
 
-            <div className="h-[600px] overflow-auto">
+            <div className="h-[600px]">
                 <GoalsList filteredGoals={filteredGoals} />
             </div>
 
