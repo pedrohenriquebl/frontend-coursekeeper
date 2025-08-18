@@ -86,10 +86,6 @@
   --sidebar-ring: 217.2 91.2% 59.8%;
 }
 
-html:focus-within {
-  scroll-behavior: smooth;
-}
-
 body {
   text-rendering: optimizeSpeed;
 }

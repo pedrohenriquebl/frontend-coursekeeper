@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body
         className={`${nunitoSans.variable}
         antialiased bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen`}
