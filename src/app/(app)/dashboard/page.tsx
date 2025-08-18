@@ -7,12 +7,11 @@ import { StatsCards } from "./components/StatsCards";
 import { RecentCourses } from "./components/RecentCourses";
 import { Sidebar } from "./components/Sidebar";
 import { useCallback, useState } from "react";
-import { Spinner } from "@/components/ui/Spinner";
 import { useAuthUser } from "@/context/authUserContext";
 import { userService } from "@/services/api/user/userService";
 
 export default function DashboardPage() {
-    const { recentCourses, isUpdatingCourse, getRecentCourses, isLoadingCourse } = useCourse();
+    const { recentCourses, isUpdatingCourse, getRecentCourses } = useCourse();
     const [showAddModal, setShowAddModal] = useState(false);
     const { user } = useAuthUser();
 
@@ -43,9 +42,7 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2">
-                    {isLoadingCourse ? (
-                        <div className="flex justify-center"><Spinner /></div>
-                    ) : hasRecentCourses ? (
+                    { hasRecentCourses ? (
                         <RecentCourses
                             courses={recentCourses}
                             onAddCourse={addCourse}
