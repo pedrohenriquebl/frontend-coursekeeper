@@ -9,7 +9,6 @@ export function useCourse() {
   const { user } = useAuthUser();
   const userId = Number(user?.id);
   const [isLoadingCourse, setIsLoadingCourse] = useState(false);
-  const [isUpdatingCourse, setIsUpdatingCourse] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [recentCourses, setRecentCourses] = useState<Course[]>([]);
@@ -108,7 +107,6 @@ export function useCourse() {
     allCourses,
     getAllCourses,
     deleteCourse,
-    updateCourse,
-    isUpdatingCourse
+    updateCourse    
   };
 }

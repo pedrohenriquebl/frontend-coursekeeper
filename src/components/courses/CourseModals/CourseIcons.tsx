@@ -67,6 +67,8 @@ export const getStatusColor = (status: string) => {
             return "bg-emerald-600/20 text-emerald-400";
         case "Não Iniciado":
             return "bg-gray-600/20 text-gray-400";
+        case "Não Concluído":
+            return "bg-red-600/20 text-red-400";
         default:
             return "bg-gray-600/20 text-gray-400";
     }

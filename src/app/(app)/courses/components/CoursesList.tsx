@@ -24,14 +24,17 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
 
     const topics = ["all", "Frontend", "Backend", "Design", "Mobile", "Data Science", "DevOps"];
     const platforms = ["all", "Udemy", "Coursera", "YouTube", "Alura", "edX", "Pluralsight"];
-    const statuses = ["all", "Não Iniciado", "Em Progresso", "Concluído"];
+    const statuses = ["all", "Não Iniciado", "Em Progresso", "Concluído", "Não Concluída"];
 
     const statusMap: Record<string, string> = {
         "Não Iniciado": "NAO_INICIADO",
         "Em Progresso": "EM_PROGRESSO",
         "Concluído": "CONCLUIDO",
+        "Não Concluída": "NAO_CONCLUIDO",
         "all": "all"
     };
+
+    console.log(courses)
 
     const filteredCourses = courses.filter((course) => {
         const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase());

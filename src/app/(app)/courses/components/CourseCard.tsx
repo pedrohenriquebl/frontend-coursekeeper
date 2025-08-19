@@ -20,6 +20,8 @@ export function CourseCard({ course, onEdit, onDelete, onViewDetails }: CourseCa
                 return "bg-emerald-600/20 text-emerald-400";
             case "NAO_INICIADO":
                 return "bg-gray-600/20 text-gray-400";
+            case "NAO_CONCLUIDO":
+                return "bg-red-600/20 text-red-400";
             default:
                 return "bg-gray-600/20 text-gray-400";
         }
@@ -55,9 +57,13 @@ export function CourseCard({ course, onEdit, onDelete, onViewDetails }: CourseCa
                     <button onClick={() => onViewDetails(course)} className="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700/50 rounded-lg">
                         <Eye className="h-4 w-4" />
                     </button>
-                    <button onClick={() => onEdit(course)} className="p-2 text-gray-400 hover:text-emerald-400 hover:bg-gray-700/50 rounded-lg">
-                        <Edit2 className="h-4 w-4" />
-                    </button>
+                    {
+                        course.status !== "NAO_CONCLUIDO" && (
+                            <button onClick={() => onEdit(course)} className="p-2 text-gray-400 hover:text-emerald-400 hover:bg-gray-700/50 rounded-lg">
+                                <Edit2 className="h-4 w-4" />
+                            </button>
+                        )
+                    }
                     <button onClick={() => onDelete(course)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700/50 rounded-lg">
                         <Trash2 className="h-4 w-4" />
                     </button>
@@ -99,7 +105,9 @@ export function CourseCard({ course, onEdit, onDelete, onViewDetails }: CourseCa
                 </span>
                 <div className="text-xs text-gray-500">
                     {course.startDate && <>Iniciado: {new Date(course.startDate).toLocaleDateString("pt-BR")}</>}
-                    {course.endDate && course.status === "CONCLUIDO" && <> • Concluído: {new Date(course.endDate).toLocaleDateString("pt-BR")}</>}
+                    {course.endDate && (course.status === "CONCLUIDO" || course.status === "NAO_CONCLUIDO") && (
+                        <> • {course.status === "CONCLUIDO" ? "Concluído" : "Vencimento"}: {new Date(course.endDate).toLocaleDateString("pt-BR")}</>
+                    )}
                 </div>
             </div>
         </div>

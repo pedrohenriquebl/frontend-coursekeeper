@@ -31,11 +31,11 @@ export default function GoalCard({ goal }: GoalCardProps) {
                         {goal.description}
                     </p>
                     {goal.topic ? (
-                        <span className="inline-block bg-gray-600/50 px-2 py-1 rounded text-xs text-gray-300 min-h-[20px]">
+                        <span className="inline-block bg-gray-600/50 px-2 py-1 rounded text-xs text-gray-300 min-h-[24px]">
                             {goal.topic}
                         </span>
                     ) : (
-                        <div className="min-h-[20px]" /> 
+                        <div className="min-h-[24px]" /> 
                     )}
                 </div>
                 <span

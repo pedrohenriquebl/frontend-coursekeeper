@@ -52,7 +52,7 @@ export const CourseDetailsModal = ({
                 <span
                   className={cn(
                     "inline-block px-3 py-1 rounded-full text-sm",
-                    getStatusColor(course.status)
+                    `${getStatusColor(handleStatusLabel(course.status) || "Não Iniciado")}`
                   )}
                 >
                   {handleStatusLabel(course.status)}

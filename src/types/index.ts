@@ -25,7 +25,7 @@ export type Topic =
   | "FULL STACK"
   | "OUTROS";
 
-export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO";
+export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO" | "NAO_CONCLUIDO";
 
 export type GoalStatus = "ATIVA" | "CONCLUIDA" | "VENCIDA";
 

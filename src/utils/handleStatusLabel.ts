@@ -2,6 +2,7 @@ const status: Record<string, string> = {
   CONCLUIDO: "Concluído",
   EM_PROGRESSO: "Em Progresso",
   NAO_INICIADO: "Não Iniciado",
+  NAO_CONCLUIDO: "Não Concluído",
 };
 
 export function handleStatusLabel(statusKey: string) {

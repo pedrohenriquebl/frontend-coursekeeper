@@ -11,7 +11,7 @@ import { useAuthUser } from "@/context/authUserContext";
 import { userService } from "@/services/api/user/userService";
 
 export default function DashboardPage() {
-    const { recentCourses, isUpdatingCourse, getRecentCourses } = useCourse();
+    const { recentCourses, getRecentCourses } = useCourse();
     const [showAddModal, setShowAddModal] = useState(false);
     const { user } = useAuthUser();
 
@@ -67,7 +67,6 @@ export default function DashboardPage() {
                 onCloseDetails={() => { }}
                 onUpdateCourse={() => { }}
                 onCourseCreated={refreshCourses}
-                isLoadingCourse={isUpdatingCourse}
             />
         </div>
     );
