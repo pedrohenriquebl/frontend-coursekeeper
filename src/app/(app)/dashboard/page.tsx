@@ -9,11 +9,25 @@ import { Sidebar } from "./components/Sidebar";
 import { useCallback, useState } from "react";
 import { useAuthUser } from "@/context/authUserContext";
 import { userService } from "@/services/api/user/userService";
+import { GoalModal } from "../goals/components/GoalModal";
+import { CreateGoalData } from "@/types";
+import { useGoals } from "../goals/hooks/useGoals";
 
 export default function DashboardPage() {
     const { recentCourses, getRecentCourses } = useCourse();
+    const { createGoal } = useGoals();
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showGoalModal, setShowGoalModal] = useState(false);
     const { user } = useAuthUser();
+
+    const handleCreateGoal = async (goalData: CreateGoalData) => {
+        try {
+            await createGoal(goalData);
+            setShowAddModal(false);
+        } catch (error) {
+            console.error("Error creating goal:", error);
+        }
+    };
 
     const refreshCourses = useCallback(async () => {
         try {
@@ -33,6 +47,9 @@ export default function DashboardPage() {
 
     const addCourse = () => setShowAddModal(true);
     const closeModal = () => setShowAddModal(false);
+    const openGoalModal = () => setShowGoalModal(true);
+    const closeGoalModal = () => setShowGoalModal(false);
+
     const hasRecentCourses = Array.isArray(recentCourses) && recentCourses.length > 0;
 
     return (
@@ -42,7 +59,7 @@ export default function DashboardPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2">
-                    { hasRecentCourses ? (
+                    {hasRecentCourses ? (
                         <RecentCourses
                             courses={recentCourses}
                             onAddCourse={addCourse}
@@ -53,7 +70,7 @@ export default function DashboardPage() {
                         </div>
                     )}
                 </div>
-                <Sidebar onAddCourse={addCourse} />
+                <Sidebar onAddCourse={addCourse} onOpenGoalModal={openGoalModal} />
             </div>
 
             <CourseModals
@@ -67,6 +84,12 @@ export default function DashboardPage() {
                 onCloseDetails={() => { }}
                 onUpdateCourse={() => { }}
                 onCourseCreated={refreshCourses}
+            />
+
+            <GoalModal
+                showModal={showGoalModal}
+                onClose={closeGoalModal}
+                onSave={handleCreateGoal}
             />
         </div>
     );

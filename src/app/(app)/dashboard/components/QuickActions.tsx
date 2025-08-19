@@ -3,9 +3,10 @@ import { useRouter } from "next/navigation";
 
 interface QuickActionsProps {
   onAddCourse: () => void;
+  onOpenGoalModal: () => void;
 }
 
-export function QuickActions({ onAddCourse }: QuickActionsProps) {
+export function QuickActions({ onAddCourse, onOpenGoalModal }: QuickActionsProps) {
   const router = useRouter();
 
   return (
@@ -20,7 +21,7 @@ export function QuickActions({ onAddCourse }: QuickActionsProps) {
           <span className="text-sm text-gray-300">Adicionar Curso</span>
         </button>
         <button
-          onClick={() => router.push('/metas')}
+          onClick={onOpenGoalModal}
           className="cursor-pointer w-full text-left p-3 rounded-lg hover:bg-gray-700/50 transition-colors duration-200 flex items-center gap-3"
         >
           <Target className="h-4 w-4 text-purple-400" />

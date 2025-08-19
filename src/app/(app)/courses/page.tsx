@@ -54,7 +54,11 @@ export default function CoursesPage() {
         totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
         completedCourses: user?.generalCoursesInfo?.totalCompletedCourses || 0,
         studyHours: user?.generalCoursesInfo?.totalStudiedHours || 0,
-        currentGoalPercent: user?.goalsStats?.goalsProgressPercent || 0,
+        currentGoalPercent: user?.generalCoursesInfo?.totalCourses
+            ? Math.round(
+                (user.generalCoursesInfo.totalCompletedCourses / user.generalCoursesInfo.totalCourses) * 100
+            )
+            : 0,
     };
 
     return (

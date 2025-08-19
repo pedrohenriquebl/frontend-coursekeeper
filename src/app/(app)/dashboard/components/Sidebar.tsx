@@ -4,9 +4,10 @@ import { HoursGoal } from "./HoursGoal";
 
 interface SidebarProps {
   onAddCourse: () => void;
+  onOpenGoalModal: () => void;
 }
 
-export function Sidebar({ onAddCourse }: SidebarProps) {
+export function Sidebar({ onAddCourse, onOpenGoalModal }: SidebarProps) {
   const { user } = useAuthUser();
   
   const goalData = {
@@ -19,7 +20,7 @@ export function Sidebar({ onAddCourse }: SidebarProps) {
   return (
     <div className="space-y-6">
       <HoursGoal userGoals={goalData} />
-      <QuickActions onAddCourse={onAddCourse} />
+      <QuickActions onAddCourse={onAddCourse} onOpenGoalModal={onOpenGoalModal} />
     </div>
   );
 }

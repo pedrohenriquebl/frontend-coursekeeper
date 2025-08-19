@@ -1,15 +1,19 @@
+'use client'
+
 import { LucideIcon } from "lucide-react";
 import { useRef } from "react";
+import { motion } from "framer-motion";
 
 interface StatsCardProps {
   icon: LucideIcon;
   iconColor: string;
-  bgColor: string;
+  gradientFrom: string;
+  gradientTo: string;
   value: string | number;
   label: string;
 }
 
-export function StatsCard({ icon: Icon, iconColor, bgColor, value, label }: StatsCardProps) {
+export function StatsCard({ icon: Icon, iconColor, gradientFrom, gradientTo, value, label }: StatsCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -23,7 +27,7 @@ export function StatsCard({ icon: Icon, iconColor, bgColor, value, label }: Stat
     const rotateX = ((y / height) - 0.5) * -10;
     const rotateY = ((x / width) - 0.5) * 10;
 
-    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
   };
 
   const handleMouseLeave = () => {
@@ -37,15 +41,31 @@ export function StatsCard({ icon: Icon, iconColor, bgColor, value, label }: Stat
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50 transition-transform duration-200 ease-out"
-    >
-      <div className="flex items-center justify-between mb-4">
-        <div className={`${bgColor} p-3 rounded-lg`}>
-          <Icon className={`h-6 w-6 ${iconColor}`} />
+      className="relative p-6 shadow-lg overflow-hidden transition-transform duration-200 ease-out"
+      style={{
+        background: `linear-gradient(135deg, ${gradientFrom}, ${gradientTo})`,
+        border: `2px solid ${gradientTo}`,
+        borderRadius: '24px 12px 24px 12px',
+      }}
+    >      
+      <div className="absolute inset-0 bg-white/5 pointer-events-none rounded-[24px_12px_24px_12px] blur-xl" />
+
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-4">
+          <div className="p-3 rounded-lg drop-shadow-lg" style={{ background: 'rgba(255,255,255,0.05)' }}>
+            <Icon className={`h-6 w-6 ${iconColor} drop-shadow-md`} />
+          </div>
+          <motion.span
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-2xl font-bold text-white"
+          >
+            {value}
+          </motion.span>
         </div>
-        <span className="text-2xl font-bold text-white">{value}</span>
+        <h3 className="text-sm font-medium text-gray-400">{label}</h3>
       </div>
-      <h3 className="text-sm font-medium text-gray-400">{label}</h3>
     </div>
   );
 }
