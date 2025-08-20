@@ -34,8 +34,6 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
         "all": "all"
     };
 
-    console.log(courses)
-
     const filteredCourses = courses.filter((course) => {
         const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesTopic = selectedTopic === "all" || course.topic === selectedTopic.toUpperCase();

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User, userService } from "@/services/api/user/userService";
+import { userService } from "@/services/api/user/userService";
+import { User } from "@/types";
 
 export interface AuthUserContextType {
   user: User | null;

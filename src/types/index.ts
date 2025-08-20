@@ -31,6 +31,41 @@ export type GoalStatus = "ATIVA" | "CONCLUIDA" | "VENCIDA";
 
 export type TabType = GoalStatus | "TODAS";
 
+export interface GeneralCoursesInfo {
+  totalCourses: number;
+  totalCompletedCourses: number;
+  totalStudiedHours: number;  
+}
+
+export interface LatestGoalInfo {
+  title: string;
+  target: number;
+  current: number;
+  status: GoalStatus
+}
+
+export interface GeneralGoalsInfo {
+  goalsProgressPercent: number;
+  latestGoal: LatestGoalInfo;
+}
+
+export interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  cpf: string;
+  profileImage?: string;
+  description?: string;
+  generalCoursesInfo?: GeneralCoursesInfo;
+  goalsStats?: GeneralGoalsInfo;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  user: User;
+}
+
 export interface Course {
   id: number;
   name: string;

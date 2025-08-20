@@ -1,40 +1,5 @@
 import { apiInstance, isAxiosError } from "@/services/api/axios/instance";
-import { GoalStatus } from "@/types";
-
-interface GeneralCoursesInfo {
-  totalCourses: number;
-  totalCompletedCourses: number;
-  totalStudiedHours: number;  
-}
-
-interface LatestGoalInfo {
-  title: string;
-  target: number;
-  current: number;
-  status: GoalStatus
-}
-
-interface GeneralGoalsInfo {
-  goalsProgressPercent: number;
-  latestGoal: LatestGoalInfo;
-}
-
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  cpf: string;
-  profileImage?: string;
-  description?: string;
-  generalCoursesInfo?: GeneralCoursesInfo;
-  goalsStats?: GeneralGoalsInfo;
-}
-
-export interface LoginResponse {
-  access_token: string;
-  user: User;
-}
+import { LoginResponse, User } from "@/types";
 
 export const userService = {
   login: async (email: string, password: string): Promise<LoginResponse> => {
@@ -67,5 +32,20 @@ export const userService = {
 
   getMe: async (): Promise<User> => {
     return apiInstance.get("/users/me").then((response) => response.data);
+  },
+
+  updateProfile: async (userId: number, data: Partial<User>): Promise<User> => {
+    const response = await apiInstance.put(`/users/${userId}`, data);
+    return response.data;
+  },
+
+  uploadAvatar: async (file: File): Promise<{ path: string; user?: User }> => {
+    const form = new FormData();
+    form.append("file", file);
+
+    const response = await apiInstance.post("/users/me/avatar", form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return response.data;
   },
 };
