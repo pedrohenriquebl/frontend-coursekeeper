@@ -65,7 +65,7 @@ export default function DashboardPage() {
                             onAddCourse={addCourse}
                         />
                     ) : (
-                        <div className="flex justify-center">
+                        <div className="flex justify-center align-center h-full">
                             <p className="text-gray-400">Nenhum curso recente encontrado.</p>
                         </div>
                     )}

@@ -12,6 +12,7 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course, onEdit, onDelete, onViewDetails }: CourseCardProps) {
+    console.log(course)
     const getStatusColor = (status: string) => {
         switch (status) {
             case "CONCLUIDO":

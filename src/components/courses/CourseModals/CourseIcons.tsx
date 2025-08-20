@@ -14,6 +14,8 @@ import {
     AlertCircle,
     Target,
 } from "lucide-react";
+import Image from "next/image";
+import { ReactNode } from "react";
 
 export const getTopicIcon = (topic: string) => {
     switch (topic.toLowerCase()) {
@@ -34,29 +36,46 @@ export const getTopicIcon = (topic: string) => {
     }
 };
 
-export const getLanguageSymbol = (topic: string, name: string): string => {
-    const courseName = name.toLowerCase();
-    const topicLower = topic.toLowerCase();
+export const getLanguageSymbol = (topic: string, name: string): ReactNode => {
+  const courseName = name.toLowerCase();
+  const topicLower = topic.toLowerCase();
 
-    if (courseName.includes("react") || courseName.includes("javascript"))
-        return "⚛️";
-    if (courseName.includes("vue")) return "💚";
-    if (courseName.includes("angular")) return "🅰️";
-    if (courseName.includes("node") || courseName.includes("express"))
-        return "🟢";
-    if (courseName.includes("python")) return "🐍";
-    if (courseName.includes("java") && !courseName.includes("javascript"))
-        return "☕";
-    if (courseName.includes("php")) return "🐘";
-    if (courseName.includes("docker")) return "🐳";
-    if (courseName.includes("kubernetes")) return "☸️";
-    if (courseName.includes("figma") || topicLower === "design") return "🎨";
-    if (topicLower === "data science") return "📊";
-    if (courseName.includes("typescript")) return "🔷";
-    if (courseName.includes("go") || courseName.includes("golang")) return "🐹";
-    if (courseName.includes("rust")) return "🦀";
+  const deviconPaths: Record<string, string> = {
+    react: "react/react-original.svg",
+    vue: "vuejs/vuejs-original.svg",
+    angular: "angularjs/angularjs-original.svg",
+    node: "nodejs/nodejs-original.svg",
+    express: "nodejs/nodejs-original.svg",
+    python: "python/python-original.svg",
+    java: "java/java-original.svg",
+    javascript: "javascript/javascript-original.svg",
+    php: "php/php-original.svg",
+    docker: "docker/docker-original.svg",
+    kubernetes: "kubernetes/kubernetes-plain.svg",
+    k8s: "kubernetes/kubernetes-plain.svg",
+    figma: "figma/figma-original.svg",
+    "data science": "jupyter/jupyter-original.svg",
+    typescript: "typescript/typescript-original.svg",
+    go: "go/go-original.svg",
+    golang: "go/go-original.svg",
+    rust: "rust/rust-plain.svg",
+    default: "kubeflow/kubeflow-original.svg",
+  };
+  
+  const key =
+    Object.keys(deviconPaths).find(k => courseName.includes(k) || topicLower === k) || "default";
 
-    return "📚";
+  const iconPath = deviconPaths[key];
+
+  return (
+    <Image
+      width={25}
+      height={25}
+      src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${iconPath}`}
+      alt={key}
+      className="h-5 w-5"
+    />
+  );
 };
 
 export const getStatusColor = (status: string) => {
