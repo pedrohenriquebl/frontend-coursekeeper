@@ -19,9 +19,6 @@ export default function ProfileClient() {
     const handleSave = () => {
         updateProfile(editedProfile as Partial<User>);
         setIsEditing(false);
-        // const updated = await updateProfile(editedProfile as Partial<User>);
-        // setEditedProfile(updated);
-        // setIsEditing(false);
     };
 
     const handleAvatarChange = async (file: File) => {

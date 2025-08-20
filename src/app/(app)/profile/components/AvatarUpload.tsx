@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState } from "react";
 import { Camera, X, Save } from "lucide-react";
 import Image from "next/image";
@@ -12,6 +14,16 @@ export default function AvatarUpload({
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [preview, setPreview] = useState<string | null>(null);
 
+    const safeImage = (url?: string) => {
+        if (!url) return "https://via.placeholder.com/150?text=Avatar";
+        try {
+            new URL(url);
+            return url;
+        } catch {
+            return "https://via.placeholder.com/150?text=Avatar";
+        }
+    };
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -21,29 +33,27 @@ export default function AvatarUpload({
 
     const handleSave = () => {
         const file = fileInputRef.current?.files?.[0];
-        if (file) {
-            onSave(file);
-        }
+        if (file) onSave(file);
     };
 
     return (
         <div className="relative">
             <div className="w-32 h-32 rounded-full bg-gray-700 overflow-hidden border-4 border-gray-600">
-                <Image
-                    src={preview || currentImage || "/placeholder.png"}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src={preview || currentImage || "/avatars/placeholder.png"}
                     alt="Avatar"
-                    width={128}
-                    height={128}
-                    className="object-cover w-full h-full"
+                    className="object-cover w-full h-full rounded-full"
+                    onError={(e) => { e.currentTarget.src = "/avatars/placeholder.png"; }}
                 />
             </div>
 
-            <button
+            {!preview && (<button
                 onClick={() => fileInputRef.current?.click()}
                 className="absolute bottom-0 right-0 bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-full transition-colors duration-200"
             >
                 <Camera className="h-4 w-4" />
-            </button>
+            </button>)}
 
             <input
                 ref={fileInputRef}

@@ -3,6 +3,7 @@ import { User } from "@/types";
 import { Calendar, Camera, Edit2, Mail, Save, X } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import AvatarUpload from "./AvatarUpload";
 
 type ProfileHeaderProps = {
     profile: User;
@@ -36,56 +37,16 @@ export default function ProfileHeader({
             setCharacterCount(value.length);
         }
     };
-
-    const handleAvatarClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            onAvatarChange(file);
-        }
-    };
-
-    const safeImage = (url?: string) => {
-        if (!url) return "https://via.placeholder.com/150?text=Avatar";
-        try {
-            new URL(url);
-            return url;
-        } catch {
-            return "https://via.placeholder.com/150?text=Avatar";
-        }
-    };
-
+    
     return (
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-gray-700/50 mb-8">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 {/* Avatar Section */}
-                <div className="relative">
-                    <div className="w-32 h-32 rounded-full bg-gray-700 overflow-hidden border-4 border-gray-600">
-                        <Image
-                            priority
-                            width={80}
-                            height={80}
-                            src={safeImage(`${process.env.NEXT_PUBLIC_IMAGE_URL}${profile.profileImage}`)}
-                            alt={`Profile - ${profile.firstName} ${profile.lastName}`}
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    <button
-                        onClick={handleAvatarClick}
-                        className="absolute bottom-0 right-0 bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-full transition-colors duration-200"
-                    >
-                        <Camera className="h-4 w-4" />
-                        <input
-                            type="file"
-                            accept="image/*"
-                            ref={fileInputRef}
-                            onChange={handleFileChange}
-                            className="hidden"
-                        />
-                    </button>
+                <div className="relative flex flex-row flex-wrap align-center">
+                    <AvatarUpload
+                        currentImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profile.profileImage}`}
+                        onSave={onAvatarChange}
+                    />
                 </div>
 
                 {/* Profile Info */}
