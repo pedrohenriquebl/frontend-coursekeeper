@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { User } from "@/types";
-import { Calendar, Edit2, Globe, Mail, Save, X } from "lucide-react";
+import { Calendar, Edit2, Mail, Save, X } from "lucide-react";
 import { useState } from "react";
 import AvatarUpload from "./AvatarUpload";
 

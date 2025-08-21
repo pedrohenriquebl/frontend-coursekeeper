@@ -10,32 +10,34 @@ export function useProfile() {
 
   const updateProfile = useCallback(
     async (userData: Partial<User>) => {
-        if (!user) return;
+      if (!user) return;
 
-        console.log("Updating profile with data: ", userData);
+      console.log("Updating profile with data: ", userData);
 
-        const filteredData = Object.fromEntries(
-            Object.entries({
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                description: userData.description,
-                profileImage: userData.profileImage,
-                email: userData.email,
-                github: userData.github,
-                linkedin: userData.linkedin,
-                website: userData.website,
-            }).filter(([_, value]) => value !== null && value !== '')
-        );
+      const filteredData: Partial<User> = {};
+      for (const field of [
+        "firstName",
+        "lastName",
+        "description",
+        "profileImage",
+        "email",
+        "github",
+        "linkedin",
+        "website",
+      ] as const) {
+        const value = userData[field];
+        if (value !== null && value !== "") filteredData[field] = value;
+      }
 
-        const updatedUser = await userService.updateProfile(
-            user.id,
-            filteredData
-        );
+      const updatedUser = await userService.updateProfile(
+        user.id,
+        filteredData
+      );
 
-        setUser(updatedUser);
+      setUser(updatedUser);
     },
     [user, setUser]
-);
+  );
 
   const uploadAvatar = useCallback(
     async (file: File) => {

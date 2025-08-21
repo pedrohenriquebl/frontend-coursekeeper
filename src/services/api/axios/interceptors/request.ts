@@ -21,10 +21,6 @@ export const requestInterceptor = (instance: AxiosInstance) => {
       return config;
     },
     (error) => {
-      if (error.response?.status === 401) {
-        window.location.href = "/login";
-      }
-      
       return Promise.reject(error);
     }
   );
@@ -34,10 +30,17 @@ export const responseInterceptor = (instance: AxiosInstance) => {
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response?.status === 401) {
-        sessionStorage.removeItem('auth_token');
-        window.location.href = '/login';
+      const isPublicEndpoint = PUBLIC_ENDPOINTS.some(
+        (endpoint) =>
+          error.config?.url?.endsWith(endpoint) ||
+          error.config?.url?.includes(endpoint)
+      );
+
+      if (error.response?.status === 401 && !isPublicEndpoint) {
+        sessionStorage.removeItem("auth_token");
+        window.location.href = "/login";
       }
+
       return Promise.reject(error);
     }
   );
