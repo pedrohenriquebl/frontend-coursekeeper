@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { userService } from "@/services/api/user/userService";
 import { useAuthUser } from "@/context/authUserContext";
 
@@ -18,7 +18,7 @@ interface Errors {
 }
 
 export function useAuthForm(initialMode: AuthMode = "login") {
-  const { loginUser } = useAuthUser();
+  const { loginUser, authError, setAuthError } = useAuthUser();
   const [mode, setMode] = useState<AuthMode>(initialMode);
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
@@ -31,8 +31,27 @@ export function useAuthForm(initialMode: AuthMode = "login") {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [attemptCount, setAttemptCount] = useState(0);
   const [errors, setErrors] = useState<Errors>({});
+
+  useEffect(() => {
+    if (authError) {
+      setErrors((prev) => ({ ...prev, general: authError }));
+    }
+  }, [authError]);
+
+  // Função utilitária para obter a contagem de tentativas do sessionStorage
+  const getAttemptCount = () => {
+    const stored = sessionStorage.getItem("login_attempt_count");
+    return stored ? Number(stored) : 0;
+  };
+
+  // Função utilitária para setar a contagem de tentativas no sessionStorage
+  const setAttemptCount = (count: number) => {
+    sessionStorage.setItem("login_attempt_count", String(count));
+  };
+
+  // Verifica se está bloqueado
+  const isBlocked = getAttemptCount() >= 5;
 
   const validateEmail = (email: string) => {
     if (!email) return "Email é obrigatório";
@@ -92,9 +111,13 @@ export function useAuthForm(initialMode: AuthMode = "login") {
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }));
-    }
+    setErrors((prev) => {
+      if (prev[field]) {
+        const { [field]: removed, ...rest } = prev;
+        return { ...rest };
+      }
+      return prev;
+    });
   };
 
   const resetForm = () => {
@@ -107,18 +130,16 @@ export function useAuthForm(initialMode: AuthMode = "login") {
       confirmPassword: "",
     });
     setErrors({});
-    setAttemptCount(0);
     setIsLoading(false);
     setShowPassword(false);
     setShowConfirmPassword(false);
+    setAuthError(null);
   };
 
   const toggleMode = () => {
     setMode(mode === "login" ? "register" : "login");
     resetForm();
   };
-
-  const isBlocked = attemptCount >= 5;
 
   const handleSubmit = async (onSuccess: () => void) => {
     setIsLoading(true);
@@ -130,11 +151,23 @@ export function useAuthForm(initialMode: AuthMode = "login") {
 
     try {
       if (mode === "login") {
-        const authenticated = await loginUser(
-          formData.email,
-          formData.password
-        );
-        if (!authenticated) throw new Error("Email ou senha incorretos");
+        const result = await loginUser(formData.email, formData.password);
+        if (!result.success) {
+          const current = getAttemptCount();
+          const newAttemptCount = current + 1;
+          setAttemptCount(newAttemptCount);
+          console.log("Tentativa de login", newAttemptCount);
+          if (newAttemptCount >= 5) {
+            const blockMsg = "Muitas tentativas de login falharam. Tente novamente mais tarde ou redefina sua senha.";
+            setErrors({ general: blockMsg });
+            setAuthError(blockMsg);
+          }
+          return;
+        } else {
+          setAuthError(null);
+          setAttemptCount(0);
+          sessionStorage.removeItem("login_attempt_count");
+        }
       } else {
         const onlyNumbersCpf = formData.cpf.replace(/\D/g, "").slice(0, 11);
 
@@ -150,37 +183,21 @@ export function useAuthForm(initialMode: AuthMode = "login") {
         if (!newUser)
           throw new Error("Erro ao criar conta. Email pode já estar em uso.");
 
-        const authenticated = await loginUser(
-          formData.email,
-          formData.password
-        );
-        if (!authenticated)
-          throw new Error("Erro ao autenticar após registro.");
+        const result = await loginUser(formData.email, formData.password);
+        if (!result.success)
+          throw new Error(
+            result.message || "Erro ao autenticar após registro."
+          );
       }
 
       onSuccess();
     } catch (error) {
-      if (mode === "login") {
-        const newAttemptCount = attemptCount + 1;
-        setAttemptCount(newAttemptCount);
-
-        if (newAttemptCount >= 5) {
-          setErrors({
-            general:
-              "Muitas tentativas de login falharam. Tente novamente mais tarde ou redefina sua senha.",
-          });
-        } else {
-          setErrors({
-            general: `Credenciais inválidas. Tentativa ${newAttemptCount} de 5.`,
-          });
-        }
-      } else {
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : "Erro ao criar conta. Tente novamente.";
-        setErrors({ general: errorMessage });
-      }
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Erro ao criar conta. Tente novamente.";
+      setErrors({ general: errorMessage });
+      setAuthError(errorMessage);
     } finally {
       setIsLoading(false);
     }

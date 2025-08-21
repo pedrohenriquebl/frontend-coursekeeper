@@ -12,8 +12,6 @@ export function useProfile() {
     async (userData: Partial<User>) => {
       if (!user) return;
 
-      console.log("Updating profile with data: ", userData);
-
       const filteredData: Partial<User> = {};
       for (const field of [
         "firstName",

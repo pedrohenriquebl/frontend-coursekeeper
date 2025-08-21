@@ -20,7 +20,6 @@ export default function ProfileClient() {
     const handleSave = () => {
         updateProfile(editedProfile as Partial<User>);
         setIsEditing(false);
-        console.log("Profile edit cancelled -> ", editedProfile);
     };
 
     const handleAvatarChange = async (file: File) => {
