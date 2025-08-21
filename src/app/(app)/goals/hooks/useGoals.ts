@@ -28,23 +28,6 @@ export function useGoals() {
     }
   }, [userId]);
 
-  const createGoal = useCallback(
-    async (goalData: CreateGoalData) => {
-      if (!userId) return null;
-
-      try {
-        await goalService.createGoal(goalData, userId);
-        await recentGoals();
-        const updatedUser = await userService.getMe();
-        setUser(updatedUser);
-      } catch (error) {
-        console.error("Erro ao criar nova meta:", error);
-        throw new Error((error as Error).message || "Erro ao criar nova meta");
-      }
-    },
-    [userId, recentGoals, setUser]
-  );
-
   const getAllGoals = useCallback(async () => {
     if (!userId) return null;
 
@@ -58,6 +41,24 @@ export function useGoals() {
       );
     }
   }, [userId]);
+
+  const createGoal = useCallback(
+    async (goalData: CreateGoalData) => {
+      if (!userId) return null;
+
+      try {
+        await goalService.createGoal(goalData, userId);
+        await recentGoals();
+        await getAllGoals();
+        const updatedUser = await userService.getMe();
+        setUser(updatedUser);
+      } catch (error) {
+        console.error("Erro ao criar nova meta:", error);
+        throw new Error((error as Error).message || "Erro ao criar nova meta");
+      }
+    },
+    [userId, recentGoals, setUser, getAllGoals]
+  );
 
   const activeGoalsSize = useMemo(
     () => allGoals.filter((goal) => goal.status === "ATIVA").length,

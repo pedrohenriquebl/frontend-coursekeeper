@@ -1,8 +1,7 @@
 import { cn } from "@/lib/utils";
 import { User } from "@/types";
-import { Calendar, Camera, Edit2, Mail, Save, X } from "lucide-react";
-import Image from "next/image";
-import { useRef, useState } from "react";
+import { Calendar, Edit2, Globe, Mail, Save, X } from "lucide-react";
+import { useState } from "react";
 import AvatarUpload from "./AvatarUpload";
 
 type ProfileHeaderProps = {
@@ -23,7 +22,6 @@ export default function ProfileHeader({
     onAvatarChange,
 }: ProfileHeaderProps) {
     const [characterCount, setCharacterCount] = useState<number>((profile?.description ?? '').length);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleCancel = () => {
         setEditedProfile(profile);
@@ -37,7 +35,7 @@ export default function ProfileHeader({
             setCharacterCount(value.length);
         }
     };
-    
+
     return (
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-gray-700/50 mb-8">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
@@ -98,6 +96,64 @@ export default function ProfileHeader({
                         )}
                     </div>
 
+                    <div className="flex flex-wrap gap-4 text-sm text-gray-400 mt-2 mb-2 flex-col">
+                        {!isEditing ? (
+                            <>
+                                {profile.website && (
+                                    <div className="flex items-center gap-1">
+                                        <span>🌐</span>
+                                        <a href={profile.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
+                                            {profile.website}
+                                        </a>
+                                    </div>
+                                )}
+                                {profile.github && (
+                                    <div className="flex items-center gap-1">
+                                        <span>🐙</span>
+                                        <a href={profile.github} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
+                                            {profile.github}
+                                        </a>
+                                    </div>
+                                )}
+                                {profile.linkedin && (
+                                    <div className="flex items-center gap-1">
+                                        <span>🔗</span>
+                                        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
+                                            {profile.linkedin}
+                                        </a>
+                                    </div>
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                <input
+                                    name="website"
+                                    type="text"
+                                    value={profile.website || ''}
+                                    onChange={(e) => setEditedProfile({ website: e.target.value })}
+                                    placeholder="Website"
+                                    className="bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-white w-full sm:w-auto focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                                />
+                                <input
+                                    name="github"
+                                    type="text"
+                                    value={profile.github || ''}
+                                    onChange={(e) => setEditedProfile({ github: e.target.value })}
+                                    placeholder="GitHub"
+                                    className="bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-white w-full sm:w-auto focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                                />
+                                <input
+                                    name="linkedin"
+                                    type="text"
+                                    value={profile.linkedin || ''}
+                                    onChange={(e) => setEditedProfile({ linkedin: e.target.value })}
+                                    placeholder="LinkedIn"
+                                    className="bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-white w-full sm:w-auto focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                                />
+                            </>
+                        )}
+                    </div>
+
                     {/* Description */}
                     <div className="mb-4">
                         {isEditing ? (
@@ -126,10 +182,12 @@ export default function ProfileHeader({
                     {/* Location and Website */}
                     <div className="flex flex-wrap gap-4 text-sm text-gray-400">
                         {!isEditing ? (
-                            <div className="flex items-center gap-1">
-                                <Calendar className="h-4 w-4" />
-                                <span>Membro desde {'1987'}</span>
-                            </div>
+                            <>
+                                <div className="flex items-center gap-1">
+                                    <Calendar className="h-4 w-4" />
+                                    <span>Membro desde {new Date(profile.createdAt).toLocaleDateString()}</span>
+                                </div>
+                            </>
                         ) : null}
                     </div>
                 </div>

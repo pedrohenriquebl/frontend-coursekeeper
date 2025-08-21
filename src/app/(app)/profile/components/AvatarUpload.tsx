@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { Camera, X, Save } from "lucide-react";
-import Image from "next/image";
 
 export default function AvatarUpload({
     currentImage,
@@ -13,17 +12,6 @@ export default function AvatarUpload({
 }) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [preview, setPreview] = useState<string | null>(null);
-
-    const safeImage = (url?: string) => {
-        if (!url) return "https://via.placeholder.com/150?text=Avatar";
-        try {
-            new URL(url);
-            return url;
-        } catch {
-            return "https://via.placeholder.com/150?text=Avatar";
-        }
-    };
-
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -31,13 +19,16 @@ export default function AvatarUpload({
         }
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const file = fileInputRef.current?.files?.[0];
-        if (file) onSave(file);
+        if (file) {
+            await onSave(file);
+            setPreview(null);
+        }
     };
 
     return (
-        <div className="relative">
+        <div className="relative flex flex-col flex-wrap align-center items-center gap-2">
             <div className="w-32 h-32 rounded-full bg-gray-700 overflow-hidden border-4 border-gray-600">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

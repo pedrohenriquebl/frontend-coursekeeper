@@ -35,6 +35,7 @@ export const userService = {
   },
 
   updateProfile: async (userId: number, data: Partial<User>): Promise<User> => {
+    console.log("Updating user profile: inside updateProfile", userId, data);
     const response = await apiInstance.put(`/users/${userId}`, data);
     return response.data;
   },

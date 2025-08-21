@@ -4,6 +4,7 @@ import { useState } from "react";
 import ProfileHeader from "./ProfileHeader";
 import { useProfile } from "../hooks/useProfile";
 import { User } from "@/types";
+import { ProfileCards } from "./ProfileCards";
 
 export default function ProfileClient() {
     const { updateProfile, user, uploadAvatar } = useProfile();
@@ -19,6 +20,7 @@ export default function ProfileClient() {
     const handleSave = () => {
         updateProfile(editedProfile as Partial<User>);
         setIsEditing(false);
+        console.log("Profile edit cancelled -> ", editedProfile);
     };
 
     const handleAvatarChange = async (file: File) => {
@@ -27,6 +29,12 @@ export default function ProfileClient() {
         if (result?.path) {
             handleSetEditedProfile({ profileImage: result.path });
         }
+    };
+
+    const generalCoursesInfo = user?.generalCoursesInfo ?? {
+        totalCourses: 0,
+        totalCompletedCourses: 0,
+        totalStudiedHours: 0,
     };
 
     return (
@@ -38,6 +46,12 @@ export default function ProfileClient() {
                 setEditedProfile={handleSetEditedProfile}
                 handleSave={handleSave}
                 onAvatarChange={handleAvatarChange}
+            />
+            <ProfileCards
+                totalCourses={generalCoursesInfo.totalCourses ?? 0}
+                coursesCompleted={generalCoursesInfo.totalCompletedCourses ?? 0}
+                totalProgressInHours={generalCoursesInfo.totalStudiedHours ?? 0}
+                maxLoginStreak={user?.maxLoginStreak ?? 0}
             />
         </div>
     )

@@ -57,6 +57,11 @@ export interface User {
   cpf: string;
   profileImage?: string;
   description?: string;
+  maxLoginStreak?: number;
+  linkedin?: string;
+  github?: string;
+  website?: string;
+  createdAt: string;
   generalCoursesInfo?: GeneralCoursesInfo;
   goalsStats?: GeneralGoalsInfo;
 }
