@@ -39,19 +39,43 @@ export function useAuthForm(initialMode: AuthMode = "login") {
     }
   }, [authError]);
 
-  // Função utilitária para obter a contagem de tentativas do sessionStorage
-  const getAttemptCount = () => {
-    const stored = sessionStorage.getItem("login_attempt_count");
-    return stored ? Number(stored) : 0;
+  const BLOCK_DURATION = 1 * 60 * 1000;
+
+  const getBlockData = () => {
+    const stored = sessionStorage.getItem("login_block");
+    if (!stored) return { attemptCount: 0, lastAttempt: 0 };
+    try {
+      return JSON.parse(stored) as {
+        attemptCount: number;
+        lastAttempt: number;
+      };
+    } catch {
+      return { attemptCount: 0, lastAttempt: 0 };
+    }
   };
 
-  // Função utilitária para setar a contagem de tentativas no sessionStorage
+  const setBlockData = (attemptCount: number, lastAttempt: number) => {
+    sessionStorage.setItem(
+      "login_block",
+      JSON.stringify({ attemptCount, lastAttempt })
+    );
+  };
+
+  const isBlocked = (() => {
+    const { attemptCount, lastAttempt } = getBlockData();
+    if (attemptCount < 5) return false;
+    const now = Date.now();
+    if (now - lastAttempt >= BLOCK_DURATION) {
+      // Reset após 20 minutos
+      setBlockData(0, 0);
+      return false;
+    }
+    return true;
+  })();
+
   const setAttemptCount = (count: number) => {
     sessionStorage.setItem("login_attempt_count", String(count));
   };
-
-  // Verifica se está bloqueado
-  const isBlocked = getAttemptCount() >= 5;
 
   const validateEmail = (email: string) => {
     if (!email) return "Email é obrigatório";
@@ -113,7 +137,7 @@ export function useAuthForm(initialMode: AuthMode = "login") {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => {
       if (prev[field]) {
-        const { [field]: removed, ...rest } = prev;
+        const { [field]: removed, ...rest } = prev; /*eslint-disable-line*/
         return { ...rest };
       }
       return prev;
@@ -153,12 +177,13 @@ export function useAuthForm(initialMode: AuthMode = "login") {
       if (mode === "login") {
         const result = await loginUser(formData.email, formData.password);
         if (!result.success) {
-          const current = getAttemptCount();
+          const { attemptCount: current } = getBlockData();
           const newAttemptCount = current + 1;
-          setAttemptCount(newAttemptCount);
-          console.log("Tentativa de login", newAttemptCount);
+          setBlockData(newAttemptCount, Date.now());
+
           if (newAttemptCount >= 5) {
-            const blockMsg = "Muitas tentativas de login falharam. Tente novamente mais tarde ou redefina sua senha.";
+            const blockMsg =
+              "Muitas tentativas de login falharam. Tente novamente mais tarde ou redefina sua senha.";
             setErrors({ general: blockMsg });
             setAuthError(blockMsg);
           }

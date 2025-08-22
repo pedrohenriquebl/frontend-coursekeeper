@@ -1,6 +1,7 @@
 import { useAuthUser } from "@/context/authUserContext";
 import { QuickActions } from "./QuickActions";
 import { HoursGoal } from "./HoursGoal";
+import { FadeSlide } from "@/components/animation/FadeSlide";
 
 interface SidebarProps {
   onAddCourse: () => void;
@@ -9,7 +10,7 @@ interface SidebarProps {
 
 export function Sidebar({ onAddCourse, onOpenGoalModal }: SidebarProps) {
   const { user } = useAuthUser();
-  
+
   const goalData = {
     title: user?.goalsStats?.latestGoal?.title || '',
     studiedHours: user?.goalsStats?.latestGoal?.current || 0,
@@ -18,9 +19,11 @@ export function Sidebar({ onAddCourse, onOpenGoalModal }: SidebarProps) {
   };
 
   return (
-    <div className="space-y-6">
-      <HoursGoal userGoals={goalData} />
-      <QuickActions onAddCourse={onAddCourse} onOpenGoalModal={onOpenGoalModal} />
-    </div>
+    <FadeSlide>
+      <div className="space-y-6">
+        <HoursGoal userGoals={goalData} />
+        <QuickActions onAddCourse={onAddCourse} onOpenGoalModal={onOpenGoalModal} />
+      </div>
+    </FadeSlide>
   );
 }

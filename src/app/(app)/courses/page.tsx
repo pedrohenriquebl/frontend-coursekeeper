@@ -9,6 +9,7 @@ import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
 import { CoursesList } from "./components/CoursesList";
 import { Course, UpdateCoursePayload } from "@/types";
 import { userService } from "@/services/api/user/userService";
+import { FadeSlide } from "@/components/animation/FadeSlide";
 
 export default function CoursesPage() {
     const { user } = useAuthUser();
@@ -83,12 +84,14 @@ export default function CoursesPage() {
 
             {hasCourses ? (
                 <>
-                    <CoursesList
-                        courses={allCourses}
-                        onEdit={handleEditCourse}
-                        onDelete={handleDeleteCourse}
-                        onViewDetails={handleViewDetails}
-                    />
+                    <FadeSlide>
+                        <CoursesList
+                            courses={allCourses}
+                            onEdit={handleEditCourse}
+                            onDelete={handleDeleteCourse}
+                            onViewDetails={handleViewDetails}
+                        />
+                    </FadeSlide>
                 </>
 
             ) : (

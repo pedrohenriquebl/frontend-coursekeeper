@@ -8,6 +8,7 @@ import { CreateGoalData, TabType } from "@/types";
 import { GoalModal } from "./components/GoalModal";
 import GoalsTab from "./components/GoalsTab";
 import GoalsList from "./components/GoalsList";
+import { FadeSlide } from "@/components/animation/FadeSlide";
 
 export default function PageGoals() {
     const {
@@ -72,18 +73,22 @@ export default function PageGoals() {
 
             <GoalsOverviewCard {...goalStats} />
 
-            <GoalsTab
-                selectedTab={selectedTab}
-                setSelectedTab={handleChangeSelect}
-                activeGoals={activeGoalsSize}
-                completedGoals={completedGoalsSize}
-                allGoals={allGoalsSize}
-                missedGoals={missedGoals}
-            />
+            <FadeSlide>
+                <GoalsTab
+                    selectedTab={selectedTab}
+                    setSelectedTab={handleChangeSelect}
+                    activeGoals={activeGoalsSize}
+                    completedGoals={completedGoalsSize}
+                    allGoals={allGoalsSize}
+                    missedGoals={missedGoals}
+                />
+            </FadeSlide>
 
             <div className="h-[600px]">
                 {hasGoals ? (
-                    <GoalsList filteredGoals={filteredGoals} />
+                    <FadeSlide>
+                        <GoalsList filteredGoals={filteredGoals} />
+                    </FadeSlide>
                 ): (
                     <div className="text-center py-12">
                         <div className="bg-gray-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
