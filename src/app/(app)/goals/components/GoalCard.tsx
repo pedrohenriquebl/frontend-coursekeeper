@@ -1,14 +1,15 @@
 import { getGoalProgress, getStatusColor, getStatusIcon } from "@/components/courses/CourseModals/CourseIcons";
 import { cn } from "@/lib/utils";
 import { Goal } from "@/types";
-import { TrendingUp, Trophy, XCircle } from "lucide-react";
+import { Trash2, TrendingUp, Trophy, XCircle } from "lucide-react";
 
 type GoalCardProps = {
     goal: Goal;
+    onDelete: (goal: Goal) => void;
 };
 
 
-export default function GoalCard({ goal }: GoalCardProps) {
+export default function GoalCard({ goal, onDelete }: GoalCardProps) {
     return (
         <div
             key={goal.id}
@@ -35,22 +36,28 @@ export default function GoalCard({ goal }: GoalCardProps) {
                             {goal.topic}
                         </span>
                     ) : (
-                        <div className="min-h-[24px]" /> 
+                        <div className="min-h-[24px]" />
                     )}
                 </div>
-                <span
-                    className={cn(
-                        "flex items-center gap-1 text-xs px-2 py-1 rounded-full",
-                        getStatusColor(goal.status),
-                    )}
-                >
-                    {getStatusIcon(goal.status)}
-                    {goal.status === "ATIVA"
-                        ? "Ativa"
-                        : goal.status === "CONCLUIDA"
-                            ? "Concluída"
-                            : "Vencida"}
-                </span>
+                <div className="flex items-center gap-2">    
+                    <span
+                        className={cn(
+                            "flex items-center gap-1 text-xs px-2 py-1 rounded-full",
+                            getStatusColor(goal.status),
+                        )}
+                    >
+                        {getStatusIcon(goal.status)}
+                        {goal.status === "ATIVA"
+                            ? "Ativa"
+                            : goal.status === "CONCLUIDA"
+                                ? "Concluída"
+                                : "Vencida"}
+                    </span>
+                    <button onClick={() => onDelete(goal)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700/50 rounded-lg">
+                        <Trash2 className="h-4 w-4" />
+                    </button>
+                </div>
+
             </div>
 
             {/* Progress Bar */}

@@ -42,5 +42,19 @@ export const goalService = {
         throw new Error(message);
       }
     }
+  },
+
+  deleteGoal: async (goalId: number, userId: number) => {
+    if (!userId) return;
+
+    try {
+      const response = await apiInstance.delete(`/goals/${userId}/${goalId}`);
+      return response.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const message = error.response?.data?.message || "Erro desconhecido";
+        throw new Error(message);
+      }
+    }
   }
 };

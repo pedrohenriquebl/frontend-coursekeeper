@@ -17,7 +17,8 @@ export default function PageGoals() {
         allGoals,
         activeGoalsSize,
         completedGoalsSize,
-        allGoalsSize
+        allGoalsSize,
+        deleteGoal
     } = useGoals();
 
     const [showAddModal, setShowAddModal] = useState(false);
@@ -87,7 +88,7 @@ export default function PageGoals() {
             <div className="h-[600px]">
                 {hasGoals ? (
                     <FadeSlide>
-                        <GoalsList filteredGoals={filteredGoals} />
+                        <GoalsList filteredGoals={filteredGoals} onDelete={deleteGoal} />
                     </FadeSlide>
                 ): (
                     <div className="text-center py-12">

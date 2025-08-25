@@ -60,6 +60,24 @@ export function useGoals() {
     [userId, recentGoals, setUser, getAllGoals]
   );
 
+  const deleteGoal = useCallback(
+    async (goalId: number) => {
+      if (!userId) return null;
+
+      try {
+        await goalService.deleteGoal(goalId, userId);
+        await recentGoals();
+        await getAllGoals();
+        const updatedUser = await userService.getMe();
+        setUser(updatedUser);
+      } catch (error) {
+        console.error("Erro ao deletar meta:", error);
+        throw new Error((error as Error).message || "Erro ao deletar meta");
+      }
+    },
+    [userId, recentGoals, setUser, getAllGoals]
+  );
+
   const activeGoalsSize = useMemo(
     () => allGoals.filter((goal) => goal.status === "ATIVA").length,
     [allGoals]
@@ -86,5 +104,6 @@ export function useGoals() {
     activeGoalsSize,
     completedGoalsSize,
     allGoalsSize,
+    deleteGoal
   };
 }
