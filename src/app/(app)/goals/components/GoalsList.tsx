@@ -27,13 +27,13 @@ export default function GoalsList({ filteredGoals, onDelete }: GoalsListProps) {
 
     return (
         <>
-            <div className={`grid grid-cols-1 lg:grid-cols-${hasFilteredGoals ? 2 : 1} gap-6 overflow-visible`}>
+            <div className={`grid grid-cols-1 lg:grid-cols-${hasFilteredGoals ? 2 : 1} gap-6 pb-4`}>
                 {hasFilteredGoals ? (
                     filteredGoals.map((goal: Goal) => (
                         <GoalCard
                             key={goal.id}
                             goal={goal}
-                            onDelete={handleDeleteClick} // 🚀 aqui
+                            onDelete={handleDeleteClick}
                         />
                     ))
                 ) : (
