@@ -5,9 +5,12 @@ import ProfileHeader from "./ProfileHeader";
 import { useProfile } from "../hooks/useProfile";
 import { User } from "@/types";
 import { ProfileCards } from "./ProfileCards";
+import { useAchievements } from "../hooks/useAchievements";
+import AchievementsCard from "./AchievementsCard";
 
 export default function ProfileClient() {
     const { updateProfile, user, uploadAvatar } = useProfile();
+    const { achievements } = useAchievements();
     const [editedProfile, setEditedProfile] = useState<User | null>(user);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -36,6 +39,8 @@ export default function ProfileClient() {
         totalStudiedHours: 0,
     };
 
+    console.log(achievements)
+
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
             <ProfileHeader
@@ -52,6 +57,8 @@ export default function ProfileClient() {
                 totalProgressInHours={generalCoursesInfo.totalStudiedHours ?? 0}
                 maxLoginStreak={user?.maxLoginStreak ?? 0}
             />
+
+            <AchievementsCard achievements={achievements} />
         </div>
     )
 }
