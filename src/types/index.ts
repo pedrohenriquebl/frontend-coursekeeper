@@ -59,6 +59,7 @@ export interface User {
   profileImage?: string;
   description?: string;
   maxLoginStreak?: number;
+  currentLoginStreak?: number;
   linkedin?: string;
   github?: string;
   website?: string;

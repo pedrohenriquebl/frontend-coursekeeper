@@ -97,34 +97,7 @@ export default function ProfileHeader({
                     </div>
 
                     <div className="flex flex-wrap gap-4 text-sm text-gray-400 mt-2 mb-2 flex-col">
-                        {!isEditing ? (
-                            <>
-                                {profile.website && (
-                                    <div className="flex items-center gap-1">
-                                        <span>🌐</span>
-                                        <a href={profile.website} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
-                                            {profile.website}
-                                        </a>
-                                    </div>
-                                )}
-                                {profile.github && (
-                                    <div className="flex items-center gap-1">
-                                        <span>🐙</span>
-                                        <a href={profile.github} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
-                                            {profile.github}
-                                        </a>
-                                    </div>
-                                )}
-                                {profile.linkedin && (
-                                    <div className="flex items-center gap-1">
-                                        <span>🔗</span>
-                                        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
-                                            {profile.linkedin}
-                                        </a>
-                                    </div>
-                                )}
-                            </>
-                        ) : (
+                        {isEditing && (
                             <>
                                 <input
                                     name="website"

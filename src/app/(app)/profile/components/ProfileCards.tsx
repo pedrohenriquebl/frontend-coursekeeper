@@ -7,14 +7,14 @@ interface ProfileCardsProps {
     totalCourses: number;
     coursesCompleted: number;
     totalProgressInHours: number;
-    maxLoginStreak: number;
+    currentLoginStreak: number;
 }
 
 export function ProfileCards({
     totalCourses,
     coursesCompleted,
     totalProgressInHours,
-    maxLoginStreak,
+    currentLoginStreak,
 }: ProfileCardsProps) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -47,7 +47,7 @@ export function ProfileCards({
                 iconColor="text-orange-400"
                 gradientFrom="rgba(251,191,36,0.2)"
                 gradientTo="rgba(245,158,11,0.2)"
-                value={maxLoginStreak}
+                value={currentLoginStreak}
                 label="Dias Consecutivos"
             />
         </div>
