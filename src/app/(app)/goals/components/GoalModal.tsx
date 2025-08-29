@@ -24,7 +24,7 @@ const goalTypes = [
 
 const topics: Topic[] = [
   "FRONTEND", "BACKEND", "DESIGN", "DATA SCIENCE",
-  "DEVOPS", "MOBILE", "FULL STACK", "OUTROS"
+  "DEVOPS", "MOBILE", "FULL STACK", "DATABASE", "OUTROS"
 ];
 
 export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
@@ -62,7 +62,7 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
     if (goalData.target <= 0) newErrors.target = "Objetivo deve ser maior que zero";
     if (!goalData.deadline) newErrors.deadline = "Prazo é obrigatório";
     if (!goalData.description) newErrors.description = "Descrição é obrigatória";
-    if (goalData.type === "HORAS_TOPICO" && !goalData.topic) {
+    if (goalData.type === "HORAS_TOPICO" || (goalData.type === "CURSOS_CONCLUIDOS" && !goalData.topic)) {
       newErrors.topic = "Tópico é obrigatório";
     }
 

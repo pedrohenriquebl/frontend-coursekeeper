@@ -22,7 +22,7 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
     const [selectedStatus, setSelectedStatus] = useState("all");
     const [courseToDelete, setCourseToDelete] = useState<Course | null>(null);
 
-    const topics = ["all", "Frontend", "Backend", "Design", "Mobile", "Data Science", "DevOps"];
+    const topics = ["all", "Frontend", "Backend", "Design", "Mobile", "Data Science", "DevOps", "Database"];
     const platforms = ["all", "Udemy", "Coursera", "YouTube", "Alura", "edX", "Pluralsight"];
     const statuses = ["all", "Não Iniciado", "Em Progresso", "Concluído", "Não Concluída"];
 

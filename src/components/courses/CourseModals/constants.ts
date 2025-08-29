@@ -8,6 +8,7 @@ export const TOPICS: Topic[] = [
   "DEVOPS",
   "MOBILE",
   "FULL STACK",
+  "DATABASE",
   "OUTROS"
 ];
 

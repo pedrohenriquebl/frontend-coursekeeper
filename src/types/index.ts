@@ -23,6 +23,7 @@ export type Topic =
   | "DEVOPS"
   | "MOBILE"
   | "FULL STACK"
+  | "DATABASE"
   | "OUTROS";
 
 export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO" | "NAO_CONCLUIDO";

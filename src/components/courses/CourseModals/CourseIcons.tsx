@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
+import css from "styled-jsx/css";
 
 export const getTopicIcon = (topic: string) => {
     switch (topic.toLowerCase()) {
@@ -31,6 +32,8 @@ export const getTopicIcon = (topic: string) => {
             return <Monitor className="h-5 w-5 text-red-400" />;
         case "mobile":
             return <Smartphone className="h-5 w-5 text-pink-400" />;
+        case "database":
+            return <Database className="h-5 w-5 text-yellow-400" />;
         default:
             return <Globe className="h-5 w-5 text-gray-400" />;
     }
@@ -59,6 +62,13 @@ export const getLanguageSymbol = (topic: string, name: string): ReactNode => {
     go: "go/go-original.svg",
     golang: "go/go-original.svg",
     rust: "rust/rust-plain.svg",
+    mongo: "mongodb/mongodb-original.svg",
+    db: "mysql/mysql-original.svg",
+    banco: "mysql/mysql-original.svg",
+    mysql: "mysql/mysql-original.svg",
+    postgres: "postgresql/postgresql-original.svg",
+    css: "css3/css3-original.svg",
+    html: "html5/html5-original.svg",
     default: "kubeflow/kubeflow-original.svg",
   };
   
