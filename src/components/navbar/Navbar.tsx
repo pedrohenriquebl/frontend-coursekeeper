@@ -25,7 +25,7 @@ export default function NavBar() {
         { name: "Dashboard", href: "/dashboard", icon: Home },
         { name: "Cursos", href: "/courses", icon: BookOpen },
         { name: "Metas", href: "/goals", icon: Target },
-        { name: "Relatórios", href: "/reports", icon: BarChart3 },
+        { name: "Relatórios", href: "/report", icon: BarChart3 },
         { name: "Perfil", href: "/profile", icon: User },
     ];
 

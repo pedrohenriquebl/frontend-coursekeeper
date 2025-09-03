@@ -26,7 +26,23 @@ export type Topic =
   | "DATABASE"
   | "OUTROS";
 
-export type CourseStatus = "NAO_INICIADO" | "EM_PROGRESSO" | "CONCLUIDO" | "NAO_CONCLUIDO";
+export type FilterTopic = Topic | "all";
+
+export type FilterPlatform = Platform | "all";
+
+export type FilterPeriod =
+  | "7days"
+  | "30days"
+  | "3months"
+  | "6months"
+  | "1year"
+  | "all";
+
+export type CourseStatus =
+  | "NAO_INICIADO"
+  | "EM_PROGRESSO"
+  | "CONCLUIDO"
+  | "NAO_CONCLUIDO";
 
 export type GoalStatus = "ATIVA" | "CONCLUIDA" | "VENCIDA";
 
@@ -35,14 +51,14 @@ export type TabType = GoalStatus | "TODAS";
 export interface GeneralCoursesInfo {
   totalCourses: number;
   totalCompletedCourses: number;
-  totalStudiedHours: number;  
+  totalStudiedHours: number;
 }
 
 export interface LatestGoalInfo {
   title: string;
   target: number;
   current: number;
-  status: GoalStatus
+  status: GoalStatus;
 }
 
 export interface GeneralGoalsInfo {
@@ -96,7 +112,10 @@ export interface Course {
   updatedAt?: string;
 }
 
-export type CreateCourseData = Omit<Course, "id" | "progress" | "rating" | "comment" | "status"> & {
+export type CreateCourseData = Omit<
+  Course,
+  "id" | "progress" | "rating" | "comment" | "status"
+> & {
   progress?: number;
   rating?: number;
   comment?: string;
