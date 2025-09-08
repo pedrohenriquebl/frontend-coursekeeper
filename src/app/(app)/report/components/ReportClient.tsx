@@ -1,18 +1,63 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ReportHeader from "./ReportHeader";
 import UserInformation from "./UserInformation";
 import ReportFilterSelect from "./ReportFilterSelect";
 import { FilterPeriod, FilterPlatform, FilterTopic } from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
+import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
+import { Key } from "lucide-react";
+import KeyMetrics from "./KeyMetrics";
 
 export default function ReportClient() {
-    const { user } = useAuthUser();    
+    const { user } = useAuthUser();
+    const { allCourses } = useCourse();
     const [isExporting, setIsExporting] = useState(false);
     const [period, setPeriod] = useState<FilterPeriod>("7days");
     const [topic, setTopic] = useState<FilterTopic>("all");
     const [platform, setPlatform] = useState<FilterPlatform>("all");
+
+    const getStartDate = (period: FilterPeriod) => {
+        const now = new Date();
+        switch (period) {
+            case "7days":
+                return new Date(now.setDate(now.getDate() - 7));
+            case "30days":
+                return new Date(now.setDate(now.getDate() - 30));
+            case "3months":
+                return new Date(now.setMonth(now.getMonth() - 3));
+            case "6months":
+                return new Date(now.setMonth(now.getMonth() - 6));
+            case "1year":
+                return new Date(now.setFullYear(now.getFullYear() - 1));
+            default:
+                return null;
+        }
+    };
+
+    const filteredCourses = useMemo(() => {
+        if (!allCourses) return [];
+        if (period === "all" && topic === "all" && platform === "all") return allCourses;
+
+        const startDate = getStartDate(period);
+        if (!startDate) return allCourses;
+
+        return allCourses.filter(course => {
+            const courseDate = course.endDate
+                ? new Date(course.endDate)
+                : (course.startDate ? new Date(course.startDate) : null);
+            const matchesPeriod = !startDate || (courseDate && courseDate >= startDate);
+            const matchesTopic = topic === "all" || course.topic === topic;
+            const matchesPlatform = platform === "all" || course.platform === platform;
+            return matchesPeriod && matchesTopic && matchesPlatform;
+        });
+    }, [allCourses, period, topic, platform]);
+
+    useEffect(() => {
+        console.log('allCourses:', allCourses);
+        console.log("Cursos filtrados:", filteredCourses);
+    }, [filteredCourses, allCourses]);
 
     if (!user) return null;
 
@@ -57,6 +102,7 @@ export default function ReportClient() {
                     if (platform) setPlatform(platform);
                 }}
             />
+            <KeyMetrics courses={filteredCourses} />
         </div>
     )
 }

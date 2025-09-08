@@ -30,6 +30,7 @@ export const courseService = {
     try {
       const response = await apiInstance.get(`/courses/${userId}`);
       return response.data || [];
+      
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response?.status === 404) {
