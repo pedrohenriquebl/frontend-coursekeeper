@@ -7,8 +7,10 @@ import ReportFilterSelect from "./ReportFilterSelect";
 import { FilterPeriod, FilterPlatform, FilterTopic } from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
 import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
-import { Key } from "lucide-react";
 import KeyMetrics from "./KeyMetrics";
+import FilteredCourses from "./FilteredCourses";
+
+type PeriodOption = { value: FilterPeriod; label: string };
 
 export default function ReportClient() {
     const { user } = useAuthUser();
@@ -38,18 +40,20 @@ export default function ReportClient() {
 
     const filteredCourses = useMemo(() => {
         if (!allCourses) return [];
-        if (period === "all" && topic === "all" && platform === "all") return allCourses;
 
         const startDate = getStartDate(period);
-        if (!startDate) return allCourses;
 
         return allCourses.filter(course => {
             const courseDate = course.endDate
                 ? new Date(course.endDate)
                 : (course.startDate ? new Date(course.startDate) : null);
-            const matchesPeriod = !startDate || (courseDate && courseDate >= startDate);
+
+            const matchesPeriod =
+                period === "all" || (startDate && courseDate && courseDate >= startDate);
+
             const matchesTopic = topic === "all" || course.topic === topic;
             const matchesPlatform = platform === "all" || course.platform === platform;
+
             return matchesPeriod && matchesTopic && matchesPlatform;
         });
     }, [allCourses, period, topic, platform]);
@@ -70,7 +74,7 @@ export default function ReportClient() {
         alert("Relatório exportado com sucesso! (funcionalidade simulada)");
     };
 
-    const periods = [
+    const periods: PeriodOption[] = [
         { value: "7days", label: "Últimos 7 dias" },
         { value: "30days", label: "Últimos 30 dias" },
         { value: "3months", label: "Últimos 3 meses" },
@@ -103,6 +107,13 @@ export default function ReportClient() {
                 }}
             />
             <KeyMetrics courses={filteredCourses} />
+            <FilteredCourses
+                period={period}
+                topic={topic}
+                platform={platform}
+                periods={periods}
+                courses={filteredCourses}
+            />
         </div>
     )
 }
