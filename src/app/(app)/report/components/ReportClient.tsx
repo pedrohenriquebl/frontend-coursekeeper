@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import ReportHeader from "./ReportHeader";
 import UserInformation from "./UserInformation";
 import ReportFilterSelect from "./ReportFilterSelect";
-import { FilterPeriod, FilterPlatform, FilterTopic } from "@/types";
+import { FilterPeriod, FilterPlatform, FilterStatus, FilterTopic } from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
 import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
 import KeyMetrics from "./KeyMetrics";
@@ -19,6 +19,7 @@ export default function ReportClient() {
     const [period, setPeriod] = useState<FilterPeriod>("7days");
     const [topic, setTopic] = useState<FilterTopic>("all");
     const [platform, setPlatform] = useState<FilterPlatform>("all");
+    const [status, setStatus] = useState<FilterStatus>("all");
 
     const getStartDate = (period: FilterPeriod) => {
         const now = new Date();
@@ -53,10 +54,11 @@ export default function ReportClient() {
 
             const matchesTopic = topic === "all" || course.topic === topic;
             const matchesPlatform = platform === "all" || course.platform === platform;
+            const matchesStatus = status === "all" || course.status === status;
 
-            return matchesPeriod && matchesTopic && matchesPlatform;
+            return matchesPeriod && matchesTopic && matchesPlatform && matchesStatus;
         });
-    }, [allCourses, period, topic, platform]);
+    }, [allCourses, period, topic, platform, status]);
 
     useEffect(() => {
         console.log('allCourses:', allCourses);
@@ -100,10 +102,12 @@ export default function ReportClient() {
                 topic={topic}
                 platform={platform}
                 periods={periods}
-                setReportFilters={({ period, topic, platform }) => {
+                status={status}
+                setReportFilters={({ period, topic, platform, status }) => {
                     if (period) setPeriod(period);
                     if (topic) setTopic(topic);
                     if (platform) setPlatform(platform);
+                    if (status) setStatus(status);
                 }}
             />
             <KeyMetrics courses={filteredCourses} />

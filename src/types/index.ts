@@ -30,6 +30,8 @@ export type FilterTopic = Topic | "all";
 
 export type FilterPlatform = Platform | "all";
 
+export type FilterStatus = CourseStatus | "all";
+
 export type FilterPeriod =
   | "7days"
   | "30days"

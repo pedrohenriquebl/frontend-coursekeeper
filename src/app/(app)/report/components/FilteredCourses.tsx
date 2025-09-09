@@ -69,12 +69,12 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                                 <div className="space-y-2 text-xs">
                                                     <div className="flex justify-between">
                                                         <span className="text-gray-400">Plataforma:</span>
-                                                        <span className="text-gray-200">{course.platform}</span>
+                                                        <span className="text-gray-200">{course.platform.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
                                                     </div>
 
                                                     <div className="flex justify-between">
                                                         <span className="text-gray-400">Tópico:</span>
-                                                        <span className="text-emerald-400">{course.topic}</span>
+                                                        <span className="text-emerald-400">{course.topic.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
                                                     </div>
 
                                                     <div className="flex justify-between">
@@ -116,7 +116,7 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                                     <div className="flex justify-between">
                                                         <span className="text-gray-400">Início:</span>
                                                         <span className="text-gray-200">
-                                                            {new Date(course.startDate).toLocaleDateString("pt-BR")}
+                                                            {course.startDate.split("T")[0].split("-").reverse().join("/")}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -127,11 +127,13 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                                         <div
                                                             className={cn(
                                                                 "h-2 rounded-full transition-all duration-300",
-                                                                course.status === "CONCLUIDO"
-                                                                    ? "bg-green-500"
-                                                                    : course.status === "EM_PROGRESSO"
-                                                                        ? "bg-blue-500"
-                                                                        : "bg-gray-500",
+                                                                course.status === "NAO_CONCLUIDO"
+                                                                    ? "bg-red-500"
+                                                                    : course.status === "CONCLUIDO"
+                                                                        ? "bg-green-500"
+                                                                        : course.status === "EM_PROGRESSO"
+                                                                            ? "bg-blue-500"
+                                                                            : "bg-gray-500",
                                                             )}
                                                             style={{ width: `${course.progress}%` }}
                                                         />

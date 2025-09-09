@@ -1,20 +1,23 @@
-import { FilterPeriod, FilterTopic, FilterPlatform } from "@/types";
+import { FilterPeriod, FilterTopic, FilterPlatform, FilterStatus } from "@/types";
 
 type ReportFilterSelectProps = {
     period: FilterPeriod;
     topic: FilterTopic;
     platform: FilterPlatform;
+    status: FilterStatus;
     periods: { value: string; label: string }[];
     setReportFilters: (filters: {
         period?: FilterPeriod;
         topic?: FilterTopic;
         platform?: FilterPlatform;
+        status?: FilterStatus;
     }) => void;
 };
 export default function ReportFilterSelect({
     period,
     topic,
     platform,
+    status,
     periods,
     setReportFilters
 }: ReportFilterSelectProps) {
@@ -82,7 +85,7 @@ export default function ReportFilterSelect({
                     >
                         {topics.map((topic) => (
                             <option key={topic} value={topic} className="bg-gray-800">
-                                {topic === "all" ? "Todos os tópicos" : topic}
+                                {topic === "all" ? "Todos os tópicos" : topic.toLocaleLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
                             </option>
                         ))}
                     </select>
@@ -107,7 +110,31 @@ export default function ReportFilterSelect({
                                 value={platform}
                                 className="bg-gray-800"
                             >
-                                {platform === "all" ? "Todas as plataformas" : platform}
+                                {platform === "all" ? "Todas as plataformas" : platform.toLocaleLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">
+                        Status
+                    </label>
+                    <select
+                        value={status}
+                        onChange={(e) =>
+                            setReportFilters({
+                                status: e.target.value as FilterStatus,
+                            })
+                        }
+                        className="w-full px-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    >
+                        {["all", "NAO_INICIADO", "EM_PROGRESSO", "CONCLUIDO", "NAO_CONCLUIDO"].map((status) => (
+                            <option
+                                key={status}
+                                value={status}
+                                className="bg-gray-800"
+                            >
+                                {status === "all" ? "Todos os status" : status === "NAO_INICIADO" ? "Não Iniciado" : status === "EM_PROGRESSO" ? "Em Progresso" : status === "CONCLUIDO" ? "Concluído" : "Não Concluído"}
                             </option>
                         ))}
                     </select>
