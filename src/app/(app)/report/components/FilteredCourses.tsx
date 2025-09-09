@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Course, FilterPeriod, FilterPlatform, FilterTopic } from "@/types";
 import { BookOpen, Filter, Star, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 type FilteredCoursesProps = {
     courses: Course[];
@@ -14,7 +15,9 @@ type FilteredCoursesProps = {
 
 export default function FilteredCourses({ courses, topic, platform, period, periods }: FilteredCoursesProps) {
     const [expanded, setExpanded] = useState(false);
-    const visibleCourses = expanded ? courses : courses.slice(0, 6);
+    const isMobile = useMediaQuery("(max-width: 768px)");
+    const sliceCount = isMobile ? 4 : 8;
+    const visibleCourses = expanded ? courses : courses.slice(0, sliceCount);
 
     return (
         <>
@@ -49,7 +52,7 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
 
                         {courses.length > 0 ? (
                             <>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                     {visibleCourses.map((course) => {
                                         const duration =
                                             parseInt(course.duration?.toString().replace(/\D/g, "") || "0") || 0;
@@ -58,7 +61,7 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                         return (
                                             <div
                                                 key={course.id}
-                                                className="bg-gray-700/30 rounded-lg p-4 border border-gray-600/50 hover:border-emerald-500/50 transition-colors duration-200"
+                                                className="bg-gray-700/30 rounded-lg p-3 border border-gray-600/50 hover:border-emerald-500/50 transition-colors duration-200 text-xs"
                                             >
                                                 <div className="mb-3">
                                                     <h4 className="font-medium text-white text-sm line-clamp-2">
@@ -66,7 +69,7 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                                     </h4>
                                                 </div>
 
-                                                <div className="space-y-2 text-xs">
+                                                <div className="space-y-1 text-xs">
                                                     <div className="flex justify-between">
                                                         <span className="text-gray-400">Plataforma:</span>
                                                         <span className="text-gray-200">{course.platform.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
@@ -145,7 +148,7 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                 </div>
 
                                 {/* Botão Mostrar mais/menos */}
-                                {courses.length > 6 && (
+                                {courses.length > sliceCount && (
                                     <div className="flex justify-center mt-6">
                                         <button
                                             onClick={() => setExpanded(!expanded)}
