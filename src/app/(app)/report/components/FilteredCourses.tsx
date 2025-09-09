@@ -109,9 +109,6 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                                                         )}
                                                                     />
                                                                 ))}
-                                                                <span className="text-gray-200 ml-1">
-                                                                    {course.rating}
-                                                                </span>
                                                             </div>
                                                         </div>
                                                     )}

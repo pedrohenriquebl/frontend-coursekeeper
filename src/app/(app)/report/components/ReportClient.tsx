@@ -9,6 +9,10 @@ import { useAuthUser } from "@/context/authUserContext";
 import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
 import KeyMetrics from "./KeyMetrics";
 import FilteredCourses from "./FilteredCourses";
+import MonthlyProgress from "./MonthlyProgress";
+import TopicBreakDown from "./TopicBreakDown";
+import PlatformBreakDown from "./PlatformBreakDown";
+import RecentCompletions from "./RecentCompletions";
 
 type PeriodOption = { value: FilterPeriod; label: string };
 
@@ -86,7 +90,7 @@ export default function ReportClient() {
     ];
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col">
             <ReportHeader onExport={handleExportPDF} isExporting={isExporting} />
             <UserInformation
                 name={`${user?.firstName} ${user?.lastName}`}
@@ -118,6 +122,14 @@ export default function ReportClient() {
                 periods={periods}
                 courses={filteredCourses}
             />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                <MonthlyProgress courses={filteredCourses} />
+                <TopicBreakDown courses={filteredCourses} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <PlatformBreakDown courses={filteredCourses} />
+                <RecentCompletions courses={filteredCourses} />
+            </div>
         </div>
     )
 }
