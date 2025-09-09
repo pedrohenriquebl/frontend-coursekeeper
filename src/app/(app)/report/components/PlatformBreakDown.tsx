@@ -43,7 +43,7 @@ export default function PlatformBreakDown({ courses }: PlatformBreakDownProps) {
     return (
         <>
             {hasCourses ? (
-                <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+                <div className="h-full bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
                     <h3 className="text-lg font-semibold text-white mb-6">
                         Distribuição por Plataforma
                     </h3>

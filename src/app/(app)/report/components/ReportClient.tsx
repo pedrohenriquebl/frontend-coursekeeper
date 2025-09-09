@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ReportHeader from "./ReportHeader";
 import UserInformation from "./UserInformation";
 import ReportFilterSelect from "./ReportFilterSelect";
@@ -13,6 +13,8 @@ import MonthlyProgress from "./MonthlyProgress";
 import TopicBreakDown from "./TopicBreakDown";
 import PlatformBreakDown from "./PlatformBreakDown";
 import RecentCompletions from "./RecentCompletions";
+import Resumee from "./Resumee";
+import { FadeSlide } from "@/components/animation/FadeSlide";
 
 type PeriodOption = { value: FilterPeriod; label: string };
 
@@ -64,11 +66,6 @@ export default function ReportClient() {
         });
     }, [allCourses, period, topic, platform, status]);
 
-    useEffect(() => {
-        console.log('allCourses:', allCourses);
-        console.log("Cursos filtrados:", filteredCourses);
-    }, [filteredCourses, allCourses]);
-
     if (!user) return null;
 
     const handleExportPDF = async () => {
@@ -92,6 +89,7 @@ export default function ReportClient() {
     return (
         <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col">
             <ReportHeader onExport={handleExportPDF} isExporting={isExporting} />
+
             <UserInformation
                 name={`${user?.firstName} ${user?.lastName}`}
                 email={user?.email}
@@ -101,6 +99,7 @@ export default function ReportClient() {
                 periods={periods}
                 userImg={user?.profileImage}
             />
+
             <ReportFilterSelect
                 period={period}
                 topic={topic}
@@ -114,22 +113,67 @@ export default function ReportClient() {
                     if (status) setStatus(status);
                 }}
             />
-            <KeyMetrics courses={filteredCourses} />
-            <FilteredCourses
-                period={period}
-                topic={topic}
-                platform={platform}
-                periods={periods}
-                courses={filteredCourses}
-            />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-                <MonthlyProgress courses={filteredCourses} />
-                <TopicBreakDown courses={filteredCourses} />
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <PlatformBreakDown courses={filteredCourses} />
-                <RecentCompletions courses={filteredCourses} />
-            </div>
+
+            {filteredCourses.length > 0 ? (
+                <>
+                    <FadeSlide>
+                        <KeyMetrics courses={filteredCourses} />
+                    </FadeSlide>
+
+                    <FadeSlide>
+                        <FilteredCourses
+                            period={period}
+                            topic={topic}
+                            platform={platform}
+                            periods={periods}
+                            courses={filteredCourses}
+                        />
+                    </FadeSlide>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4 items-stretch">
+                        <FadeSlide>
+                            <MonthlyProgress courses={filteredCourses} />
+                        </FadeSlide>
+                        <FadeSlide>
+                            <TopicBreakDown courses={filteredCourses} />
+                        </FadeSlide>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+                        <FadeSlide>
+                            <PlatformBreakDown courses={filteredCourses} />
+                        </FadeSlide>
+                        <FadeSlide>
+                            <RecentCompletions courses={filteredCourses} />
+                        </FadeSlide>
+                    </div>
+
+                    <div className="mt-8 bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+                        <FadeSlide>
+                            <Resumee
+                                name={`${user?.firstName} ${user?.lastName}`}
+                                email={user?.email}
+                                memberSince={new Date(user?.createdAt).toLocaleDateString("pt-BR")}
+                                courses={filteredCourses}
+                                period={period}
+                                periods={periods}
+                                topic={topic}
+                                platform={platform}
+                            />
+                        </FadeSlide>
+                    </div>
+                </>
+            ) : (
+                <div className="flex flex-col items-center justify-center h-[40vh]">
+                    <h2 className="text-2xl font-semibold text-white mb-4">
+                        Nenhum curso encontrado
+                    </h2>
+                    <p className="text-gray-400">
+                        Tente ajustar os filtros para ver seus cursos.
+                    </p>
+                </div>
+            )}
         </div>
-    )
+    );
+
 }
