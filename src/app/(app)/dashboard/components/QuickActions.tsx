@@ -28,7 +28,7 @@ export function QuickActions({ onAddCourse, onOpenGoalModal }: QuickActionsProps
           <span className="text-sm text-gray-300">Definir Meta</span>
         </button>
         <button
-          onClick={() => router.push('/relatorios')}
+          onClick={() => router.push('/report')}
           className="cursor-pointer w-full text-left p-3 rounded-lg hover:bg-gray-700/50 transition-colors duration-200 flex items-center gap-3"
         >
           <Calendar className="h-4 w-4 text-green-400" />

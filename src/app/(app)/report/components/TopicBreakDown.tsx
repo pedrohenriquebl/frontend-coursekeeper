@@ -8,6 +8,7 @@ import {
     YAxis,
     Tooltip,
     CartesianGrid,
+    Cell,
     RadialBarChart,
     RadialBar,
     RadarChart,
@@ -22,8 +23,28 @@ type TopicBreakDownProps = {
     courses: Course[];
 };
 
+type TopicPayload = {
+    topic: string;
+    hours: number;
+    courses: number;
+    fill: string;
+};
+
+type TopicTooltipProps = {
+    active?: boolean;
+    payload?: Array<{
+        payload: TopicPayload;
+        value?: number;
+        name?: string;
+        color?: string;
+    }>;
+    label?: string | number;
+};
+
 export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
-    const [chartType, setChartType] = useState<"progressbar" | "bar" | "radial" | "radar">("progressbar");
+    const [chartType, setChartType] = useState<
+        "progressbar" | "bar" | "radial" | "radar"
+    >("progressbar");
     const hasCourses = Array.isArray(courses) && courses.length > 0;
 
     const colors = ["#34d399", "#3b82f6", "#8b5cf6", "#facc15", "#ef4444"];
@@ -39,7 +60,10 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
                     ? course.studiedHours || 0
                     : Math.round(((course.duration || 0) * (course.progress || 0)) / 100);
 
-            const topic = course.topic.toLowerCase().replace(/\b\w/g, char => char.toUpperCase()) || "Outros";
+            const topic =
+                (course.topic || "Outros")
+                    .toLowerCase()
+                    .replace(/\b\w/g, (char) => char.toUpperCase()) || "Outros";
 
             if (!grouped[topic]) grouped[topic] = { hours: 0, courses: 0 };
 
@@ -59,6 +83,19 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
 
     const topicBreakDown = groupByTopic(courses);
     const totalHours = topicBreakDown.reduce((acc, t) => acc + t.hours, 0) || 1;
+    const CustomTooltip = ({ active, payload }: TopicTooltipProps) => {
+        if (!active || !payload || !payload.length) return null;
+
+        const data = payload[0].payload; // TopicPayload
+        return (
+            <div className="bg-gray-800/90 text-white rounded-md p-2 text-sm shadow-lg">
+                <div className="font-semibold">{data.topic}</div>
+                <div className="text-xs text-gray-200">
+                    {data.hours}h • {data.courses} curso{data.courses > 1 ? "s" : ""}
+                </div>
+            </div>
+        );
+    };
 
     return (
         <>
@@ -72,7 +109,9 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
                             label=""
                             value={chartType}
                             onChange={(e) =>
-                                setChartType(e.target.value as "progressbar" | "bar" | "radial" | "radar")
+                                setChartType(
+                                    e.target.value as "progressbar" | "bar" | "radial" | "radar"
+                                )
                             }
                             options={[
                                 { value: "progressbar", label: "Progressbar" },
@@ -91,10 +130,8 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
                                 const hoursPercent = (topic.hours / totalHours) * 100;
                                 return (
                                     <div key={index} className="flex items-center gap-4">
-                                        <div className="w-20 text-sm text-gray-400 text-left">
-                                            {topic.topic
-                                                .toLowerCase()
-                                                .replace(/\b\w/g, (char) => char.toUpperCase())}
+                                        <div className="w-24 text-sm text-gray-400 text-left">
+                                            {topic.topic}
                                         </div>
                                         <div className="flex-1">
                                             <div className="bg-gray-600 rounded-full h-4 relative">
@@ -112,7 +149,7 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="w-16 text-sm text-gray-400 text-center">
+                                        <div className="w-20 text-sm text-gray-400 text-center">
                                             {`${topic.courses} curso${topic.courses > 1 ? "s" : ""}`}
                                         </div>
                                     </div>
@@ -125,13 +162,15 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
                     {chartType === "bar" && (
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={topicBreakDown}>
-                                <XAxis dataKey="topic" />
-                                <YAxis />
-                                <Tooltip />
-                                <CartesianGrid strokeDasharray="3 3" />
-                                {topicBreakDown.map((t, i) => (
-                                    <Bar key={i} dataKey="hours" fill={t.fill} />
-                                ))}
+                                <XAxis dataKey="topic" tick={{ fill: "#cbd5e1" }} />
+                                <YAxis tick={{ fill: "#cbd5e1" }} />
+                                <Tooltip content={<CustomTooltip />} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#2d3748" />
+                                <Bar dataKey="hours" radius={[4, 4, 4, 4]}>
+                                    {topicBreakDown.map((entry, idx) => (
+                                        <Cell key={`cell-${idx}`} fill={entry.fill} />
+                                    ))}
+                                </Bar>
                             </BarChart>
                         </ResponsiveContainer>
                     )}
@@ -145,19 +184,20 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
                                     cy="50%"
                                     innerRadius="10%"
                                     outerRadius="80%"
-                                    barSize={15}
+                                    barSize={16}
                                     data={topicBreakDown}
                                 >
                                     <RadialBar
                                         dataKey="hours"
                                         background
-                                        label={{ position: "insideStart", fill: "#fff" }}
+                                        label={{ position: "insideStart", fill: "#fff", formatter: () => "" }}
+                                        cornerRadius={8}
                                     />
-                                    <Tooltip />
+                                    <Tooltip content={<CustomTooltip />} />
                                 </RadialBarChart>
                             </ResponsiveContainer>
-                            {/* Legenda manual */}
-                            <div className="flex gap-4 mt-4 flex-wrap">
+
+                            <div className="flex gap-4 mt-4 flex-wrap justify-center">
                                 {topicBreakDown.map((t, i) => (
                                     <div key={i} className="flex items-center gap-2">
                                         <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: t.fill }} />
@@ -175,14 +215,8 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
                                 <PolarGrid />
                                 <PolarAngleAxis dataKey="topic" />
                                 <PolarRadiusAxis />
-                                <Radar
-                                    name="Horas"
-                                    dataKey="hours"
-                                    stroke="#fff"
-                                    fillOpacity={0.6}
-                                    fill="#34d399"
-                                />
-                                <Tooltip />
+                                <Radar name="Horas" dataKey="hours" stroke="#fff" fillOpacity={0.6} fill="#34d399" />
+                                <Tooltip content={<CustomTooltip />} />
                             </RadarChart>
                         </ResponsiveContainer>
                     )}

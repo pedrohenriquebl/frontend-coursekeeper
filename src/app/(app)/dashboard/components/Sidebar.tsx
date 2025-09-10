@@ -10,7 +10,7 @@ interface SidebarProps {
 
 export function Sidebar({ onAddCourse, onOpenGoalModal }: SidebarProps) {
   const { user } = useAuthUser();
-
+  
   const goalData = {
     title: user?.goalsStats?.latestGoal?.title || '',
     studiedHours: user?.goalsStats?.latestGoal?.current || 0,
