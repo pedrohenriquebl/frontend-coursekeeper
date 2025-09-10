@@ -106,7 +106,7 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-xl w-full max-w-2xl max-h-[90vh] sm:max-h-[740px] overflow-y-auto scrollbar-gutter-stable">
+      <div className="bg-gray-800 rounded-xl w-full max-w-2xl max-h-[90vh] sm:max-h-[850px] overflow-y-auto scrollbar-gutter-stable">
         <div className="p-6">
           <ModalHeader
             title="Criar Nova Meta"

@@ -79,7 +79,7 @@ export default function MonthlyProgress({ courses }: MonthlyProgressProps) {
                                         <div className="bg-gray-600 rounded-full h-4 relative">
                                             <div
                                                 className="h-4 bg-gradient-to-r from-emerald-600 to-green-600 rounded-full transition-all duration-500 flex items-center justify-end pr-2"
-                                                style={{ width: `${hoursPercent}%` }}
+                                                style={{ width: `${hoursPercent}%`, minWidth: "2rem" }}
                                             >
                                                 <span className="text-white text-xs font-medium">
                                                     {month.hours}h
