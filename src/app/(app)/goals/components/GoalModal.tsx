@@ -9,6 +9,7 @@ import { ModalActions } from "./ModalActions";
 import { ModalHeader } from "./ModalHeader";
 import { toDateString } from "@/utils/dateUtils";
 import toast from "react-hot-toast";
+import { on } from "events";
 
 interface GoalModalProps {
   showModal: boolean;
@@ -92,8 +93,22 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
       });
       onClose();
     } catch (error) {
+      onClose();
       const message = (error as Error)?.message || "Erro ao criar meta";
-      toast.error(message);
+      toast.error(message, {
+        style: {
+          background: "#2d3748",
+          color: "#fff",
+          border: "1px solid #e53e3e",
+          padding: "16px 24px",
+          borderRadius: "12px",
+          fontWeight: "500",
+        },
+        iconTheme: {
+          primary: "#e53e3e",
+          secondary: "#ffffff",
+        },
+      });
     } finally {
       setIsSubmitting(false);
     }
