@@ -36,6 +36,16 @@ export default function ProfileHeader({
         }
     };
 
+    const planColors: Record<string, string> = {
+        FREE: "bg-gray-700 text-gray-200 border border-gray-500",
+        GOLD: "bg-yellow-500/20 text-yellow-400 border border-yellow-500/40",
+        PLATINUM: "bg-emerald-600/20 text-emerald-400 border border-emerald-500/40",
+    };
+
+    const planStyle =
+        planColors[profile.subscriptionPlan] ||
+        "bg-gray-700 text-gray-200 border border-gray-500";
+
     return (
         <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-gray-700/50 mb-8">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
@@ -60,7 +70,17 @@ export default function ProfileHeader({
                                     placeholder="Seu nome"
                                 />
                             ) : (
-                                <h1 className="text-2xl font-bold text-white">{profile.firstName}</h1>
+                                <div className="flex items-center gap-3">
+                                    <h1 className="text-2xl font-bold text-white">{profile.firstName}</h1>
+                                    <span
+                                        className={cn(
+                                            "px-3 py-1 text-xs font-semibold rounded-full",
+                                            planStyle
+                                        )}
+                                    >
+                                        {profile.subscriptionPlan.toLocaleLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
+                                    </span>
+                                </div>
                             )}
                             <div className="flex items-center gap-2 text-gray-400 mt-1">
                                 <Mail className="h-4 w-4" />

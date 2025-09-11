@@ -84,6 +84,8 @@ export interface User {
   createdAt: string;
   generalCoursesInfo?: GeneralCoursesInfo;
   goalsStats?: GeneralGoalsInfo;
+  subscriptionPlan: "FREE" | "GOLD" | "PLATINUM";
+  subscriptionValidUntil?: string;
 }
 
 export interface LoginResponse {
