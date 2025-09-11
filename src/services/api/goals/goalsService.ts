@@ -6,13 +6,14 @@ export const goalService = {
     if (!userId) return;
 
     try {
-        const response = await apiInstance.post(`/goals/${userId}`, goalData);
-        return response.data;
+      const response = await apiInstance.post(`/goals/${userId}`, goalData);
+      return response.data;
     } catch (error) {
       if (isAxiosError(error)) {
         const message = error.response?.data?.message || "Erro desconhecido";
         throw new Error(message);
       }
+      throw error;
     }
   },
 
@@ -56,5 +57,5 @@ export const goalService = {
         throw new Error(message);
       }
     }
-  }
+  },
 };

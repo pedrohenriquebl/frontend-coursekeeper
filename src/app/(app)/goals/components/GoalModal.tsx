@@ -8,11 +8,12 @@ import { GoalPreview } from "./GoalPreview";
 import { ModalActions } from "./ModalActions";
 import { ModalHeader } from "./ModalHeader";
 import { toDateString } from "@/utils/dateUtils";
+import toast from "react-hot-toast";
 
 interface GoalModalProps {
   showModal: boolean;
   onClose: () => void;
-  onSave: (goal: CreateGoalData) => void;
+  onSave: (goal: CreateGoalData) => Promise<void>;
 }
 
 const goalTypes = [
@@ -80,7 +81,6 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
         deadline: new Date(goalData.deadline + "T23:59:59.999Z").toISOString(),
       });
 
-      // Resetar formulário
       setGoalData({
         title: "",
         type: "HORAS_TOTAIS",
@@ -91,6 +91,9 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
         topic: null,
       });
       onClose();
+    } catch (error) {
+      const message = (error as Error)?.message || "Erro ao criar meta";
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }

@@ -29,12 +29,7 @@ export default function PageGoals() {
     };
 
     const handleCreateGoal = async (goalData: CreateGoalData) => {
-        try {
-            await createGoal(goalData);
-            setShowAddModal(false);
-        } catch (error) {
-            console.error("Error creating goal:", error);
-        }
+        await createGoal(goalData);
     };
 
     const filteredGoals = allGoals.filter(goal => {
@@ -49,7 +44,7 @@ export default function PageGoals() {
         goalsCompleted: overviewGoals?.goalsCompleted || 0,
         goalsRating: overviewGoals?.goalsRating || 0,
         totalProgressInHours: overviewGoals?.totalProgressInHours || 0,
-        totalGoalInHours: overviewGoals?.totalGoalInHours || 0,        
+        totalGoalInHours: overviewGoals?.totalGoalInHours || 0,
     }
 
     const hasGoals = Array.isArray(allGoals) && allGoals.length > 0;
@@ -90,14 +85,14 @@ export default function PageGoals() {
                     <FadeSlide>
                         <GoalsList filteredGoals={filteredGoals} onDelete={deleteGoal} />
                     </FadeSlide>
-                ): (
+                ) : (
                     <div className="text-center py-12">
                         <div className="bg-gray-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                             <BookAlertIcon className="h-8 w-8 text-gray-400" />
                         </div>
                         <h3 className="text-lg font-medium text-white mb-2">Nenhuma meta definida</h3>
                     </div>
-                )}                
+                )}
             </div>
 
             <GoalModal

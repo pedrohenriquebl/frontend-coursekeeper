@@ -53,8 +53,7 @@ export function useGoals() {
         const updatedUser = await userService.getMe();
         setUser(updatedUser);
       } catch (error) {
-        console.error("Erro ao criar nova meta:", error);
-        throw new Error((error as Error).message || "Erro ao criar nova meta");
+        throw error;
       }
     },
     [userId, recentGoals, setUser, getAllGoals]
@@ -104,6 +103,6 @@ export function useGoals() {
     activeGoalsSize,
     completedGoalsSize,
     allGoalsSize,
-    deleteGoal
+    deleteGoal,
   };
 }
