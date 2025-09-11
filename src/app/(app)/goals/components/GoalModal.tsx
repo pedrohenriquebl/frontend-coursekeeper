@@ -9,7 +9,6 @@ import { ModalActions } from "./ModalActions";
 import { ModalHeader } from "./ModalHeader";
 import { toDateString } from "@/utils/dateUtils";
 import toast from "react-hot-toast";
-import { on } from "events";
 
 interface GoalModalProps {
   showModal: boolean;
@@ -58,7 +57,6 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação
     const newErrors: { [key: string]: string } = {};
     if (!goalData.title) newErrors.title = "Título é obrigatório";
     if (goalData.target <= 0) newErrors.target = "Objetivo deve ser maior que zero";
