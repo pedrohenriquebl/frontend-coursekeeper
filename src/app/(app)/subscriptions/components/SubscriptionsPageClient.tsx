@@ -3,49 +3,23 @@
 import { useState } from "react";
 import SubscriptionPlans from "./SubscriptionPlans";
 import SubscriptionDialog from "./SubscriptionDialog";
-import { SubscriptionPlan } from "@/types";
+import { Duration, SubscriptionPlan } from "@/types";
 import ConfirmDowngradeModal from "./ConfirmDowngradeModal";
-import toast from "react-hot-toast";
+import { useSubscription } from "../hooks/useSubscription";
+import { useAuthUser } from "@/context/authUserContext";
 
 export default function SubscriptionsPageClient() {
     const [open, setOpen] = useState(false);
     const [selectedPlan, setSelectedPlan] = useState<SubscriptionPlan | null>(null);
-    const [currentPlan] = useState<SubscriptionPlan>("PLATINUM");
     const [showDowngradeModal, setShowDowngradeModal] = useState(false);
     const [downgradeTarget, setDowngradeTarget] = useState<SubscriptionPlan | null>(null);
+    const { currentPlan, changeSubscription, isDowngrade } = useSubscription();
+    const { user } = useAuthUser();
 
-    const showSuccessToast = (newPlan: SubscriptionPlan) => {
-        const planNames = {
-            FREE: "Free",
-            GOLD: "Gold",
-            PLATINUM: "Platinum"
-        };
-
-        toast.success(`Plano alterado para ${planNames[newPlan]} com sucesso!`, {
-            style: {
-                background: "#2d3748",
-                color: "#fff",
-                border: "1px solid #10b981",
-                padding: "16px 24px",
-                borderRadius: "12px",
-                fontWeight: "500",
-            },
-            iconTheme: {
-                primary: "#10b981",
-                secondary: "#ffffff",
-            },
-        });
-    };
-
-    function isDowngrade(current: SubscriptionPlan, target: SubscriptionPlan): boolean {
-        const planHierarchy = ["FREE", "GOLD", "PLATINUM"];
-        const currentIndex = planHierarchy.indexOf(current);
-        const targetIndex = planHierarchy.indexOf(target);
-        return targetIndex < currentIndex;
-    }
+    console.log("User data in SubscriptionsPageClient:", user);
 
     const handlePlanSelection = (plan: SubscriptionPlan) => {
-        if (isDowngrade(currentPlan, plan)) {
+        if (isDowngrade(plan)) {
             setDowngradeTarget(plan);
             setShowDowngradeModal(true);
         } else {
@@ -54,19 +28,17 @@ export default function SubscriptionsPageClient() {
         }
     };
 
-    const handleConfirmDowngrade = () => {
+    const handleConfirmDowngrade = async () => {
         if (downgradeTarget) {
-            if (downgradeTarget === "FREE") {
-                console.log("Enviando para backend - Downgrade para FREE:", {
-                    plan: "FREE",
-                    duration: null,
-                    paymentMethod: null
-                });
-
-                showSuccessToast("FREE");
-            } else {
-                setSelectedPlan(downgradeTarget);
-                setOpen(true);
+            try {
+                if (downgradeTarget === "FREE") {
+                    await changeSubscription("FREE");
+                } else {
+                    setSelectedPlan(downgradeTarget);
+                    setOpen(true);
+                }
+            } catch (error) {
+                console.error("Erro ao confirmar downgrade:", error);
             }
         }
         setShowDowngradeModal(false);
@@ -78,9 +50,17 @@ export default function SubscriptionsPageClient() {
         setShowDowngradeModal(false);
     };
 
-    const handleSubscriptionSuccess = (newPlan: SubscriptionPlan) => {
-        showSuccessToast(newPlan);
-    };
+    const handleSubscriptionSuccess = async (
+        newPlan: SubscriptionPlan,
+        duration?: Duration
+    ) => {
+        try {
+            await changeSubscription(newPlan, duration);
+            setOpen(false);
+        } catch (error) {
+            console.error("Erro ao alterar assinatura:", error);
+        }
+    }
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
