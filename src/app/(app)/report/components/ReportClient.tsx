@@ -15,6 +15,7 @@ import PlatformBreakDown from "./PlatformBreakDown";
 import RecentCompletions from "./RecentCompletions";
 import Resumee from "./Resumee";
 import { FadeSlide } from "@/components/animation/FadeSlide";
+import Link from "next/link";
 
 type PeriodOption = { value: FilterPeriod; label: string };
 
@@ -85,6 +86,22 @@ export default function ReportClient() {
         { value: "1year", label: "Último ano" },
         { value: "all", label: "Todo o período" },
     ];
+
+    if (user.subscriptionPlan === "FREE") {
+        return (
+            <div className="flex flex-col items-center justify-center h-[60vh] px-4 text-center">
+                <h2 className="text-2xl font-semibold text-white mb-4">
+                    Relatórios Disponíveis Apenas para Planos Pagos
+                </h2>
+                <p className="text-gray-400 max-w-md">
+                    Atualize para um plano pago para acessar recursos avançados de relatórios e obter insights detalhados sobre seu aprendizado.
+                </p>
+                <Link href="/subscription" className="mt-4 inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded">
+                    Ver Planos
+                </Link>
+            </div>
+        )
+    }
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col">
