@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" data-theme="light">
+    <html lang="en" data-scroll-behavior="smooth" /*data-theme="light"*/>
       <body
         className={`${nunitoSans.variable}
         antialiased`}
