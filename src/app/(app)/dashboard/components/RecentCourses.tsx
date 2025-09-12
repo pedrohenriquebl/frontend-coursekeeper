@@ -10,14 +10,14 @@ interface RecentCoursesProps {
 
 export function RecentCourses({ courses, onAddCourse }: RecentCoursesProps) {
   return (
-    <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700/50 p-6">
+    <div className="bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 p-6">
       <div className="flex items-center justify-between mb-6 gap-1">
-        <h2 className="text-xl font-semibold text-white">Cursos Recentes</h2>
+        <h2 className="text-xl font-semibold text-[color:var(--modal-title,#fff)]">Cursos Recentes</h2>
 
         <FadeSlide>
           <button
             onClick={onAddCourse}
-            className="cursor-pointer flex text-sm items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors duration-200"
+            className="cursor-pointer flex text-sm items-center gap-2 bg-[color:var(--modal-submit-bg,#059669)] text-[color:var(--modal-submit-text,#fff)] px-4 py-2 rounded-lg hover:bg-[color:var(--modal-submit-bg-hover,#047857)] transition-colors duration-200"
           >
             <Plus className="h-4 w-4" />
             Novo Curso

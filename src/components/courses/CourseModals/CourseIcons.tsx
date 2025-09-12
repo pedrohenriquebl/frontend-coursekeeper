@@ -20,21 +20,21 @@ import { ReactNode } from "react";
 export const getTopicIcon = (topic: string) => {
     switch (topic.toLowerCase()) {
         case "frontend":
-            return <Code className="h-5 w-5 text-blue-400" />;
+            return <Code className="h-5 w-5 text-[color:var(--topic-frontend,#60a5fa)]" />;
         case "backend":
-            return <Database className="h-5 w-5 text-green-400" />;
+            return <Database className="h-5 w-5 text-[color:var(--topic-backend,#22c55e)]" />;
         case "design":
-            return <Palette className="h-5 w-5 text-purple-400" />;
+            return <Palette className="h-5 w-5 text-[color:var(--topic-design,#a78bfa)]" />;
         case "data science":
-            return <BarChart className="h-5 w-5 text-orange-400" />;
+            return <BarChart className="h-5 w-5 text-[color:var(--topic-datascience,#fb923c)]" />;
         case "devops":
-            return <Monitor className="h-5 w-5 text-red-400" />;
+            return <Monitor className="h-5 w-5 text-[color:var(--topic-devops,#f87171)]" />;
         case "mobile":
-            return <Smartphone className="h-5 w-5 text-pink-400" />;
+            return <Smartphone className="h-5 w-5 text-[color:var(--topic-mobile,#f472b6)]" />;
         case "database":
-            return <Database className="h-5 w-5 text-yellow-400" />;
+            return <Database className="h-5 w-5 text-[color:var(--topic-database,#fde047)]" />;
         default:
-            return <Globe className="h-5 w-5 text-gray-400" />;
+            return <Globe className="h-5 w-5 text-[color:var(--topic-default,#a3a3a3)]" />;
     }
 };
 
@@ -90,15 +90,15 @@ export const getLanguageSymbol = (topic: string, name: string): ReactNode => {
 export const getStatusColor = (status: string) => {
     switch (status) {
         case "Concluído":
-            return "bg-green-600/20 text-green-400";
+            return "bg-[color:var(--modal-completed-bg,rgba(22,163,74,0.2))] text-[color:var(--modal-completed-icon,#22c55e)]";
         case "Em Progresso":
-            return "bg-emerald-600/20 text-emerald-400";
+            return "bg-[color:var(--modal-progress-bg,rgba(16,185,129,0.2))] text-[color:var(--modal-progress-bar,#10b981)]";
         case "Não Iniciado":
-            return "bg-gray-600/20 text-gray-400";
+            return "bg-[color:var(--modal-preview-bg,rgba(55,65,81,0.2))] text-[color:var(--modal-preview-meta,#a3a3a3)]";
         case "Não Concluído":
-            return "bg-red-600/20 text-red-400";
+            return "bg-[color:var(--modal-delete-bg,rgba(220,38,38,0.2))] text-[color:var(--modal-delete-bg,#dc2626)]";
         default:
-            return "bg-gray-600/20 text-gray-400";
+            return "bg-[color:var(--modal-preview-bg,rgba(55,65,81,0.2))] text-[color:var(--modal-preview-meta,#a3a3a3)]";
     }
 };
 

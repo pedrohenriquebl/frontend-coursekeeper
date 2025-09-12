@@ -16,15 +16,15 @@ export function GoalPreview({
   typeIcon,
 }: GoalPreviewProps) {
   return (
-    <div className="bg-gray-700/30 rounded-lg p-4">
-      <h3 className="text-sm font-medium text-gray-400 mb-2">
+    <div className="bg-[color:var(--goal-preview-bg,#23272f)]/30 rounded-lg p-4">
+      <h3 className="text-sm font-medium text-[color:var(--goal-preview-label,#a3a3a3)] mb-2">
         Preview da Meta:
       </h3>
       <div className="flex items-center gap-3">
-        <div className="bg-emerald-600/20 p-2 rounded-lg">{typeIcon}</div>
+        <div className="bg-[color:var(--goal-preview-icon-bg,#059669)]/20 p-2 rounded-lg">{typeIcon}</div>
         <div>
-          <div className="font-medium text-white">{title}</div>
-          <div className="text-sm text-gray-400">
+          <div className="font-medium text-[color:var(--goal-preview-title,#fff)]">{title}</div>
+          <div className="text-sm text-[color:var(--goal-preview-meta,#a3a3a3)]">
             {target} {unit}
             {topic && ` em ${topic}`}
             {deadline &&

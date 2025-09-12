@@ -20,7 +20,7 @@ export function Sidebar({ onAddCourse, onOpenGoalModal }: SidebarProps) {
 
   return (
     <FadeSlide>
-      <div className="space-y-6">
+      <div className="space-y-6 bg-[color:var(--dashboard-sidebar-bg,transparent)]">
         <HoursGoal userGoals={goalData} />
         <QuickActions onAddCourse={onAddCourse} onOpenGoalModal={onOpenGoalModal} />
       </div>

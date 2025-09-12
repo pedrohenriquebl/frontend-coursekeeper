@@ -104,7 +104,7 @@ export default function ReportClient() {
     }
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col">
+    <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col text-[color:var(--report-page-text,#fff)]">
             <ReportHeader onExport={handleExportPDF} isExporting={isExporting} />
 
             <UserInformation
@@ -165,7 +165,7 @@ export default function ReportClient() {
                         </FadeSlide>
                     </div>
 
-                    <div className="mt-8 bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+                    <div className="mt-8 bg-[color:var(--report-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border,#52525b)]/50">
                         <FadeSlide>
                             <Resumee
                                 name={`${user?.firstName} ${user?.lastName}`}

@@ -15,19 +15,19 @@ interface Achievement {
 export default function AchievementsCard({ achievements }: { achievements: Achievement[] }) {
     return (
         <FadeSlide>
-            <div className={`bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50 max-h-[394px] 
+            <div className={`bg-[color:var(--achievements-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--achievements-card-border,#52525b)]/50 max-h-[394px] 
                 ${achievements.length > 4 ? 'overflow-y-scroll' : ''}`}>
-                <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                    <Award className="h-5 w-5 text-yellow-400" />
+                <h2 className="text-xl font-semibold text-[color:var(--achievements-card-title,#fff)] mb-6 flex items-center gap-2">
+                    <Award className="h-5 w-5 text-[color:var(--achievements-card-icon,#facc15)]" />
                     Conquistas
                 </h2>
                 <div className="space-y-3">
                     {achievements.map(({ achievement, unlocked }, index) => (
                         <div
                             key={achievement.id ?? index}
-                            className="flex items-center gap-3 p-3 bg-gray-700/30 rounded-lg"
+                            className="flex items-center gap-3 p-3 bg-[color:var(--achievements-card-item-bg,#23272f)]/30 rounded-lg"
                         >
-                            <div className="w-8 h-8 bg-yellow-600/20 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-[color:var(--achievements-card-item-icon-bg,#facc15)]/20 rounded-full flex items-center justify-center">
                                 {achievement.icon ? (
                                     <span className="text-lg">{achievement.icon}</span>
                                 ) : (
@@ -35,15 +35,15 @@ export default function AchievementsCard({ achievements }: { achievements: Achie
                                 )}
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-white font-medium">
+                                <span className="text-[color:var(--achievements-card-item-title,#fff)] font-medium">
                                     {achievement.name}
                                 </span>
-                                <span className="text-gray-400 text-sm">
+                                <span className="text-[color:var(--achievements-card-item-meta,#a3a3a3)] text-sm">
                                     {achievement.description}
                                 </span>
                             </div>
                             {!unlocked && (
-                                <span className="ml-auto text-xs text-gray-500 italic">
+                                <span className="ml-auto text-xs text-[color:var(--achievements-card-item-locked,#6b7280)] italic">
                                     Bloqueado
                                 </span>
                             )}

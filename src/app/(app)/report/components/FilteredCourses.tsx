@@ -23,25 +23,25 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
         <>
             {(topic !== "all" || platform !== "all" || period !== "all" || courses.length > 0) && (
                 <div className="mb-8">
-                    <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+                    <div className="bg-[color:var(--report-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border,#52525b)]/50">
                         <div className="flex items-center justify-between mb-6 gap-1">
-                            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                                <Filter className="h-5 w-5 text-emerald-400" />
+                            <h3 className="text-lg font-semibold text-[color:var(--report-card-title,#fff)] flex items-center gap-2">
+                                <Filter className="h-5 w-5 text-[color:var(--report-card-icon,#34d399)]" />
                                 Cursos Filtrados ({courses.length})
                             </h3>
                             <div className="flex items-center gap-2 text-xs">
                                 {topic !== "all" && (
-                                    <span className="bg-emerald-600/20 text-emerald-400 px-2 py-1 rounded">
+                                    <span className="bg-[color:var(--report-card-topic-bg,#059669)]/20 text-[color:var(--report-card-topic,#34d399)] px-2 py-1 rounded">
                                         {topic.toLocaleLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
                                     </span>
                                 )}
                                 {platform !== "all" && (
-                                    <span className="bg-blue-600/20 text-blue-400 px-2 py-1 rounded">
+                                    <span className="bg-[color:var(--report-card-platform-bg,#60a5fa)]/20 text-[color:var(--report-card-platform,#60a5fa)] px-2 py-1 rounded">
                                         {platform.toLocaleLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
                                     </span>
                                 )}
                                 {period && (
-                                    <span className="bg-purple-600/20 text-purple-400 px-2 py-1 rounded">
+                                    <span className="bg-[color:var(--report-card-period-bg,#a78bfa)]/20 text-[color:var(--report-card-period,#a78bfa)] px-2 py-1 rounded">
                                         {period === "all"
                                             ? "Todo o período"
                                             : periods.find((p) => p.value === period)?.label}
@@ -61,42 +61,42 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                         return (
                                             <div
                                                 key={course.id}
-                                                className="bg-gray-700/30 rounded-lg p-3 border border-gray-600/50 hover:border-emerald-500/50 transition-colors duration-200 text-xs"
+                                                className="bg-[color:var(--report-card-item-bg,#23272f)]/30 rounded-lg p-3 border border-[color:var(--report-card-item-border,#52525b)]/50 hover:border-[color:var(--report-card-item-hover-border,#059669)]/50 transition-colors duration-200 text-xs"
                                             >
                                                 <div className="mb-3">
-                                                    <h4 className="font-medium text-white text-sm line-clamp-2">
+                                                    <h4 className="font-medium text-[color:var(--report-card-item-title,#fff)] text-sm line-clamp-2">
                                                         {course.name}
                                                     </h4>
                                                 </div>
 
                                                 <div className="space-y-1 text-xs">
                                                     <div className="flex justify-between">
-                                                        <span className="text-gray-400">Plataforma:</span>
-                                                        <span className="text-gray-200">{course.platform.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
+                                                        <span className="text-[color:var(--report-card-item-meta,#a3a3a3)]">Plataforma:</span>
+                                                        <span className="text-[color:var(--report-card-item-meta2,#e5e7eb)]">{course.platform.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
                                                     </div>
 
                                                     <div className="flex justify-between">
-                                                        <span className="text-gray-400">Tópico:</span>
-                                                        <span className="text-emerald-400">{course.topic.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
+                                                        <span className="text-[color:var(--report-card-item-meta,#a3a3a3)]">Tópico:</span>
+                                                        <span className="text-[color:var(--report-card-item-topic,#34d399)]">{course.topic.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
                                                     </div>
 
                                                     <div className="flex justify-between">
-                                                        <span className="text-gray-400">Progresso:</span>
+                                                        <span className="text-[color:var(--profile-header-meta,#a3a3a3)]">Progresso:</span>
                                                         <span className={getStatusColor(course.status)}>
                                                             {course.progress}%
                                                         </span>
                                                     </div>
 
                                                     <div className="flex justify-between">
-                                                        <span className="text-gray-400">Horas estudadas:</span>
-                                                        <span className="text-gray-200">
+                                                        <span className="text-[color:var(--profile-header-meta,#a3a3a3)]">Horas estudadas:</span>
+                                                        <span className="text-[color:var(--profile-header-meta,#a3a3a3)]">
                                                             {studiedHours}h / {duration}h
                                                         </span>
                                                     </div>
 
                                                     {(course.rating ?? 0) > 0 && (
                                                         <div className="flex justify-between">
-                                                            <span className="text-gray-400">Avaliação:</span>
+                                                            <span className="text-[color:var(--profile-header-meta,#a3a3a3)]">Avaliação:</span>
                                                             <div className="flex items-center gap-1">
                                                                 {[...Array(5)].map((_, i) => (
                                                                     <Star
@@ -114,8 +114,8 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                                     )}
 
                                                     <div className="flex justify-between">
-                                                        <span className="text-gray-400">Início:</span>
-                                                        <span className="text-gray-200">
+                                                        <span className="text-[color:var(--profile-header-meta,#a3a3a3)]">Início:</span>
+                                                        <span className="text-[color:var(--profile-header-meta,#a3a3a3)]">
                                                             {course.startDate.split("T")[0].split("-").reverse().join("/")}
                                                         </span>
                                                     </div>
@@ -167,7 +167,7 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                         ) : (
                             <div className="text-center py-8">
                                 <BookOpen className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                                <p className="text-gray-400">Nenhum curso encontrado com os filtros aplicados.</p>
+                                <p className="text-[color:var(--profile-header-meta,#a3a3a3)]">Nenhum curso encontrado com os filtros aplicados.</p>
                             </div>
                         )}
                     </div>

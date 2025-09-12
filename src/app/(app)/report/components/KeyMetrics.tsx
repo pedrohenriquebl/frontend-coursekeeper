@@ -13,40 +13,40 @@ export default function KeyMetrics({ courses }: KeyMetricsProps) {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+            <div className="bg-[color:var(--report-card-bg)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border)]/50">
                 <div className="flex items-center gap-3 mb-2">
-                    <Award className="h-6 w-6 text-green-400" />
-                    <span className="text-2xl font-bold text-white">
+                    <Award className="h-6 w-6 text-[color:var(--report-metrics-award)]" />
+                    <span className="text-2xl font-bold text-[color:var(--report-metrics-value)]">
                         {completedCourses}
                     </span>
                 </div>
-                <p className="text-sm text-gray-400">Cursos Concluídos</p>
+                <p className="text-sm text-[color:var(--report-metrics-meta)]">Cursos Concluídos</p>
             </div>
 
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+            <div className="bg-[color:var(--report-card-bg)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border)]/50">
                 <div className="flex items-center gap-3 mb-2">
-                    <Clock className="h-6 w-6 text-emerald-400" />
-                    <span className="text-2xl font-bold text-white">
+                    <Clock className="h-6 w-6 text-[color:var(--report-metrics-clock)]" />
+                    <span className="text-2xl font-bold text-[color:var(--report-metrics-value)]">
                         {totalHours}h
                     </span>
                 </div>
-                <p className="text-sm text-gray-400">Horas Estudadas</p>
+                <p className="text-sm text-[color:var(--report-metrics-meta)]">Horas Estudadas</p>
             </div>
 
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+            <div className="bg-[color:var(--report-card-bg)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border)]/50">
                 <div className="flex items-center gap-3 mb-2">
-                    <TrendingUp className="h-6 w-6 text-yellow-400" />
-                    <span className="text-2xl font-bold text-white">
+                    <TrendingUp className="h-6 w-6 text-[color:var(--report-metrics-trending)]" />
+                    <span className="text-2xl font-bold text-[color:var(--report-metrics-value)]">
                         {averageRating.toFixed(2)}
                     </span>
                 </div>
-                <p className="text-sm text-gray-400">Avaliação Média</p>
+                <p className="text-sm text-[color:var(--report-metrics-meta)]">Avaliação Média</p>
             </div>
 
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+            <div className="bg-[color:var(--report-card-bg)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border)]/50">
                 <div className="flex items-center gap-3 mb-2">
-                    <Target className="h-6 w-6 text-purple-400" />
-                    <span className="text-2xl font-bold text-white">
+                    <Target className="h-6 w-6 text-[color:var(--report-metrics-target)]" />
+                    <span className="text-2xl font-bold text-[color:var(--report-metrics-value)]">
                         {totalCourses && completedCourses !== undefined
                             ? Math.round(
                                 (completedCourses / totalCourses) *
@@ -56,7 +56,7 @@ export default function KeyMetrics({ courses }: KeyMetricsProps) {
                         %
                     </span>
                 </div>
-                <p className="text-sm text-gray-400">Taxa de Conclusão</p>
+                <p className="text-sm text-[color:var(--report-metrics-meta)]">Taxa de Conclusão</p>
             </div>
         </div>
     );

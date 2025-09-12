@@ -29,7 +29,7 @@ export default function AvatarUpload({
 
     return (
         <div className="relative flex flex-col flex-wrap align-center items-center gap-2">
-            <div className="w-32 h-32 rounded-full bg-gray-700 overflow-hidden border-4 border-gray-600">
+            <div className="w-32 h-32 rounded-full bg-[color:var(--avatar-bg,#23272f)] overflow-hidden border-4 border-[color:var(--avatar-border,#52525b)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                     src={preview || currentImage || "/avatars/placeholder.png"}
@@ -41,7 +41,7 @@ export default function AvatarUpload({
 
             {!preview && (<button
                 onClick={() => fileInputRef.current?.click()}
-                className="absolute bottom-0 right-0 bg-emerald-600 hover:bg-emerald-700 text-white p-2 rounded-full transition-colors duration-200"
+                className="absolute bottom-0 right-0 bg-[color:var(--avatar-action-bg,#059669)] hover:bg-[color:var(--avatar-action-hover-bg,#059669)] text-[color:var(--avatar-action,#fff)] p-2 rounded-full transition-colors duration-200"
             >
                 <Camera className="h-4 w-4" />
             </button>)}
@@ -58,14 +58,14 @@ export default function AvatarUpload({
                 <div className="flex gap-2 mt-2">
                     <button
                         onClick={handleSave}
-                        className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg"
+                        className="flex items-center gap-2 bg-[color:var(--avatar-save-bg,#059669)] hover:bg-[color:var(--avatar-save-hover-bg,#059669)] text-[color:var(--avatar-save,#fff)] px-4 py-2 rounded-lg"
                     >
                         <Save className="h-4 w-4" />
                         Salvar
                     </button>
                     <button
                         onClick={() => setPreview(null)}
-                        className="flex items-center gap-2 bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg"
+                        className="flex items-center gap-2 bg-[color:var(--avatar-cancel-bg,#52525b)] hover:bg-[color:var(--avatar-cancel-hover-bg,#a3a3a3)] text-[color:var(--avatar-cancel,#fff)] px-4 py-2 rounded-lg"
                     >
                         <X className="h-4 w-4" />
                         Cancelar

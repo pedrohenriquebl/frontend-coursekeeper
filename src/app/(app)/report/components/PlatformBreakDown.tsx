@@ -43,8 +43,8 @@ export default function PlatformBreakDown({ courses }: PlatformBreakDownProps) {
     return (
         <>
             {hasCourses ? (
-                <div className="h-full bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
-                    <h3 className="text-lg font-semibold text-white mb-6">
+                <div className="h-full bg-[color:var(--report-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border,#52525b)]/50">
+                    <h3 className="text-lg font-semibold text-[color:var(--report-card-title,#fff)] mb-6">
                         Distribuição por Plataforma
                     </h3>
                     <div className="space-y-4">
@@ -54,21 +54,21 @@ export default function PlatformBreakDown({ courses }: PlatformBreakDownProps) {
                             return (
                                 <div
                                     key={index}
-                                    className="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg"
+                                    className="flex items-center justify-between p-3 bg-[color:var(--report-platform-bg,#23272f)]/30 rounded-lg"
                                 >
                                     <div>
-                                        <div className="font-medium text-white">
+                                        <div className="font-medium text-[color:var(--report-platform-title,#fff)]">
                                             {platform.platform.toLowerCase().replace(/\b\w/g, char => char.toUpperCase())}
                                         </div>
-                                        <div className="text-sm text-gray-400">
+                                        <div className="text-sm text-[color:var(--report-platform-meta,#a3a3a3)]">
                                             {`${platform.courses} curso${platform.courses === 1 ? '' : 's'}`}
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <div className="font-medium text-emerald-400">
+                                        <div className="font-medium text-[color:var(--report-platform-hours,#34d399)]">
                                             {platform.hours}h
                                         </div>
-                                        <div className="text-xs text-gray-400">
+                                        <div className="text-xs text-[color:var(--report-platform-meta2,#a3a3a3)]">
                                             {Math.round(hoursPercent)}%
                                         </div>
                                     </div>
@@ -79,7 +79,6 @@ export default function PlatformBreakDown({ courses }: PlatformBreakDownProps) {
                 </div>
             ) : (
                 null
-
             )}
         </>
     )

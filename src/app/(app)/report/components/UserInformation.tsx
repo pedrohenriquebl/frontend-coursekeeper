@@ -18,13 +18,13 @@ export default function UserInformation({ name, email, memberSince, reportDate, 
         : "/avatars/placeholder.png";
 
     return (
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50 mb-8" >
-            <h3 className="text-lg font-semibold text-white mb-4">
+    <div className="bg-[color:var(--report-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border,#52525b)]/50 mb-8" >
+            <h3 className="text-lg font-semibold text-[color:var(--report-card-title,#fff)] mb-4">
                 Informações do Usuário
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-emerald-600/20 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-[color:var(--report-user-avatar-bg,#059669)]/20 flex items-center justify-center">
                         <Image
                             width={48}
                             height={48}
@@ -35,21 +35,21 @@ export default function UserInformation({ name, email, memberSince, reportDate, 
                         />
                     </div>
                     <div>
-                        <div className="text-white font-medium">{name}</div>
-                        <div className="text-gray-400 text-sm">
+                        <div className="text-[color:var(--report-user-title,#fff)] font-medium">{name}</div>
+                        <div className="text-[color:var(--report-user-meta,#a3a3a3)] text-sm">
                             {email}
                         </div>
                     </div>
                 </div>
                 <div>
                     <div className="text-gray-400 text-sm mb-1">Membro desde</div>
-                    <div className="text-white font-medium">{memberSince}</div>
+                    <div className="text-[color:var(--report-card-title,#fff)] font-medium">{memberSince}</div>
                 </div>
                 <div>
                     <div className="text-gray-400 text-sm mb-1">
                         Relatório gerado em
                     </div>
-                    <div className="text-white font-medium">
+                    <div className="text-[color:var(--report-card-title,#fff)] font-medium">
                         {reportDate}
                     </div>
                     <div className="text-gray-400 text-sm">

@@ -7,17 +7,143 @@ input::placeholder {
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* AuthForm specific colors */
-  --authform-bg-gradient: linear-gradient(to bottom right, #0f172a, #1e293b, #111827); /* from-slate-900 via-gray-900 to-slate-800 */
-  --authform-card-bg: rgba(55, 65, 81, 0.5); /* bg-gray-700/50 */
-  --authform-muted: #9ca3af; /* text-gray-400 */
-  --authform-primary-gradient: linear-gradient(to right, #059669, #16a34a); /* from-emerald-600 to-green-600 */
-  --authform-primary: #059669; /* emerald-600 */
-  --authform-primary-light: #34d399; /* emerald-400 */
-  --authform-accent: #16a34a; /* green-600 */
-  --authform-accent-light: #bbf7d0; /* green-400 */
-  --authform-disabled-bg: #4b5563; /* bg-gray-600 */
-  --authform-disabled-text: #9ca3af; /* text-gray-400 */
+  --goal-preview-bg: #23272f;
+  --goal-preview-title: #fff;
+  --goal-modal-input-bg: #23272f;
+  --goal-modal-input-border: #52525b;
+  --goal-modal-input-text: #fff;
+  --goal-modal-input-placeholder: #a3a3a3;
+  --goal-modal-input-focus: #059669;
+  --goal-modal-select-bg: #23272f;
+  --goal-modal-select-border: #52525b;
+  --goal-modal-select-text: #fff;
+  --goal-modal-select-placeholder: #a3a3a3;
+  --goal-modal-select-focus: #059669;
+  --goal-modal-textarea-bg: #23272f;
+  --goal-modal-textarea-border: #52525b;
+  --goal-modal-textarea-text: #fff;
+  --goal-modal-textarea-placeholder: #a3a3a3;
+  --goal-modal-textarea-focus: #059669;
+  --goal-type-bg: #23272f;
+  --goal-type-text: #fff;
+  /* Goal Modal Variables */
+  --goal-modal-bg: #23272f;
+  --goal-modal-label: #a3a3a3;
+  --goal-modal-input-bg: #23272f;
+  --goal-modal-input-border: #52525b;
+  --goal-modal-input-text: #fff;
+  --goal-modal-input-placeholder: #a3a3a3;
+  --goal-modal-input-focus: #059669;
+  --goal-modal-error: #ef4444;
+  --goal-modal-unit: #a3a3a3;
+  /* Course Modal Variables */
+  --modal-overlay-bg: rgba(0, 0, 0, 0.5);
+  --modal-bg: #23272f;
+  --modal-title: #fff;
+  --modal-close: #a3a3a3;
+  --modal-close-hover: #fff;
+  --modal-preview-bg: rgba(55, 65, 81, 0.3);
+  --modal-preview-label: #a3a3a3;
+  --modal-preview-title: #fff;
+  --modal-preview-meta: #a3a3a3;
+  --modal-cancel-bg: #52525b;
+  --modal-cancel-bg-hover: #3f3f46;
+  --modal-cancel-text: #fff;
+  --modal-submit-bg-disabled: #52525b;
+  --modal-submit-text-disabled: #d4d4d8;
+  --modal-submit-bg: #059669;
+  --modal-submit-bg-hover: #047857;
+  --modal-submit-text: #fff;
+  --modal-spinner: #d4d4d8;
+  /* Course Topic Variables */
+  --topic-frontend: #60a5fa;
+  --topic-backend: #22c55e;
+  --topic-design: #a78bfa;
+  --topic-datascience: #fb923c;
+  --topic-devops: #f87171;
+  --topic-mobile: #f472b6;
+  --topic-database: #fde047;
+  --topic-default: #a3a3a3;
+  /* Dashboard Module Variables */
+  --dashboard-card-bg: #23272f;
+  --dashboard-card-border: #52525b;
+  --dashboard-card-title: #fff;
+  --dashboard-card-hover-bg: #52525b;
+  --dashboard-action-plus: #34d399;
+  --dashboard-card-text: #d1d5db;
+  --dashboard-action-target: #a78bfa;
+  --dashboard-action-calendar: #22c55e;
+  --dashboard-card-meta: #a3a3a3;
+  --dashboard-progress-bg: #52525b;
+  /* Goals Module Variables */
+  --goals-list-icon-bg: #52525b;
+  --goals-list-icon: #a3a3a3;
+  --goals-list-title: #fff;
+  --goals-list-meta: #a3a3a3;
+  --goals-tab-bg: #23272f;
+  --goals-tab-active-bg: #059669;
+  --goals-tab-active-text: #fff;
+  --goals-tab-inactive: #a3a3a3;
+  --goals-tab-hover: #fff;
+  --goals-tab-hover-bg: #52525b;
+  --goals-page-text: #fff;
+  --goals-page-title: #fff;
+  --goals-page-meta: #a3a3a3;
+  --goals-page-action-bg: #059669;
+  --goals-page-action: #fff;
+  --goals-page-action-hover-bg: #059669;
+  --goals-page-empty-title: #fff;
+  /* Dashboard Module Variables */
+  --dashboard-card-bg: #23272f;
+  --dashboard-card-border: #52525b;
+  --dashboard-card-title: #fff;
+  --dashboard-card-meta: #a3a3a3;
+  --dashboard-progress-bg: #52525b;
+  --dashboard-progress-from: #059669;
+  --dashboard-progress-to: #22c55e;
+  --dashboard-card-hover-bg: #52525b;
+  --dashboard-action-plus: #34d399;
+  --dashboard-card-text: #d1d5db;
+  --dashboard-action-target: #a78bfa;
+  --dashboard-action-calendar: #22c55e;
+  --dashboard-sidebar-bg: transparent;
+  --dashboard-header-title: #fff;
+  --dashboard-header-meta: #a3a3a3;
+  /* Profile Module Variables */
+  --profile-page-text: #fff;
+  --profile-client-text: #fff;
+  --profile-header-bg: #23272f;
+  --profile-header-border: #52525b;
+  --profile-header-input-bg: #23272f;
+  --profile-header-input-border: #52525b;
+  --profile-header-input: #fff;
+  --profile-header-input-focus: #059669;
+  --profile-header-title: #fff;
+  --profile-header-meta: #a3a3a3;
+  --profile-header-action-bg: #52525b;
+  --profile-header-action-hover-bg: #a3a3a3;
+  --profile-header-action: #fff;
+  --profile-header-save-bg: #059669;
+  --profile-header-save-hover-bg: #059669;
+  --profile-header-save: #fff;
+  --profile-header-cancel-bg: #52525b;
+  --profile-header-cancel-hover-bg: #a3a3a3;
+  --profile-header-cancel: #fff;
+  --authform-bg-gradient: linear-gradient(
+    to bottom right,
+    #0f172a,
+    #1e293b,
+    #111827
+  );
+  --authform-card-bg: rgba(55, 65, 81, 0.5);
+  --authform-muted: #9ca3af;
+  --authform-primary-gradient: linear-gradient(to right, #059669, #16a34a);
+  --authform-primary: #059669;
+  --authform-primary-light: #34d399;
+  --authform-accent: #16a34a;
+  --authform-accent-light: #bbf7d0;
+  --authform-disabled-bg: #4b5563;
+  --authform-disabled-text: #9ca3af;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
 
@@ -76,6 +202,311 @@ input::placeholder {
   --chart-5: oklch(0.769 0.188 70.08);
 
   --sidebar: oklch(0.985 0 0);
+  /* Report Module Variables */
+  --report-card-bg: #23272f;
+  --report-card-border: #52525b;
+  --report-card-title: #fff;
+  --report-card-item-bg: #23272f;
+  --report-card-item-title: #fff;
+  --report-card-item-meta: #a3a3a3;
+  --report-card-item-star: #facc15;
+  --report-card-item-star-empty: #6b7280;
+  --report-card-item-date: #a3a3a3;
+  --report-metrics-award: #22c55e;
+  --report-metrics-clock: #34d399;
+  --report-metrics-trending: #facc15;
+  --report-metrics-target: #a78bfa;
+  --report-metrics-value: #fff;
+  --report-metrics-meta: #a3a3a3;
+  --report-resumee-title: #fff;
+  --profile-header-meta: #a3a3a3;
+  --report-resumee-meta: #a3a3a3;
+  --report-resumee-section-title: #fff;
+  --report-resumee-label: #fff;
+  --report-platform-bg: #23272f;
+  --report-platform-title: #fff;
+  --report-platform-meta: #a3a3a3;
+  --report-platform-hours: #34d399;
+  --report-platform-meta2: #a3a3a3;
+  --report-header-title: #fff;
+  --report-header-meta: #a3a3a3;
+  --report-header-action-bg: #059669;
+  --report-header-action: #fff;
+  --report-header-action-hover-bg: #059669;
+  --report-header-spinner: #fff;
+  --report-user-avatar-bg: #059669;
+  --report-user-title: #fff;
+  --report-user-meta: #a3a3a3;
+  --report-page-bg: #18181b;
+  --report-page-text: #fff;
+  --report-month-bg: #52525b;
+  --report-month-label: #a3a3a3;
+  --report-month-meta: #a3a3a3;
+  --report-month-value: #fff;
+  --report-tooltip-bg: #23272f;
+  --report-card-item-border: #52525b;
+  --report-filter-input-border: #52525b;
+  /* Additional Report Variables */
+  --report-card-icon: #34d399;
+  --report-card-topic-bg: #059669;
+  --report-card-topic: #34d399;
+  --report-card-platform-bg: #60a5fa;
+  --report-card-platform: #60a5fa;
+  --report-card-period-bg: #a78bfa;
+  --report-card-period: #a78bfa;
+  --report-card-item-hover-border: #059669;
+  --report-card-item-meta2: #e5e7eb;
+  --report-card-item-topic: #34d399;
+  --report-filter-label: #a3a3a3;
+  --report-filter-input-bg: #23272f;
+  --report-filter-input: #fff;
+  --report-filter-input-focus: #059669;
+  --report-tooltip-text: #fff;
+  --report-tooltip-meta: #e5e7eb;
+  --report-month-from: #059669;
+  --report-month-to: #22c55e;
+}
+/* Light Theme */
+[data-theme="light"] {
+  --goal-card-border: #e5e7eb;
+  --goal-card-border-hover: #059669;
+  --course-card-border: #e5e7eb;
+  --course-card-border-hover: #059669;
+  --modal-preview-bg: #e5e7eb;
+  --modal-submit-bg: #059669;
+  --goal-card-bg: #f4f4f5;
+  --goal-card-border: #e5e7eb;
+  --goal-card-title: #18181b;
+  --goal-card-action-bg: #ef4444;
+  --goal-card-action: #ef4444;
+  --goal-card-action-hover: #dc2626;
+  --goal-card-topic: #18181b;
+  --goal-card-topic-bg: #e5e7eb;
+  --course-card-bg: #f4f4f5;
+  --course-card-title: #18181b;
+  --course-card-action-bg: #059669;
+  --course-card-action: #fff;
+  --course-card-topic: #059669;
+  --modal-preview-bg: #e5e7eb;
+  --modal-preview-meta: #71717a;
+  --goal-preview-bg: #e5e7eb;
+  --goal-preview-title: #18181b;
+  --goal-modal-input-bg: #f4f4f5;
+  --goal-modal-input-border: #e5e7eb;
+  --goal-modal-input-text: #23272f;
+  --goal-modal-input-placeholder: #a3a3a3;
+  --goal-modal-input-text: #23272f;
+  --goal-modal-select-bg: #f4f4f5;
+  --goal-modal-select-border: #e5e7eb;
+  --goal-modal-select-text: #18181b;
+  --goal-modal-select-placeholder: #a3a3a3;
+  --goal-modal-select-text: #23272f;
+  --goal-modal-textarea-bg: #f4f4f5;
+  --goal-modal-textarea-border: #e5e7eb;
+  --goal-modal-textarea-text: #18181b;
+  --goal-modal-textarea-placeholder: #a3a3a3;
+  --goal-modal-textarea-text: #23272f;
+  --modal-header-title: #23272f;
+  --goal-type-bg: #e5e7eb;
+  --goal-type-text: #18181b;
+  /* Goal Modal Variables - Light */
+  --goal-modal-bg: #fff;
+  --goal-modal-label: #71717a;
+  --goal-modal-input-bg: #f4f4f5;
+  --goal-modal-input-border: #e5e7eb;
+  --goal-modal-input-text: #18181b;
+  --modal-input-text: #23272f;
+  --goal-modal-input-placeholder: #a3a3a3;
+  --goal-modal-input-text: #18181b;
+  --goal-modal-input-placeholder: #23272f;
+  --goal-modal-unit: #71717a;
+  --modal-input-bg: #f4f4f5;
+  --goal-modal-select-text: #18181b;
+  --goal-modal-select-placeholder: #23272f;
+  --modal-input-placeholder: #a3a3a3;
+  /* Melhor contraste para dashboard header */
+  --goal-modal-textarea-text: #18181b;
+  --goal-modal-textarea-placeholder: #23272f;
+  /* Melhor contraste para modal preview comment */
+  --modal-preview-comment: #18181b;
+  /* Navbar para tema light */
+  --navbar-bg: #fff;
+  --navbar-text: #18181b;
+  --navbar-border: #e5e7eb;
+  --navbar-icon: #059669;
+  --navbar-hover-bg: #e5e7eb;
+  --navbar-hover-text: #059669;
+  --background: #f4f4f5;
+  --foreground: #18181b;
+  /* Dashboard */
+  --dashboard-header-title: #18181b;
+  --dashboard-card-title: #18181b;
+  --dashboard-card-bg: #f4f4f5;
+  --dashboard-card-border: #e5e7eb;
+  --modal-input: #18181b;
+  --dashboard-card-hover-bg: #e5e7eb;
+  --dashboard-action-plus: #059669;
+  --dashboard-card-text: #18181b;
+  --dashboard-action-target: #7c3aed;
+  --dashboard-action-calendar: #16a34a;
+  --dashboard-card-meta: #71717a;
+  --dashboard-progress-bg: #e5e7eb;
+  /* Goals */
+  --goals-list-icon-bg: #e5e7eb;
+  --goals-list-icon: #71717a;
+  --goals-list-title: #18181b;
+  --goals-list-meta: #71717a;
+  --goals-tab-bg: #e5e7eb;
+  --goals-tab-active-bg: #059669;
+  --goals-tab-active-text: #fff;
+  --goals-tab-inactive: #71717a;
+  --goals-tab-hover: #18181b;
+  --goals-tab-hover-bg: #d4d4d8;
+  --goals-page-text: #18181b;
+  --goals-page-title: #18181b;
+  --goals-page-meta: #71717a;
+  --goals-page-action-bg: #059669;
+  --goals-page-action: #fff;
+  --goals-page-action-hover-bg: #059669;
+  --goals-page-empty-title: #18181b;
+  /* Modal */
+  --modal-overlay-bg: rgba(229, 231, 235, 0.7);
+  --modal-bg: #fff;
+  --modal-title: #18181b;
+  --modal-close: #71717a;
+  --modal-close-hover: #18181b;
+  --modal-preview-bg: rgba(156, 163, 175, 0.2);
+  --modal-preview-label: #71717a;
+  --modal-preview-title: #18181b;
+  --modal-preview-meta: #71717a;
+  --modal-cancel-bg: #e5e7eb;
+  --modal-cancel-bg-hover: #d4d4d8;
+  --modal-cancel-text: #18181b;
+  --modal-submit-bg-disabled: #e5e7eb;
+  --modal-submit-text-disabled: #a1a1aa;
+  --modal-submit-bg: #059669;
+  --modal-submit-bg-hover: #047857;
+  --modal-submit-text: #fff;
+  --modal-spinner: #a1a1aa;
+  /* Course Topic */
+  --topic-frontend: #2563eb;
+  --topic-backend: #16a34a;
+  --topic-design: #7c3aed;
+  --topic-datascience: #ea580c;
+  --topic-devops: #dc2626;
+  --topic-mobile: #db2777;
+  --topic-database: #ca8a04;
+  --topic-default: #71717a;
+
+  --report-card-bg: #f4f4f5;
+  --report-card-border: #e5e7eb;
+  --report-card-title: #18181b;
+
+  --report-card-item-bg: #fff;
+  --report-card-item-title: #18181b;
+  --report-card-item-meta: #71717a;
+  --report-card-item-star: #facc15;
+  --report-card-item-star-empty: #d4d4d8;
+  --report-card-item-date: #71717a;
+
+  --report-metrics-award: #16a34a;
+  --report-metrics-clock: #34d399;
+  --report-metrics-trending: #facc15;
+  --report-metrics-target: #7c3aed;
+  --report-metrics-value: #18181b;
+  --report-metrics-meta: #71717a;
+
+  --report-resumee-title: #18181b;
+  --report-resumee-meta: #71717a;
+  --report-resumee-section-title: #18181b;
+  --report-resumee-label: #18181b;
+
+  --report-platform-bg: #e5e7eb;
+  --report-card-item-bg: #e5e7eb;
+  --report-platform-title: #18181b;
+  --report-platform-meta: #71717a;
+  --report-platform-hours: #059669;
+  --report-platform-meta2: #71717a;
+  --report-card-item-bg: #fff;
+
+  --report-header-title: #18181b;
+  --report-header-meta: #71717a;
+  --report-header-action-bg: #059669;
+  --report-header-action: #fff;
+  --report-header-action-hover-bg: #047857;
+  --report-header-spinner: #18181b;
+
+  --report-user-avatar-bg: #059669;
+  --report-user-title: #18181b;
+  --report-user-meta: #71717a;
+
+  --report-page-bg: #fff;
+  --report-page-text: #18181b;
+
+  --report-month-bg: #e5e7eb;
+  --report-month-label: #71717a;
+  --report-month-meta: #71717a;
+  --report-month-value: #18181b;
+
+  --report-tooltip-bg: #f4f4f5;
+  --report-tooltip-text: #18181b;
+  --report-tooltip-meta: #71717a;
+
+  --report-card-item-border: #e5e7eb;
+  --report-filter-input-border: #e5e7eb;
+  --report-card-icon: #059669;
+  --report-card-topic-bg: #059669;
+  --report-card-topic: #059669;
+  --report-card-platform-bg: #2563eb;
+  --report-card-platform: #2563eb;
+  --report-card-period-bg: #7c3aed;
+  --report-card-period: #7c3aed;
+  --report-card-item-hover-border: #059669;
+  --report-card-item-meta2: #a1a1aa;
+  --report-card-item-topic: #059669;
+  --report-filter-label: #71717a;
+  --report-filter-input-bg: #fff;
+  --report-filter-input: #18181b;
+  --report-filter-input-focus: #059669;
+
+  --report-month-from: #059669;
+  --report-month-to: #22c55e;
+
+  --profile-page-text: #18181b;
+  --profile-client-text: #18181b;
+
+  --profile-header-bg: #f4f4f5;
+  --achievements-card-bg: #f4f4f5;
+  --social-info-bg: #f4f4f5;
+  --profile-header-border: #e5e7eb;
+  --social-info-border: #e5e7eb;
+  --achievements-card-border: #e5e7eb;
+
+  --profile-header-input-bg: #fff;
+  --profile-header-input-border: #e5e7eb;
+  --profile-header-input: #18181b;
+  --profile-header-input-focus: #059669;
+
+  --profile-header-title: #18181b;
+  --social-info-title: #18181b;
+  --achievements-card-title: #18181b;
+  --profile-header-meta: #71717a;
+  --achievements-card-item-title: #18181b;
+  --social-info-item-title: #18181b;
+
+  --profile-header-action-bg: #e5e7eb;
+  --achievements-card-item-bg: #e5e7eb;
+  --social-info-item-bg: #e5e7eb;
+  --profile-header-action-hover-bg: #d4d4d8;
+  --profile-header-action: #18181b;
+
+  --profile-header-save-bg: #059669;
+  --profile-header-save-hover-bg: #047857;
+  --profile-header-save: #fff;
+
+  --profile-header-cancel-bg: #e5e7eb;
+  --profile-header-cancel-hover-bg: #d4d4d8;
+  --profile-header-cancel: #18181b;
 }
 
 .dark {
@@ -128,9 +559,8 @@ body {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom right, #0f172a, #1e293b, #111827);
+  background: var(--background);
 }
-
 body {
   text-rendering: optimizeSpeed;
 }
@@ -149,17 +579,17 @@ select {
 ::-webkit-scrollbar {
   width: 12px;
   border-radius: 8px;
-  background: hsl(var(--sidebar-accent));
+  background: #e5e7eb;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary));
+  background: #059669;
   border-radius: 8px;
-  border: 2px solid hsl(var(--sidebar-accent));
+  border: 2px solid #e5e7eb;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--sidebar-background));
+  background: #e5e7eb;
   border-radius: 8px;
 }
 

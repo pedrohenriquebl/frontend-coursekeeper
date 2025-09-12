@@ -21,7 +21,7 @@ export function ModalActions({
       <button
         type="button"
         onClick={onCancel}
-        className="flex-1 bg-gray-600 hover:bg-gray-500 text-white py-3 rounded-lg transition-colors duration-200"
+  className="flex-1 bg-[color:var(--modal-actions-cancel-bg,#52525b)] hover:bg-[color:var(--modal-actions-cancel-hover-bg,#a3a3a3)] text-[color:var(--modal-actions-cancel-text,#fff)] py-3 rounded-lg transition-colors duration-200"
       >
         {cancelText}
       </button>
@@ -32,15 +32,15 @@ export function ModalActions({
         className={cn(
           "flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
           isLoading
-            ? "bg-gray-600 text-gray-300 cursor-not-allowed"
-            : "bg-emerald-600 hover:bg-emerald-700 text-white",
+            ? "bg-[color:var(--modal-actions-submit-loading-bg,#52525b)] text-[color:var(--modal-actions-submit-loading-text,#d1d5db)] cursor-not-allowed"
+            : "bg-[color:var(--modal-actions-submit-bg,#059669)] hover:bg-[color:var(--modal-actions-submit-hover-bg,#059669)] text-[color:var(--modal-actions-submit-text,#fff)]",
         )}
       >
         {isLoading ? (
           <>
             <Spinner
               size="sm"
-              className="border-gray-300 border-t-transparent"
+              className="border-[color:var(--modal-actions-spinner,#d1d5db)] border-t-transparent"
             />
             Salvando...
           </>

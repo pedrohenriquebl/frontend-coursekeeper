@@ -88,9 +88,9 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
 
         const data = payload[0].payload; // TopicPayload
         return (
-            <div className="bg-gray-800/90 text-white rounded-md p-2 text-sm shadow-lg">
+            <div className="bg-[color:var(--report-tooltip-bg,#23272f)]/90 text-[color:var(--report-tooltip-text,#fff)] rounded-md p-2 text-sm shadow-lg">
                 <div className="font-semibold">{data.topic}</div>
-                <div className="text-xs text-gray-200">
+                <div className="text-xs text-[color:var(--report-tooltip-meta,#e5e7eb)]">
                     {data.hours}h • {data.courses} curso{data.courses > 1 ? "s" : ""}
                 </div>
             </div>
@@ -100,9 +100,9 @@ export default function TopicBreakDown({ courses }: TopicBreakDownProps) {
     return (
         <>
             {hasCourses && (
-                <div className="h-full bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
+                <div className="h-full bg-[color:var(--report-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border,#52525b)]/50">
                     <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-semibold text-white">Distribuição por Tópico</h3>
+                        <h3 className="text-lg font-semibold text-[color:var(--report-card-title,#fff)]">Distribuição por Tópico</h3>
                         <FormSelect
                             id={"topic-chart-type"}
                             aria-label="Tipo de gráfico para Tópicos"

@@ -59,12 +59,12 @@ export function StatsCard({ icon: Icon, iconColor, gradientFrom, gradientTo, val
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-2xl font-bold text-white"
+            className="text-2xl font-bold text-[color:var(--modal-title,#fff)]"
           >
             {value}
           </motion.span>
         </div>
-        <h3 className="text-sm font-medium text-gray-400">{label}</h3>
+        <h3 className="text-sm font-medium text-[color:var(--modal-preview-meta,#a3a3a3)]">{label}</h3>
       </div>
     </div>
   );

@@ -90,15 +90,15 @@ export const EditCourseModal = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-[color:var(--modal-overlay-bg,rgba(0,0,0,0.5))] flex items-center justify-center z-50 p-4">
+      <div className="bg-[color:var(--modal-bg,#23272f)] rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6 gap-1">
-            <h2 className="text-xl font-semibold text-white">Editar Curso</h2>
+            <h2 className="text-xl font-semibold text-[color:var(--modal-title,#fff)]">Editar Curso</h2>
             <button
               onClick={onClose}
-              className="cursor-pointer text-gray-400 hover:text-white transition-colors duration-200"
+              className="cursor-pointer text-[color:var(--modal-close,#a3a3a3)] hover:text-[color:var(--modal-close-hover,#fff)] transition-colors duration-200"
             >
               <X className="h-6 w-6" />
             </button>
@@ -106,13 +106,13 @@ export const EditCourseModal = ({
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Curso preview */}
-            <div className="flex items-center gap-3 p-4 bg-gray-700/30 rounded-lg">
+            <div className="flex items-center gap-3 p-4 bg-[color:var(--modal-preview-bg,rgba(55,65,81,0.3))] rounded-lg">
               <span className="text-2xl">
                 {getLanguageSymbol(editCourse.topic, editCourse.name)}
               </span>
               <div>
-                <div className="font-medium text-white">{editCourse.name}</div>
-                <div className="text-sm text-gray-400">
+                <div className="font-medium text-[color:var(--modal-preview-title,#fff)]">{editCourse.name}</div>
+                <div className="text-sm text-[color:var(--modal-preview-meta,#a3a3a3)]">
                   {editCourse.platform} • {editCourse.duration}h • {editCourse.topic}
                 </div>
               </div>
@@ -120,14 +120,14 @@ export const EditCourseModal = ({
 
             {/* Progresso */}
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-2">
+              <label className="block text-sm font-medium text-[color:var(--modal-preview-label,#a3a3a3)] mb-2">
                 Progresso ({editCourse.progress}%)
               </label>
               <progress
                 value={editCourse.progress}
                 max={100}
                 className="w-full h-3 rounded-lg"
-                style={{ accentColor: "#10b981" }}
+                style={{ accentColor: "var(--modal-progress-bar,#10b981)" }}
               />
               <div className="flex gap-2 mt-3">
                 {[25, 50, 75].map((percent) => (
@@ -142,7 +142,7 @@ export const EditCourseModal = ({
                         status: "EM_PROGRESSO",
                       })
                     }
-                    className="flex-1 py-1 px-2 bg-gray-700 hover:bg-gray-600 text-white text-xs rounded transition-colors duration-200"
+                    className="flex-1 py-1 px-2 bg-[color:var(--modal-preview-bg,rgba(55,65,81,0.3))] hover:bg-[color:var(--modal-preview-bg-hover,#52525b)] text-[color:var(--modal-preview-title,#fff)] text-xs rounded transition-colors duration-200"
                   >
                     {percent}%
                   </button>
@@ -157,7 +157,7 @@ export const EditCourseModal = ({
                       endDate: new Date().toISOString(),
                     })
                   }
-                  className="flex-1 py-1 px-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs rounded transition-colors duration-200"
+                  className="flex-1 py-1 px-2 bg-[color:var(--modal-submit-bg,#059669)] hover:bg-[color:var(--modal-submit-bg-hover,#047857)] text-[color:var(--modal-submit-text,#fff)] text-xs rounded transition-colors duration-200"
                 >
                   Concluir
                 </button>
@@ -189,7 +189,7 @@ export const EditCourseModal = ({
                   + Adicionar
                 </button>
               </div>
-              <div className="mt-2 p-2 bg-gray-700/20 rounded text-xs text-gray-400">
+              <div className="mt-2 p-2 bg-[color:var(--modal-preview-bg,rgba(55,65,81,0.2))] rounded text-xs text-[color:var(--modal-preview-meta,#a3a3a3)]">
                 <div>Duração total: {editCourse.duration} horas</div>
                 <div>
                   Horas estudadas:{" "}
@@ -206,7 +206,7 @@ export const EditCourseModal = ({
               >
                 {handleStatusLabel(course.status)}
               </span>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-[color:var(--modal-preview-meta,#a3a3a3)]">
                 {course.startDate && (
                   <>
                     Iniciado:{" "}
@@ -225,7 +225,7 @@ export const EditCourseModal = ({
 
             {/* Avaliação */}
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-2">
+              <label className="block text-sm font-medium text-[color:var(--modal-preview-label,#a3a3a3)] mb-2">
                 Avaliação
               </label>
               <div className="flex items-center gap-2">
@@ -243,14 +243,14 @@ export const EditCourseModal = ({
                     className={cn(
                       "text-2xl transition-colors duration-200",
                       star <= editRating
-                        ? "text-yellow-400"
-                        : "text-gray-600 hover:text-yellow-400"
+                        ? "text-[color:var(--modal-star,#facc15)]"
+                        : "text-[color:var(--modal-star-empty,#52525b)] hover:text-[color:var(--modal-star,#facc15)]"
                     )}
                   >
                     <Star className={cn("h-6 w-6", star <= editRating && "fill-current")} />
                   </button>
                 ))}
-                <span className="ml-2 text-gray-400">({editRating}/5)</span>
+                <span className="ml-2 text-[color:var(--modal-preview-meta,#a3a3a3)]">({editRating}/5)</span>
               </div>
             </div>
 
@@ -268,7 +268,7 @@ export const EditCourseModal = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 bg-gray-600 hover:bg-gray-500 text-white py-3 rounded-lg transition-colors duration-200"
+                className="flex-1 bg-[color:var(--modal-cancel-bg,#52525b)] hover:bg-[color:var(--modal-cancel-bg-hover,#3f3f46)] text-[color:var(--modal-cancel-text,#fff)] py-3 rounded-lg transition-colors duration-200"
               >
                 Cancelar
               </button>
@@ -278,15 +278,15 @@ export const EditCourseModal = ({
                 className={cn(
                   "flex-1 py-3 rounded-lg transition-colors duration-200 font-medium flex items-center justify-center gap-2",
                   !hasChanges()
-                    ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                    ? "bg-[color:var(--modal-submit-bg-disabled,#52525b)] text-[color:var(--modal-submit-text-disabled,#d4d4d8)] cursor-not-allowed"
                     : isSaving
-                      ? "bg-gray-600 text-gray-300 cursor-not-allowed"
-                      : "bg-emerald-600 hover:bg-emerald-700 text-white"
+                      ? "bg-[color:var(--modal-submit-bg-disabled,#52525b)] text-[color:var(--modal-submit-text-disabled,#d4d4d8)] cursor-not-allowed"
+                      : "bg-[color:var(--modal-submit-bg,#059669)] hover:bg-[color:var(--modal-submit-bg-hover,#047857)] text-[color:var(--modal-submit-text,#fff)]"
                 )}
               >
                 {isSaving ? (
                   <>
-                    <Spinner size="sm" className="border-gray-300 border-t-transparent" />
+                    <Spinner size="sm" className="border-[color:var(--modal-spinner,#d4d4d8)] border-t-transparent" />
                     Salvando...
                   </>
                 ) : (

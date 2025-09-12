@@ -9,21 +9,21 @@ export default function ReportHeader({ onExport, isExporting }: ReportHeaderProp
     return (
         <div className="flex items-center justify-between mb-8">
             <div>
-                <h1 className="text-3xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-[color:var(--report-header-title,#fff)] mb-2">
                     Relatórios de Progresso
                 </h1>
-                <p className="text-gray-400">
+                <p className="text-[color:var(--report-header-meta,#a3a3a3)]">
                     Acompanhe sua evolução e análise detalhada dos estudos
                 </p>
             </div>
             <button
                 onClick={onExport}
                 disabled={isExporting}
-                className="flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition-colors duration-200 font-medium disabled:opacity-50"
+                className="flex items-center gap-2 bg-[color:var(--report-header-action-bg,#059669)] text-[color:var(--report-header-action,#fff)] px-6 py-3 rounded-lg hover:bg-[color:var(--report-header-action-hover-bg,#059669)] transition-colors duration-200 font-medium disabled:opacity-50"
             >
                 {isExporting ? (
                     <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-[color:var(--report-header-spinner,#fff)] border-t-transparent rounded-full animate-spin" />
                         Exportando...
                     </>
                 ) : (

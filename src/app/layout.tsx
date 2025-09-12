@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" data-theme="light">
       <body
         className={`${nunitoSans.variable}
         antialiased`}
@@ -29,7 +29,7 @@ export default function RootLayout({
       >
         <AuthUserProvider>
           <Toaster position="top-right" reverseOrder={false} />
-          <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen w-full">
+          <div className="min-h-screen w-full">
             {children}
           </div>
         </AuthUserProvider>

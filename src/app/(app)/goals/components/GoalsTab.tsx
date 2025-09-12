@@ -21,14 +21,14 @@ export default function GoalsTab({
     
 
     return (
-        <div className="flex space-x-1 mb-6 bg-gray-800/60 backdrop-blur-sm rounded-lg p-1 flex-wrap">
+    <div className="flex space-x-1 mb-6 bg-[color:var(--goals-tab-bg,#23272f)]/60 backdrop-blur-sm rounded-lg p-1 flex-wrap">
             <button
                 onClick={() => setSelectedTab("ATIVA")}
                 className={cn(
                     "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
                     selectedTab === "ATIVA"
-                        ? "bg-emerald-600 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-700/50",
+                        ? "bg-[color:var(--goals-tab-active-bg,#059669)] text-[color:var(--goals-tab-active-text,#fff)]"
+                        : "text-[color:var(--goals-tab-inactive,#a3a3a3)] hover:text-[color:var(--goals-tab-hover,#fff)] hover:bg-[color:var(--goals-tab-hover-bg,#52525b)]/50",
                 )}
             >
                 Metas Ativas ({activeGoals})
@@ -38,8 +38,8 @@ export default function GoalsTab({
                 className={cn(
                     "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
                     selectedTab === "CONCLUIDA"
-                        ? "bg-emerald-600 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-700/50",
+                        ? "bg-[color:var(--goals-tab-active-bg,#059669)] text-[color:var(--goals-tab-active-text,#fff)]"
+                        : "text-[color:var(--goals-tab-inactive,#a3a3a3)] hover:text-[color:var(--goals-tab-hover,#fff)] hover:bg-[color:var(--goals-tab-hover-bg,#52525b)]/50",
                 )}
             >
                 Concluídas ({completedGoals})
@@ -49,8 +49,8 @@ export default function GoalsTab({
                 className={cn(
                     "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
                     selectedTab === "VENCIDA"
-                        ? "bg-emerald-600 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-700/50",
+                        ? "bg-[color:var(--goals-tab-active-bg,#059669)] text-[color:var(--goals-tab-active-text,#fff)]"
+                        : "text-[color:var(--goals-tab-inactive,#a3a3a3)] hover:text-[color:var(--goals-tab-hover,#fff)] hover:bg-[color:var(--goals-tab-hover-bg,#52525b)]/50",
                 )}
             >
                 Vencidas ({missedGoals})
@@ -60,8 +60,8 @@ export default function GoalsTab({
                 className={cn(
                     "flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
                     selectedTab === "TODAS"
-                        ? "bg-emerald-600 text-white"
-                        : "text-gray-400 hover:text-white hover:bg-gray-700/50",
+                        ? "bg-[color:var(--goals-tab-active-bg,#059669)] text-[color:var(--goals-tab-active-text,#fff)]"
+                        : "text-[color:var(--goals-tab-inactive,#a3a3a3)] hover:text-[color:var(--goals-tab-hover,#fff)] hover:bg-[color:var(--goals-tab-hover-bg,#52525b)]/50",
                 )}
             >
                 Todas ({allGoals})

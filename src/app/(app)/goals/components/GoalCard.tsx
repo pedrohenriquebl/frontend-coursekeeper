@@ -14,26 +14,26 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
         <div
             key={goal.id}
             className={cn(
-                "bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border transition-all hover:scale-105 duration-200",
+                "bg-[color:var(--goal-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border transition-all hover:scale-105 duration-200",
                 goal.status === "CONCLUIDA"
-                    ? "border-green-600/50"
+                    ? "border-[color:var(--goal-card-border-success,#22c55e)]/50"
                     : goal.status === "VENCIDA"
-                        ? "border-red-600/50"
-                        : "border-gray-700/50 hover:border-emerald-500/50",
+                        ? "border-[color:var(--goal-card-border-fail,#ef4444)]/50"
+                        : "border-[color:var(--goal-card-border,#52525b)]/50 hover:border-[color:var(--goal-card-border-hover,#059669)]/50",
             )}
         >
             {/* Goal Header */}
             <div className="flex items-start justify-between mb-4 flex-wrap sm:no-wrap">
                 <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                    <h3 className="text-lg font-semibold text-[color:var(--goal-card-title,#fff)] mb-2">
                         {goal.title}
                     </h3>
-                    <p className="text-sm text-gray-400 mb-2">
+                    <p className="text-sm text-[color:var(--goal-card-meta,#a3a3a3)] mb-2">
                         {goal.description}
                     </p>
                     {goal.topic ? (
-                        <span className="inline-block bg-gray-600/50 px-2 py-1 rounded text-xs text-gray-300 min-h-[24px]">
-                            {goal.topic}
+                        <span className="inline-block bg-[color:var(--goal-card-topic-bg,#52525b)]/50 px-2 py-1 rounded text-xs text-[color:var(--goal-card-topic,#d1d5db)] min-h-[24px]">
+                            {goal.topic.toLocaleLowerCase().replace(/\b\w/g, char => char.toUpperCase())}
                         </span>
                     ) : (
                         <div className="min-h-[24px]" />
@@ -53,7 +53,7 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
                                 ? "Concluída"
                                 : "Vencida"}
                     </span>
-                    <button onClick={() => onDelete(goal)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700/50 rounded-lg">
+                    <button onClick={() => onDelete(goal)} className="p-2 text-[color:var(--goal-card-action,#a3a3a3)] hover:text-[color:var(--goal-card-action-hover,#ef4444)] hover:bg-[color:var(--goal-card-action-bg,#52525b)]/50 rounded-lg">
                         <Trash2 className="h-4 w-4" />
                     </button>
                 </div>
@@ -62,21 +62,21 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
 
             {/* Progress Bar */}
             <div className="mb-4">
-                <div className="flex justify-between text-sm text-gray-400 mb-2">
+                <div className="flex justify-between text-sm text-[color:var(--goal-card-meta,#a3a3a3)] mb-2">
                     <span>Progresso</span>
                     <span>
                         {goal.current}/{goal.target} {goal.unit}
                     </span>
                 </div>
-                <div className="bg-gray-600 rounded-full h-3">
+                <div className="bg-[color:var(--goal-card-progress-bg,#52525b)] rounded-full h-3">
                     <div
                         className={cn(
                             "h-3 rounded-full transition-all duration-300",
                             goal.status === "CONCLUIDA"
-                                ? "bg-green-500"
+                                ? "bg-[color:var(--goal-card-progress-success,#22c55e)]"
                                 : goal.status === "VENCIDA"
-                                    ? "bg-red-500"
-                                    : "bg-emerald-500",
+                                    ? "bg-[color:var(--goal-card-progress-fail,#ef4444)]"
+                                    : "bg-[color:var(--goal-card-progress,#059669)]",
                         )}
                         style={{
                             width: `${Math.min(getGoalProgress(goal), 100)}%`,

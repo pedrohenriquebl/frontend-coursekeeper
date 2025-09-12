@@ -66,14 +66,14 @@ export default function CoursesPage() {
         <div className="max-w-7xl mx-auto px-4 py-8">
             <div className="flex items-center justify-between mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Meus Cursos</h1>
-                    <p className="text-gray-400">
+                    <h1 className="text-3xl font-bold text-[color:var(--modal-title,#fff)] mb-2">Meus Cursos</h1>
+                    <p className="text-[color:var(--modal-preview-meta,#a3a3a3)]">
                         Gerencie todos os seus cursos e acompanhe o progresso
                     </p>
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
-                    className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition-colors duration-200 font-medium"
+                    className="cursor-pointer flex items-center gap-2 bg-[color:var(--modal-submit-bg,#059669)] text-[color:var(--modal-submit-text,#fff)] px-6 py-3 rounded-lg hover:bg-[color:var(--modal-submit-bg-hover,#047857)] transition-colors duration-200 font-medium"
                 >
                     <Plus className="h-5 w-5" />
                     Adicionar Curso
@@ -96,10 +96,10 @@ export default function CoursesPage() {
 
             ) : (
                 <div className="text-center py-12">
-                    <div className="bg-gray-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <BookAlertIcon className="h-8 w-8 text-gray-400" />
+                    <div className="bg-[color:var(--modal-preview-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <BookAlertIcon className="h-8 w-8 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
                     </div>
-                    <h3 className="text-lg font-medium text-white mb-2">Nenhum curso cadatrado</h3>
+                    <h3 className="text-lg font-medium text-[color:var(--modal-title,#fff)] mb-2">Nenhum curso cadatrado</h3>
                 </div>
             )}
 

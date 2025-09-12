@@ -50,17 +50,17 @@ export default function PageGoals() {
     const hasGoals = Array.isArray(allGoals) && allGoals.length > 0;
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 text-[color:var(--goals-page-text,#fff)]">
             <div className="flex items-center justify-between mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Metas de Estudo</h1>
-                    <p className="text-gray-400">
+                    <h1 className="text-3xl font-bold text-[color:var(--goals-page-title,#fff)] mb-2">Metas de Estudo</h1>
+                    <p className="text-[color:var(--goals-page-meta,#a3a3a3)]">
                         Defina objetivos e acompanhe seu progresso educacional
                     </p>
                 </div>
                 <button
                     onClick={() => setShowAddModal(true)}
-                    className="cursor-pointer flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition-colors duration-200 font-medium"
+                    className="cursor-pointer flex items-center gap-2 bg-[color:var(--goals-page-action-bg,#059669)] text-[color:var(--goals-page-action,#fff)] px-6 py-3 rounded-lg hover:bg-[color:var(--goals-page-action-hover-bg,#059669)] transition-colors duration-200 font-medium"
                 >
                     <Plus className="h-5 w-5" />
                     Adicionar Meta
@@ -90,7 +90,7 @@ export default function PageGoals() {
                         <div className="bg-gray-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                             <BookAlertIcon className="h-8 w-8 text-gray-400" />
                         </div>
-                        <h3 className="text-lg font-medium text-white mb-2">Nenhuma meta definida</h3>
+                        <h3 className="text-lg font-medium text-[color:var(--goals-page-empty-title,#fff)] mb-2">Nenhuma meta definida</h3>
                     </div>
                 )}
             </div>

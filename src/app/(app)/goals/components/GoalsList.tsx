@@ -38,11 +38,11 @@ export default function GoalsList({ filteredGoals, onDelete }: GoalsListProps) {
                     ))
                 ) : (
                     <div className="text-center py-12">
-                        <div className="bg-gray-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Search className="h-8 w-8 text-gray-400" />
-                        </div>
-                        <h3 className="text-lg font-medium text-white mb-2">Nenhuma meta encontrada</h3>
-                        <p className="text-gray-400">Tente ajustar os filtros ou adicionar uma nova meta</p>
+                        <div className="bg-[color:var(--goals-list-icon-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Search className="h-8 w-8 text-[color:var(--goals-list-icon,#a3a3a3)]" />
+                            </div>
+                            <h3 className="text-lg font-medium text-[color:var(--goals-list-title,#fff)] mb-2">Nenhuma meta encontrada</h3>
+                            <p className="text-[color:var(--goals-list-meta,#a3a3a3)]">Tente ajustar os filtros ou adicionar uma nova meta</p>
                     </div>
                 )}
             </div>

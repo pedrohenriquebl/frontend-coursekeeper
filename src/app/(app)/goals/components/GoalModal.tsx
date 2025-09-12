@@ -122,7 +122,7 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-xl w-full max-w-2xl max-h-[90vh] sm:max-h-[850px] overflow-y-auto scrollbar-gutter-stable">
+  <div className="bg-[color:var(--goal-modal-bg,#23272f)] rounded-xl w-full max-w-2xl max-h-[90vh] sm:max-h-[850px] overflow-y-auto scrollbar-gutter-stable">
         <div className="p-6">
           <ModalHeader
             title="Criar Nova Meta"
@@ -133,7 +133,7 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Tipo de Meta */}
             <div>
-              <label className="block text-sm font-medium text-gray-400 mb-3">Tipo de Meta *</label>
+                <label className="block text-sm font-medium text-[color:var(--goal-modal-label,#a3a3a3)] mb-3">Tipo de Meta *</label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {goalTypes.map((type) => (
                   <GoalTypeButton
@@ -151,76 +151,76 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Título */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-400 mb-2">Título da Meta *</label>
+                    <label className="block text-sm font-medium text-[color:var(--goal-modal-label,#a3a3a3)] mb-2">Título da Meta *</label>
                 <input
                   type="text"
                   value={goalData.title}
                   onChange={(e) => setGoalData({ ...goalData, title: e.target.value })}
-                  className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full px-4 py-3 bg-[color:var(--goal-modal-input-bg,#23272f)]/50 border border-[color:var(--goal-modal-input-border,#52525b)] rounded-lg text-[color:var(--goal-modal-input-text,#fff)] placeholder-[color:var(--goal-modal-input-placeholder,#a3a3a3)] focus:border-[color:var(--goal-modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--goal-modal-input-focus,#059669)]"
                   placeholder="Ex: 100 horas de estudo em Frontend"
                 />
-                {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
+                {errors.title && <p className="text-[color:var(--goal-modal-error,#ef4444)] text-sm mt-1">{errors.title}</p>}
               </div>
 
               {/* Objetivo */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Objetivo *</label>
+                    <label className="block text-sm font-medium text-[color:var(--goal-modal-label,#a3a3a3)] mb-2">Objetivo *</label>
                 <div className="relative">
                   <input
                     type="number"
                     min={1}
                     value={goalData.target || ""}
                     onChange={(e) => setGoalData({ ...goalData, target: parseInt(e.target.value) || 0 })}
-                    className="w-full px-4 py-3 pr-16 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                        className="w-full px-4 py-3 pr-16 bg-[color:var(--goal-modal-input-bg,#23272f)]/50 border border-[color:var(--goal-modal-input-border,#52525b)] rounded-lg text-[color:var(--goal-modal-input-text,#fff)] placeholder-[color:var(--goal-modal-input-placeholder,#a3a3a3)] focus:border-[color:var(--goal-modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--goal-modal-input-focus,#059669)]"
                     placeholder="100"
                   />
-                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm">{goalData.unit}</span>
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[color:var(--goal-modal-unit,#a3a3a3)] text-sm">{goalData.unit}</span>
                 </div>
-                {errors.target && <p className="text-red-500 text-sm mt-1">{errors.target}</p>}
+                {errors.target && <p className="text-[color:var(--goal-modal-error,#ef4444)] text-sm mt-1">{errors.target}</p>}
               </div>
 
               {/* Prazo */}
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Prazo *</label>
+                <label className="block text-sm font-medium text-[color:var(--goal-modal-label,#a3a3a3)] mb-2">Prazo *</label>
                 <input
                   type="date"
                   value={goalData.deadline}
                   onChange={(e) => setGoalData({ ...goalData, deadline: e.target.value })}
                   min={new Date().toISOString().split("T")[0]}
-                  className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                  className="w-full px-4 py-3 bg-[color:var(--goal-modal-input-bg,#23272f)]/50 border border-[color:var(--goal-modal-input-border,#52525b)] rounded-lg text-[color:var(--goal-modal-input-text,#fff)] placeholder-[color:var(--goal-modal-input-placeholder,#a3a3a3)] focus:border-[color:var(--goal-modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--goal-modal-input-focus,#059669)]"
                 />
-                {errors.deadline && <p className="text-red-500 text-sm mt-1">{errors.deadline}</p>}
+                {errors.deadline && <p className="text-[color:var(--goal-modal-error,#ef4444)] text-sm mt-1">{errors.deadline}</p>}
               </div>
 
               {/* Tópico */}
               {(goalData.type === "HORAS_TOPICO" || goalData.type === "CURSOS_CONCLUIDOS") && (
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-400 mb-2">Tópico *</label>
+                  <label className="block text-sm font-medium text-[color:var(--goal-modal-label,#a3a3a3)] mb-2">Tópico *</label>
                   <select
                     value={goalData.topic || ""}
                     onChange={(e) => setGoalData({ ...goalData, topic: e.target.value as Topic })}
-                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                    className="w-full px-4 py-3 bg-[color:var(--goal-modal-select-bg,#23272f)]/50 border border-[color:var(--goal-modal-select-border,#52525b)] rounded-lg text-[color:var(--goal-modal-select-text,#fff)] placeholder-[color:var(--goal-modal-select-placeholder,#a3a3a3)] focus:border-[color:var(--goal-modal-select-focus,#059669)] focus:ring-1 focus:ring-[color:var(--goal-modal-select-focus,#059669)]"
                   >
                     <option value="">Selecione um tópico</option>
                     {topics.map((topic) => (
                       <option key={topic} value={topic}>{topic}</option>
                     ))}
                   </select>
-                  {errors.topic && <p className="text-red-500 text-sm mt-1">{errors.topic}</p>}
+                  {errors.topic && <p className="text-[color:var(--goal-modal-error,#ef4444)] text-sm mt-1">{errors.topic}</p>}
                 </div>
               )}
 
               {/* Descrição */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-400 mb-2">Descrição *</label>
+                <label className="block text-sm font-medium text-[color:var(--goal-modal-label,#a3a3a3)] mb-2">Descrição *</label>
                 <textarea
                   rows={3}
                   value={goalData.description || ""}
                   onChange={(e) => setGoalData({ ...goalData, description: e.target.value })}
-                  className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none"
+                  className="w-full px-4 py-3 bg-[color:var(--goal-modal-textarea-bg,#23272f)]/50 border border-[color:var(--goal-modal-textarea-border,#52525b)] rounded-lg text-[color:var(--goal-modal-textarea-text,#fff)] placeholder-[color:var(--goal-modal-textarea-placeholder,#a3a3a3)] focus:border-[color:var(--goal-modal-textarea-focus,#059669)] focus:ring-1 focus:ring-[color:var(--goal-modal-textarea-focus,#059669)] resize-none"
                   placeholder="Descreva o objetivo desta meta e como ela contribui para seu desenvolvimento..."
                 />
-                {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+                {errors.description && <p className="text-[color:var(--goal-modal-error,#ef4444)] text-sm mt-1">{errors.description}</p>}
               </div>
             </div>
 

@@ -39,17 +39,17 @@ export default function NavBar() {
     };
 
     return (
-        <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="bg-gradient-to-br from-[color:var(--navbar-bg-from,#111827)] via-[color:var(--navbar-bg-via,#1f2937)] to-[color:var(--navbar-bg-to,#111827)]">
             {/* Navigation Header */}
-            <nav className="bg-gray-800/90 backdrop-blur-md border-b border-gray-700/60 sticky top-0 z-50">
+            <nav className="bg-[color:var(--navbar-header-bg,rgba(31,41,55,0.9))] backdrop-blur-md border-b border-[color:var(--navbar-header-border,rgba(75,85,99,0.3))] sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         {/* Logo */}
                         <Link href="/" className="flex items-center space-x-2 group">
-                            <div className="bg-gradient-to-r from-emerald-600 to-green-600 p-2 rounded-lg group-hover:from-emerald-700 group-hover:to-green-700 transition-all duration-200">
-                                <BookOpen className="h-6 w-6 text-white" />
+                            <div className="bg-gradient-to-r from-[color:var(--navbar-logo-from,#059669)] to-[color:var(--navbar-logo-to,#22c55e)] p-2 rounded-lg group-hover:from-[color:var(--navbar-logo-hover-from,#047857)] group-hover:to-[color:var(--navbar-logo-hover-to,#16a34a)] transition-all duration-200">
+                                <BookOpen className="h-6 w-6 text-[color:var(--navbar-logo-icon,#fff)]" />
                             </div>
-                            <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
+                            <span className="text-xl font-bold bg-gradient-to-r from-[color:var(--navbar-logo-text-from,#34d399)] to-[color:var(--navbar-logo-text-to,#4ade80)] bg-clip-text text-transparent">
                                 CourseKeeper
                             </span>
                         </Link>
@@ -58,19 +58,20 @@ export default function NavBar() {
                         <div className="hidden md:flex space-x-1">
                             {navigation.map((item) => {
                                 const Icon = item.icon;
+                                const active = isActive(item.href);
                                 return (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         className={cn(
-                                            "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border border-transparent",
-                                            isActive(item.href)
-                                                ? "bg-emerald-900/50 text-emerald-400 shadow-sm border-emerald-900/50"
-                                                : "text-gray-300 hover:text-emerald-400 hover:bg-gray-700/50"
+                                            "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border border-transparent group",
+                                            active
+                                                ? "bg-[color:var(--navbar-link-active-bg,#022c22)] text-[color:var(--navbar-link-active-text,#34d399)] shadow-sm border-[color:var(--navbar-link-active-border,#022c22)]"
+                                                : "text-[color:var(--navbar-link-text,#d1d5db)] hover:text-[color:var(--navbar-link-hover-text,#34d399)] hover:bg-[color:var(--navbar-link-hover-bg,#1f2937)]"
                                         )}
                                     >
-                                        <Icon className="h-4 w-4" />
-                                        <span>{item.name}</span>
+                                        <Icon className={cn("h-4 w-4", !active && "group-hover:text-[color:var(--navbar-link-hover-text,#34d399)] group-hover:opacity-100")}/>
+                                        <span className={!active ? "group-hover:text-[color:var(--navbar-link-hover-text,#34d399)] group-hover:opacity-100" : undefined}>{item.name}</span>
                                     </Link>
                                 );
                             })}
@@ -83,7 +84,7 @@ export default function NavBar() {
                                     setIsMobileMenuOpen(false);
                                     logoutUser();
                                 }}
-                                className="cursor-pointer flex items-center space-x-2 text-gray-300 hover:text-red-400 transition-colors duration-200"
+                                className="cursor-pointer flex items-center space-x-2 text-[color:var(--navbar-link-text,#d1d5db)] hover:text-[color:var(--navbar-link-logout-hover,#ef4444)] transition-colors duration-200"
                             >
                                 <LogOut className="h-4 w-4" />
                                 <span className="text-sm font-medium">Sair</span>
@@ -93,7 +94,7 @@ export default function NavBar() {
                         {/* Mobile menu button */}
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="md:hidden p-2 rounded-lg text-gray-300 hover:bg-gray-700 transition-colors duration-200"
+                            className="md:hidden p-2 rounded-lg text-[color:var(--navbar-link-text,#d1d5db)] hover:bg-[color:var(--navbar-link-hover-bg,#1f2937)] transition-colors duration-200"
                         >
                             {isMobileMenuOpen ? (
                                 <X className="h-6 w-6" />
@@ -106,24 +107,25 @@ export default function NavBar() {
 
                 {/* Mobile Navigation */}
                 {isMobileMenuOpen && (
-                    <div className="md:hidden bg-gray-800/95 backdrop-blur-md border-t border-gray-700/60">
+                    <div className="md:hidden bg-[color:var(--navbar-header-bg-mobile,#1f2937)]/95 backdrop-blur-md border-t border-[color:var(--navbar-header-border-mobile,#374151)]/60">
                         <div className="px-4 py-2 space-y-1">
                             {navigation.map((item) => {
                                 const Icon = item.icon;
+                                const active = isActive(item.href);
                                 return (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className={cn(
-                                            "flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200",
-                                            isActive(item.href)
-                                                ? "bg-emerald-900/50 text-emerald-400"
-                                                : "text-gray-300 hover:text-emerald-400 hover:bg-gray-700/50",
+                                            "flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 group",
+                                            active
+                                                ? "bg-[color:var(--navbar-link-active-bg,#022c22)] text-[color:var(--navbar-link-active-text,#34d399)]"
+                                                : "text-[color:var(--navbar-link-text,#d1d5db)] hover:text-[color:var(--navbar-link-hover-text,#34d399)] hover:bg-[color:var(--navbar-link-hover-bg,#1f2937)]",
                                         )}
                                     >
-                                        <Icon className="h-5 w-5" />
-                                        <span>{item.name}</span>
+                                        <Icon className={cn("h-5 w-5", !active && "group-hover:text-[color:var(--navbar-link-hover-text,#34d399)] group-hover:opacity-100")}/>
+                                        <span className={!active ? "group-hover:text-[color:var(--navbar-link-hover-text,#34d399)] group-hover:opacity-100" : undefined}>{item.name}</span>
                                     </Link>
                                 );
                             })}
@@ -132,7 +134,7 @@ export default function NavBar() {
                                     setIsMobileMenuOpen(false);
                                     logoutUser();
                                 }}
-                                className="cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:text-red-400 transition-colors duration-200"
+                                className="cursor-pointer flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-[color:var(--navbar-link-text,#d1d5db)] hover:text-[color:var(--navbar-link-logout-hover,#ef4444)] transition-colors duration-200"
                             >
                                 <LogOut className="h-5 w-5" />
                                 <span>Sair</span>

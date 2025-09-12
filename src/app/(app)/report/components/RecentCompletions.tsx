@@ -21,21 +21,21 @@ export default function RecentCompletions({ courses }: RecentCompletionsProps) {
     return (
         <>
             {recentCourses.length > 0 ? (
-                <div className="h-full bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50">
-                    <h3 className="text-lg font-semibold text-white mb-6">
-                        Cursos Concluídos Recentemente
-                    </h3>
+                    <div className="h-full bg-[color:var(--report-card-bg)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--report-card-border)]/50">
+            <h3 className="text-lg font-semibold text-[color:var(--report-card-title,#fff)] mb-6">
+                Cursos Concluídos Recentemente
+            </h3>
                     <div className="space-y-4">
                         {recentCourses.map((completion, index) => (
                             <div
                                 key={index}
-                                className="flex items-center justify-between p-3 bg-gray-700/30 rounded-lg"
+                                className="flex items-center justify-between p-3 bg-[color:var(--report-card-item-bg,#23272f)]/30 rounded-lg"
                             >
                                 <div>
-                                    <div className="font-medium text-white">
+                                        <div className="font-medium text-[color:var(--report-card-item-title)]">
                                         {completion.name}
                                     </div>
-                                    <div className="text-sm text-gray-400">
+                                        <div className="text-sm text-[color:var(--report-card-item-meta)]">
                                         {completion.platform.toLowerCase().replace(/\b\w/g, char => char.toUpperCase())}
                                     </div>
                                 </div>
@@ -49,9 +49,9 @@ export default function RecentCompletions({ courses }: RecentCompletionsProps) {
                                                         key={i}
                                                         className={cn(
                                                             "h-3 w-3",
-                                                            i < (completion.rating ?? 0)
-                                                                ? "text-yellow-400 fill-current"
-                                                                : "text-gray-500"
+                                                                i < (completion.rating ?? 0)
+                                                                    ? "text-[color:var(--report-card-item-star)] fill-current"
+                                                                    : "text-[color:var(--report-card-item-star-empty)]"
                                                         )}
                                                     />
                                                 ))}
@@ -59,7 +59,7 @@ export default function RecentCompletions({ courses }: RecentCompletionsProps) {
                                         </div>
                                     )}
                                 </div>
-                                <div className="text-xs text-gray-400">
+                                    <div className="text-xs text-[color:var(--report-card-item-date)]">
                                     {completion.endDate && (
                                         new Date(completion.endDate).toLocaleDateString("pt-BR")
                                     )}

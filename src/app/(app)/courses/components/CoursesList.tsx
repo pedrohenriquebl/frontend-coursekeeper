@@ -52,28 +52,28 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
     return (
         <div className="mt-8">
             {/* Filtros */}
-            <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-700/50 mb-8">
+            <div className="bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
                         <input
                             type="text"
                             placeholder="Buscar cursos..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                            className="w-full pl-10 pr-4 py-2 bg-[color:var(--modal-input-bg,rgba(55,65,81,0.5))] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] placeholder-[color:var(--modal-input-placeholder,#a3a3a3)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
                         />
                     </div>
 
-                    <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
                         {topics.map(t => <option key={t} value={t}>{t === "all" ? "Todos os tópicos" : t}</option>)}
                     </select>
 
-                    <select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
                         {platforms.map(p => <option key={p} value={p}>{p === "all" ? "Todas as plataformas" : p}</option>)}
                     </select>
 
-                    <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                    <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
                         {statuses.map(s => <option key={s} value={s}>{s === "all" ? "Todos os status" : s}</option>)}
                     </select>
                 </div>
@@ -101,11 +101,11 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
 
             {filteredCourses.length === 0 && !isLoading && (
                 <div className="text-center py-12">
-                    <div className="bg-gray-600/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Search className="h-8 w-8 text-gray-400" />
+                    <div className="bg-[color:var(--modal-preview-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Search className="h-8 w-8 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
                     </div>
-                    <h3 className="text-lg font-medium text-white mb-2">Nenhum curso encontrado</h3>
-                    <p className="text-gray-400">Tente ajustar os filtros ou adicionar um novo curso</p>
+                    <h3 className="text-lg font-medium text-[color:var(--modal-title,#fff)] mb-2">Nenhum curso encontrado</h3>
+                    <p className="text-[color:var(--modal-preview-meta,#a3a3a3)]">Tente ajustar os filtros ou adicionar um novo curso</p>
                 </div>
             )}
         </div>

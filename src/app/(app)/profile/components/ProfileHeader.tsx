@@ -38,17 +38,17 @@ export default function ProfileHeader({
     };
 
     const planColors: Record<string, string> = {
-        FREE: "bg-gray-700 text-gray-200 border border-gray-500",
+    FREE: "bg-gray-700 text-[color:var(--profile-header-meta,#a3a3a3)] border border-gray-500",
         GOLD: "bg-yellow-500/20 text-yellow-400 border border-yellow-500/40",
         PLATINUM: "bg-emerald-600/20 text-emerald-400 border border-emerald-500/40",
     };
 
     const planStyle =
-        planColors[profile.subscriptionPlan] ||
-        "bg-gray-700 text-gray-200 border border-gray-500";
+    planColors[profile.subscriptionPlan] ||
+    "bg-gray-700 text-[color:var(--profile-header-meta,#a3a3a3)] border border-gray-500";
 
     return (
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-gray-700/50 mb-8">
+    <div className="bg-[color:var(--profile-header-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-[color:var(--profile-header-border,#52525b)]/50 mb-8">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 {/* Avatar Section */}
                 <div className="relative flex flex-row flex-wrap align-center">
@@ -67,12 +67,12 @@ export default function ProfileHeader({
                                     type="text"
                                     value={profile.firstName || profile.firstName}
                                     onChange={(e) => setEditedProfile({ firstName: e.target.value })}
-                                    className="text-2xl font-bold bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                                    className="text-2xl font-bold bg-[color:var(--profile-header-input-bg,#23272f)]/50 border border-[color:var(--profile-header-input-border,#52525b)] rounded-lg px-3 py-2 text-[color:var(--profile-header-input,#fff)] focus:border-[color:var(--profile-header-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--profile-header-input-focus,#059669)]"
                                     placeholder="Seu nome"
                                 />
                             ) : (
                                 <div className="flex items-center gap-3">
-                                    <h1 className="text-2xl font-bold text-white">{profile.firstName}</h1>
+                                    <h1 className="text-2xl font-bold text-[color:var(--profile-header-title,#fff)]">{profile.firstName}</h1>
                                     <Link
                                         href="/subscriptions"
                                         className={cn(
@@ -84,7 +84,7 @@ export default function ProfileHeader({
                                     </Link>
                                 </div>
                             )}
-                            <div className="flex items-center gap-2 text-gray-400 mt-1">
+                            <div className="flex items-center gap-2 text-[color:var(--profile-header-meta,#a3a3a3)] mt-1">
                                 <Mail className="h-4 w-4" />
                                 <span>{profile.email}</span>
                             </div>
@@ -93,7 +93,7 @@ export default function ProfileHeader({
                         {!isEditing ? (
                             <button
                                 onClick={() => setIsEditing(true)}
-                                className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                                className="flex items-center gap-2 bg-[color:var(--profile-header-action-bg,#52525b)] hover:bg-[color:var(--profile-header-action-hover-bg,#a3a3a3)] text-[color:var(--profile-header-action,#fff)] px-4 py-2 rounded-lg transition-colors duration-200"
                             >
                                 <Edit2 className="h-4 w-4" />
                                 Editar Perfil
@@ -102,14 +102,14 @@ export default function ProfileHeader({
                             <div className="flex gap-2">
                                 <button
                                     onClick={handleSave}
-                                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                                    className="flex items-center gap-2 bg-[color:var(--profile-header-save-bg,#059669)] hover:bg-[color:var(--profile-header-save-hover-bg,#059669)] text-[color:var(--profile-header-save,#fff)] px-4 py-2 rounded-lg transition-colors duration-200"
                                 >
                                     <Save className="h-4 w-4" />
                                     Salvar
                                 </button>
                                 <button
                                     onClick={handleCancel}
-                                    className="flex items-center gap-2 bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                                    className="flex items-center gap-2 bg-[color:var(--profile-header-cancel-bg,#52525b)] hover:bg-[color:var(--profile-header-cancel-hover-bg,#a3a3a3)] text-[color:var(--profile-header-cancel,#fff)] px-4 py-2 rounded-lg transition-colors duration-200"
                                 >
                                     <X className="h-4 w-4" />
                                     Cancelar
@@ -118,7 +118,7 @@ export default function ProfileHeader({
                         )}
                     </div>
 
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-400 mt-2 mb-2 flex-col">
+                    <div className="flex flex-wrap gap-4 text-sm text-[color:var(--profile-header-meta,#a3a3a3)] mt-2 mb-2 flex-col">
                         {isEditing && (
                             <>
                                 <input
@@ -157,25 +157,25 @@ export default function ProfileHeader({
                                     value={profile.description ?? ""}
                                     onChange={(e) => handleDescriptionChange(e.target.value)}
                                     rows={4}
-                                    className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none"
+                                    className="w-full bg-gray-700/50 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-[color:var(--profile-header-meta,#a3a3a3)] focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 resize-none"
                                     placeholder="Conte um pouco sobre você e seus objetivos de aprendizado..."
                                 />
-                                <div className="flex justify-between text-xs text-gray-400 mt-1">
+                                <div className="flex justify-between text-xs text-[color:var(--profile-header-meta,#a3a3a3)] mt-1">
                                     <span>Máximo 340 caracteres</span>
                                     <span className={cn(
-                                        characterCount > 340 ? "text-red-400" : "text-gray-400"
+                                        characterCount > 340 ? "text-red-400" : "text-[color:var(--profile-header-meta,#a3a3a3)]"
                                     )}>
                                         {characterCount}/340
                                     </span>
                                 </div>
                             </div>
                         ) : (
-                            <p className="text-gray-300 leading-relaxed">{profile.description}</p>
+                            <p className="text-[color:var(--profile-header-meta,#a3a3a3)] leading-relaxed">{profile.description}</p>
                         )}
                     </div>
 
                     {/* Location and Website */}
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-400">
+                    <div className="flex flex-wrap gap-4 text-sm text-[color:var(--profile-header-meta,#a3a3a3)]">
                         {!isEditing ? (
                             <>
                                 <div className="flex items-center gap-1">
