@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-
 import DurationStep from "./DurationStep";
 import CardPaymentStep from "./CardPaymentStep";
 import PixPaymentStep from "./PixPaymentStep";
 import SummaryStep from "./SummaryStep";
-import { Duration, PaymentMethod, SubscriptionDialogProps } from "@/types";
+import { Duration, PaymentMethod, SubscriptionDialogProps, SubscriptionPlan } from "@/types";
+import { cn } from "@/lib/utils";
 
 export default function SubscriptionDialog({
     open,
@@ -24,9 +24,6 @@ export default function SubscriptionDialog({
     };
 
     const handleSubscribe = () => {
-        const payload = { plan: selectedPlan, duration, paymentMethod };
-        console.log("Enviando para backend:", payload);
-        
         if (onSubscriptionSuccess && selectedPlan) {
             onSubscriptionSuccess(selectedPlan);
         }
@@ -34,11 +31,42 @@ export default function SubscriptionDialog({
         handleClose();
     };
 
+    const getPlanTitleColor = (plan: SubscriptionPlan | null) => {
+        switch (plan) {
+            case "FREE":
+                return "text-blue-400";
+            case "GOLD":
+                return "text-yellow-400";
+            case "PLATINUM":
+                return "text-purple-400";
+            default:
+                return "text-white";
+        }
+    };
+
+    const getPlanFriendlyName = (plan: SubscriptionPlan | null) => {
+        switch (plan) {
+            case "FREE":
+                return "Free";
+            case "GOLD":
+                return "Gold";
+            case "PLATINUM":
+                return "Platinum";
+            default:
+                return "Plano";
+        }
+    };
+
     return (
         <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="max-w-md space-y-6 bg-gray-900 text-white rounded-2xl border border-gray-700">
                 <DialogHeader>
-                    <DialogTitle className="text-2xl font-bold">{selectedPlan}</DialogTitle>
+                    <DialogTitle className={cn(
+                        "text-2xl font-bold",
+                        getPlanTitleColor(selectedPlan)
+                    )}>
+                        {getPlanFriendlyName(selectedPlan)}
+                    </DialogTitle>
                     <DialogDescription className="text-gray-300">
                         Finalize a assinatura escolhendo a forma de pagamento.
                     </DialogDescription>
