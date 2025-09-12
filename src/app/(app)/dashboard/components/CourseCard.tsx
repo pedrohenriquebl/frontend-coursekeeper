@@ -8,6 +8,21 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course }: CourseCardProps) {
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "CONCLUIDO":
+        return "bg-green-600/20 text-green-400";
+      case "EM_PROGRESSO":
+        return "bg-emerald-600/20 text-emerald-400";
+      case "NAO_INICIADO":
+        return "bg-gray-600/20 text-gray-400";
+      case "NAO_CONCLUIDO":
+        return "bg-red-600/20 text-red-400";
+      default:
+        return "bg-gray-600/20 text-gray-400";
+    }
+  };
+
   return (
     <div className="p-4 border border-gray-600/50 rounded-lg hover:border-emerald-500/50 transition-colors duration-200 bg-gray-700/30">
       <div className="flex items-start flex-wrap gap-4 justify-between mb-3 sm:no-wrap sm:gap-0">
@@ -16,12 +31,12 @@ export function CourseCard({ course }: CourseCardProps) {
           <div>
             <h3 className="font-semibold text-white mb-1">{course.name}</h3>
             <div className="flex items-center gap-4 text-sm sm:text-base text-gray-400">
-              <span>{course.platform}</span>
+              <span>{course.platform.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
               <span>•</span>
               <span>{course.duration}</span>
               <span>•</span>
               <span className="bg-gray-600/50 px-2 py-1 rounded text-xs text-gray-300">
-                {course.topic}
+                {course.topic.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
               </span>
             </div>
           </div>
@@ -46,11 +61,7 @@ export function CourseCard({ course }: CourseCardProps) {
           </div>
           <span className="text-sm text-gray-400">{course.progress}%</span>
         </div>
-        <span className={`text-xs px-2 py-1 rounded-full ${
-          course.status === "CONCLUIDO"
-            ? "bg-green-600/20 text-green-400"
-            : "bg-emerald-600/20 text-emerald-400"
-        }`}>
+        <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(course.status || "Não Iniciado")}`}>
           {handleStatusLabel(course.status)}
         </span>
       </div>

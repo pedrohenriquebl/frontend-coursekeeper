@@ -3,6 +3,7 @@ import { User } from "@/types";
 import { Calendar, Edit2, Mail, Save, X } from "lucide-react";
 import { useState } from "react";
 import AvatarUpload from "./AvatarUpload";
+import Link from "next/link";
 
 type ProfileHeaderProps = {
     profile: User;
@@ -72,14 +73,15 @@ export default function ProfileHeader({
                             ) : (
                                 <div className="flex items-center gap-3">
                                     <h1 className="text-2xl font-bold text-white">{profile.firstName}</h1>
-                                    <span
+                                    <Link
+                                        href="/subscriptions"
                                         className={cn(
-                                            "px-3 py-1 text-xs font-semibold rounded-full",
+                                            "px-3 py-1 text-xs font-semibold rounded-full cursor-pointer hover:opacity-80 transition",
                                             planStyle
                                         )}
                                     >
-                                        {profile.subscriptionPlan.toLocaleLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
-                                    </span>
+                                        <span>{profile.subscriptionPlan.toLocaleLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
+                                    </Link>
                                 </div>
                             )}
                             <div className="flex items-center gap-2 text-gray-400 mt-1">

@@ -14,9 +14,7 @@ export default function ProfileClient() {
     const { achievements } = useAchievements();
     const [editedProfile, setEditedProfile] = useState<User | null>(user);
     const [isEditing, setIsEditing] = useState(false);
-
-    console.log(user);
-
+    
     if (!user || !editedProfile) return null;
 
     const handleSetEditedProfile = (profile: Partial<User>) => {

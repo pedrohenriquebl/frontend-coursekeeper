@@ -3,9 +3,7 @@
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { PasswordInput } from "@/components/ui/PasswordInput";
-import { cn } from "@/lib/utils";
 import { authService } from "@/services/api/user/authService";
-import { Spinner } from "@/components/ui/Spinner";
 
 export default function ResetPasswordPage() {
     const searchParams = useSearchParams();

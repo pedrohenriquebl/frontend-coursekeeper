@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { ReactNode } from "react";
-import css from "styled-jsx/css";
 
 export const getTopicIcon = (topic: string) => {
     switch (topic.toLowerCase()) {
