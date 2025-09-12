@@ -10,15 +10,17 @@ interface ErrorMessageProps {
 export function ErrorMessage({ message, isBlocked = false }: ErrorMessageProps) {
   return (
     <div
-      className={cn(
-        "p-4 rounded-lg flex items-start gap-3",
-        isBlocked ? "bg-red-500/10 border border-red-500/20" : "bg-orange-500/10 border border-orange-500/20"
-      )}
+      className={cn("p-4 rounded-lg flex items-start gap-3 border")}
+      style={{
+        background: isBlocked ? "rgba(239,68,68,0.1)" : "rgba(251,146,60,0.1)",
+        borderColor: isBlocked ? "rgba(239,68,68,0.2)" : "rgba(251,146,60,0.2)"
+      }}
     >
       <AlertCircle
-        className={cn("h-5 w-5 mt-0.5", isBlocked ? "text-red-400" : "text-orange-400")}
+        className="h-5 w-5 mt-0.5"
+        style={{ color: isBlocked ? "#ef4444" : "#fb923c" }}
       />
-      <p className={cn("text-sm", isBlocked ? "text-red-400" : "text-orange-400")}>{message}</p>
+      <p className="text-sm" style={{ color: isBlocked ? "#ef4444" : "#fb923c" }}>{message}</p>
     </div>
   );
 }

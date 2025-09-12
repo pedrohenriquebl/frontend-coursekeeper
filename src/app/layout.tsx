@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthUserProvider } from "@/context/authUserContext";
-import { PageLoaderProvider } from "@/context/PageLoaderContext";
 import { Toaster } from "react-hot-toast";
 
 const nunitoSans = Nunito_Sans({
@@ -29,12 +28,10 @@ export default function RootLayout({
         style={{ fontFamily: 'var(--font-nunito-sans), ui-sans-serif, system-ui, sans-serif' }}
       >
         <AuthUserProvider>
-          <PageLoaderProvider>
-            <Toaster position="top-right" reverseOrder={false} />
-            <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen w-full">
-              {children}
-            </div>
-          </PageLoaderProvider>
+          <Toaster position="top-right" reverseOrder={false} />
+          <div className="bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 min-h-screen w-full">
+            {children}
+          </div>
         </AuthUserProvider>
       </body>
     </html>

@@ -24,7 +24,7 @@ export function PasswordInput({
     <div>
       <label className="sr-only">{props.placeholder || "Senha"}</label>
       <div className="relative">
-        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5" style={{ color: "var(--authform-muted)" }} />
         <input
           type={showPassword ? "text" : "password"}
           value={value}
@@ -32,23 +32,30 @@ export function PasswordInput({
           disabled={disabled}
           autoComplete="current-password"
           className={cn(
-            "w-full pl-10 pr-12 py-3 bg-gray-700/50 border rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200",
-            error ? "border-red-500 bg-red-500/10" : "border-gray-600 hover:border-gray-500"
+            "w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:border-2 transition-colors duration-200",
+            error ? "border-red-500" : "hover:border-gray-500"
           )}
+          style={{
+            background: error ? "rgba(239,68,68,0.1)" : "var(--authform-card-bg)",
+            color: "#fff",
+            borderColor: error ? "#ef4444" : "var(--authform-disabled-bg)",
+            boxShadow: "none"
+          }}
           {...props}
         />
         <button
           type="button"
           onClick={toggleShowPassword}
           disabled={disabled}
-          className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 transition-colors duration-200"
+          className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 transition-colors duration-200"
+          style={{ color: "var(--authform-muted)" }}
           tabIndex={-1}
         >
           {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
         </button>
       </div>
       {error && (
-        <p className="mt-1 text-sm text-red-400 flex items-center gap-1">
+        <p className="mt-1 text-sm flex items-center gap-1" style={{ color: "#ef4444" }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4"

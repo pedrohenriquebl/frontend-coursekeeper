@@ -15,10 +15,15 @@ export function Spinner({ size = "md", className }: SpinnerProps) {
   return (
     <div
       className={cn(
-        "border-gray-300 border-t-transparent rounded-full animate-spin",
+        "rounded-full animate-spin",
         sizeClasses[size],
         className,
       )}
+      style={{
+        borderColor: "var(--authform-muted) var(--authform-primary-light) var(--authform-muted) var(--authform-muted)",
+        borderStyle: "solid",
+        borderTopColor: "var(--authform-primary-light)"
+      }}
     />
   );
 }
@@ -38,8 +43,8 @@ export function SpinnerOverlay({
     <div className={cn("relative", className)}>
       {children}
       {isLoading && (
-        <div className="absolute inset-0 bg-gray-900/20 backdrop-blur-sm rounded-lg flex items-center justify-center z-10">
-          <Spinner className="border-emerald-400 border-t-transparent" />
+        <div className="absolute inset-0 backdrop-blur-sm rounded-lg flex items-center justify-center z-10" style={{ background: "rgba(17,24,39,0.2)" }}>
+          <Spinner />
         </div>
       )}
     </div>

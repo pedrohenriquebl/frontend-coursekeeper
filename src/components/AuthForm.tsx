@@ -57,32 +57,44 @@ export function AuthForm({
     toggleMode,
 }: AuthFormProps) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 flex items-center justify-center p-4">
+        <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "var(--authform-bg-gradient)" }}>
             <div className="w-full max-w-md lg:min-h-[733px]">
                 <div className="text-center mb-8">
-                    <div className="bg-gradient-to-r from-emerald-600 to-green-600 p-3 rounded-xl inline-block mb-4">
-                        <User className="h-8 w-8 text-white" />
+                    <div className="p-3 rounded-xl inline-block mb-4" style={{ background: "var(--authform-primary-gradient)" }}>
+                        <User className="h-8 w-8" style={{ color: "#fff" }} />
                     </div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent mb-2">
-                        CourseKeeper
-                    </h1>
-                    <p className="text-gray-400">
+                                        <h1
+                                            className="text-2xl font-bold mb-2"
+                                            style={{
+                                                background: "linear-gradient(to right, var(--authform-primary-light), var(--authform-accent-light))",
+                                                WebkitBackgroundClip: "text",
+                                                WebkitTextFillColor: "transparent",
+                                                backgroundClip: "text",
+                                                color: "transparent"
+                                            }}
+                                        >
+                                            CourseKeeper
+                                        </h1>
+                    <p style={{ color: "var(--authform-muted)" }}>
                         {mode === "login"
                             ? "Entre na sua conta para continuar"
                             : "Crie sua conta para começar"}
                     </p>
                 </div>
 
-                <div className="flex bg-gray-700/50 rounded-lg p-1 mb-6">
+                <div className="flex rounded-lg p-1 mb-6" style={{ background: "var(--authform-card-bg)" }}>
                     <button
                         type="button"
                         onClick={() => mode !== "login" && toggleMode()}
                         className={cn(
                             "cursor-pointer flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
                             mode === "login"
-                                ? "bg-emerald-600 text-white shadow-sm"
-                                : "text-gray-400 hover:text-gray-200"
+                                ? "shadow-sm"
+                                : "hover:opacity-80"
                         )}
+                        style={mode === "login"
+                            ? { background: "var(--authform-primary)", color: "#fff" }
+                            : { color: "var(--authform-muted)" }}
                     >
                         Entrar
                     </button>
@@ -92,9 +104,12 @@ export function AuthForm({
                         className={cn(
                             "cursor-pointer flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200",
                             mode === "register"
-                                ? "bg-emerald-600 text-white shadow-sm"
-                                : "text-gray-400 hover:text-gray-200"
+                                ? "shadow-sm"
+                                : "hover:opacity-80"
                         )}
+                        style={mode === "register"
+                            ? { background: "var(--authform-primary)", color: "#fff" }
+                            : { color: "var(--authform-muted)" }}
                     >
                         Cadastrar
                     </button>
@@ -186,13 +201,16 @@ export function AuthForm({
                         className={cn(
                             "cursor-pointer w-full py-3 px-4 rounded-lg font-medium transition-all duration-200",
                             isLoading || isBlocked
-                                ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                                : "bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:from-emerald-700 hover:to-green-700 focus:ring-4 focus:ring-emerald-500/20"
+                                ? "cursor-not-allowed"
+                                : "hover:opacity-90 focus:ring-4"
                         )}
+                        style={isLoading || isBlocked
+                            ? { background: "var(--authform-disabled-bg)", color: "var(--authform-disabled-text)" }
+                            : { background: "var(--authform-primary-gradient)", color: "#fff" }}
                     >
                         {isLoading ? (
                             <div className="flex items-center justify-center gap-2">
-                                <Spinner size="sm" className="text-gray-400" />
+                                <Spinner size="sm" className="text-[var(--authform-muted)]" />
                                 {mode === "login" ? "Entrando..." : "Criando conta..."}
                             </div>
                         ) : isBlocked ? (
@@ -209,7 +227,8 @@ export function AuthForm({
                     <div className="mt-6 text-center">
                         <Link
                             href="/forgot-password"
-                            className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors duration-200"
+                            className="text-sm transition-colors duration-200"
+                            style={{ color: "var(--authform-primary-light)" }}
                         >
                             Esqueci a senha
                         </Link>

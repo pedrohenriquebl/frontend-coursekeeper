@@ -11,21 +11,27 @@ export function Input({ icon, error, className, ...props }: InputProps) {
     <div>
       <div className="relative">
         {icon && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "var(--authform-muted)" }}>
             {icon}
           </span>
         )}
         <input
           {...props}
           className={cn(
-            "w-full pl-10 pr-4 py-3 bg-gray-700/50 border rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200",
-            error ? "border-red-500 bg-red-500/10" : "border-gray-600 hover:border-gray-500",
+            "w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-2 transition-colors duration-200",
+            error ? "border-red-500 bg-red-500/10" : "hover:border-gray-500",
             className
           )}
+          style={{
+            background: error ? "rgba(239, 68, 68, 0.1)" : "var(--authform-card-bg)",
+            color: "#fff",
+            borderColor: error ? "#ef4444" : "var(--authform-disabled-bg)",
+            boxShadow: "none"
+          }}
         />
       </div>
       {error && (
-        <p className="mt-1 text-sm text-red-400 flex items-center gap-1">
+        <p className="mt-1 text-sm flex items-center gap-1" style={{ color: "#ef4444" }}>
           {/* Pode passar o ícone de erro aqui */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
