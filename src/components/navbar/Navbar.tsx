@@ -11,6 +11,7 @@ import {
     BarChart3,
     Home,
     LogOut,
+    DollarSign,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -27,6 +28,7 @@ export default function NavBar() {
         { name: "Metas", href: "/goals", icon: Target },
         { name: "Relatórios", href: "/report", icon: BarChart3 },
         { name: "Perfil", href: "/profile", icon: User },
+        { name: "Meu plano", href: "/subscriptions", icon: DollarSign },
     ];
 
     const isActive = (href: string) => {
