@@ -273,4 +273,5 @@ export interface SubscriptionDialogProps {
   onOpenChange: (open: boolean) => void;
   selectedPlan: SubscriptionPlan | null;
   currentPlan: SubscriptionPlan;
+  onSubscriptionSuccess?: (newPlan: SubscriptionPlan) => void
 }
