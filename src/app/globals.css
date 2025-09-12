@@ -268,6 +268,22 @@ input::placeholder {
 }
 /* Light Theme */
 [data-theme="light"] {
+  --authform-bg-gradient: linear-gradient(
+    to bottom right,
+    #f9fafb,
+    #f3f4f6,
+    #e5e7eb
+  );
+  --authform-card-bg: rgba(255, 255, 255, 0.8);
+  --authform-muted: #71717a;
+  --authform-primary-gradient: linear-gradient(to right, #059669, #16a34a);
+  --authform-primary: #059669;
+  --authform-primary-light: #34d399;
+  --authform-accent: #16a34a;
+  --authform-accent-light: #6ee7b7;
+  --authform-disabled-bg: #e5e7eb;
+  --authform-disabled-text: #a1a1aa;
+
   --goal-card-border: #e5e7eb;
   --goal-card-border-hover: #059669;
   --course-card-border: #e5e7eb;

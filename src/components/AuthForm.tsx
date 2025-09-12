@@ -58,7 +58,7 @@ export function AuthForm({
 }: AuthFormProps) {
     return (
         <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "var(--authform-bg-gradient)" }}>
-            <div className="w-full max-w-md lg:min-h-[733px]">
+            <div className="w-full max-w-md lg:min-h-[733px] backdrop-blur-sm rounded-xl p-6 shadow-lg">
                 <div className="text-center mb-8">
                     <div className="p-3 rounded-xl inline-block mb-4" style={{ background: "var(--authform-primary-gradient)" }}>
                         <User className="h-8 w-8" style={{ color: "#fff" }} />
