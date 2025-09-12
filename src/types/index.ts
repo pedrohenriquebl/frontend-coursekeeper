@@ -233,3 +233,44 @@ export interface OverviewGoals {
   totalProgressInHours: number;
   totalGoalInHours: number;
 }
+
+export type SubscriptionPlan = "FREE" | "GOLD" | "PLATINUM";
+
+export type Duration = "MONTHLY" | "ANNUAL";
+
+export type PaymentMethod = "CREDIT" | "DEBIT" | "PIX";
+
+export interface Plan {
+  name: SubscriptionPlan;
+  title: string;
+  priceMonthly: number;
+  priceAnnual: number;
+  features: string[];
+  popular?: boolean;
+}
+
+export interface CardData {
+  number: string;
+  name: string;
+  expiry: string;
+  cvv: string;
+}
+
+export interface CardErrors {
+  number: string;
+  name: string;
+  expiry: string;
+  cvv: string;
+}
+
+export interface SubscriptionPlansProps {
+  currentPlan: SubscriptionPlan;
+  onSelectPlan: (plan: SubscriptionPlan) => void;
+}
+
+export interface SubscriptionDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  selectedPlan: SubscriptionPlan | null;
+  currentPlan: SubscriptionPlan;
+}
