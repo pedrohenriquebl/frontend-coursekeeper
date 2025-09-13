@@ -7,6 +7,7 @@ input::placeholder {
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --root-bg: rgba(31, 41, 55, 0.9);
   --goal-preview-bg: #23272f;
   --goal-preview-title: #fff;
   --goal-modal-input-bg: #23272f;
@@ -268,6 +269,8 @@ input::placeholder {
 }
 /* Light Theme */
 [data-theme="light"] {
+  --root-bg: rgba(255, 255, 255, 0.9);
+  
   --authform-bg-gradient: linear-gradient(
     to bottom right,
     #f9fafb,
@@ -575,7 +578,7 @@ body {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  background: var(--background);
+  background: var(--root-bg);
 }
 body {
   text-rendering: optimizeSpeed;
