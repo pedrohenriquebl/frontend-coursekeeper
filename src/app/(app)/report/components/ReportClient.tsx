@@ -24,7 +24,7 @@ type PeriodOption = { value: FilterPeriod; label: string };
 type QualityOption = { label: string; dpi: number; scale: number };
 
 const QUALITY_OPTIONS: QualityOption[] = [
-    { label: "Tela (96 DPI)", dpi: 96, scale: 1 },
+    { label: "Baixa (96 DPI)", dpi: 96, scale: 1 },
     { label: "Boa (150 DPI)", dpi: 150, scale: 2 },
     { label: "Muito Boa (200 DPI)", dpi: 200, scale: 2.5 },
     { label: "Alta (300 DPI)", dpi: 300, scale: 3 },
