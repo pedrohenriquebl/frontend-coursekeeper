@@ -37,7 +37,7 @@ export function PasswordInput({
           )}
           style={{
             background: error ? "rgba(239,68,68,0.1)" : "var(--authform-card-bg)",
-            color: "#fff",
+            color: "var(--authform-muted,#fff)",
             borderColor: error ? "#ef4444" : "var(--authform-disabled-bg)",
             boxShadow: "none"
           }}

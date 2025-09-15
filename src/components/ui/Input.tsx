@@ -18,15 +18,15 @@ export function Input({ icon, error, className, ...props }: InputProps) {
         <input
           {...props}
           className={cn(
-            "w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:border-2 transition-colors duration-200",
+            "w-full pl-10 pr-4 py-3 border rounded-lg text-[color:var(--authform-muted,#fff)] focus:ring-2 focus:border-2 transition-colors duration-200",
             error ? "border-red-500 bg-red-500/10" : "hover:border-gray-500",
             className
           )}
           style={{
             background: error ? "rgba(239, 68, 68, 0.1)" : "var(--authform-card-bg)",
-            color: "#fff",
-            borderColor: error ? "#ef4444" : "var(--authform-disabled-bg)",
-            boxShadow: "none"
+            color: "var(--authform-muted,#fff)",
+            borderColor: error ? "#ef4444" : "var(--authform-muted)",
+            boxShadow: "none",
           }}
         />
       </div>
