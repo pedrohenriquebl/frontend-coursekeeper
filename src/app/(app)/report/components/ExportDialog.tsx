@@ -43,20 +43,35 @@ export default function ExportDialog({
         </DialogHeader>
 
         <div className="flex flex-col gap-2 my-4">
-          {qualityOptions.map((option) => (
-            <Button
-              key={option.label}
-              variant={selectedQuality.label === option.label ? "default" : "secondary"}
-              className="bg-[color:var(--authform-secondary-bg)] text-left
-    text-[color:var(--authform-secondary-text)]
-    border border-[color:var(--authform-secondary-border)]
-    hover:bg-[color:var(--authform-secondary-hover-bg)]
-    hover:text-[color:var(--authform-secondary-hover-text)]"
-              onClick={() => setSelectedQuality(option)}
-            >
-              {option.label}
-            </Button>
-          ))}
+          {qualityOptions.map((option) => {
+            const isSelected = selectedQuality.label === option.label;
+
+            return (
+              <button
+                key={option.label}
+                type="button"
+                onClick={() => setSelectedQuality(option)}
+                className={`
+                  px-4 py-2 rounded text-left border
+                  border-[color:var(--authform-secondary-border)]
+                  ${isSelected
+                    ? `
+                        bg-[color:var(--authform-secondary-hover-bg)]
+                        text-[color:var(--authform-secondary-hover-text)]
+                      `
+                    : `
+                        bg-[color:var(--authform-secondary-bg)]
+                        text-[color:var(--authform-secondary-text)]
+                        hover:bg-[color:var(--authform-secondary-hover-bg)]
+                        hover:text-[color:var(--authform-secondary-hover-text)]
+                      `
+                  }
+                `}
+              >
+                {option.label}
+              </button>
+            );
+          })}
         </div>
 
         <DialogFooter>
