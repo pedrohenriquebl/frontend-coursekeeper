@@ -16,8 +16,6 @@ export default function RecentCompletions({ courses }: RecentCompletionsProps) {
         })
         .slice(0, 5);
 
-    console.log(recentCourses);
-
     return (
         <>
             {recentCourses.length > 0 ? (

@@ -16,9 +16,19 @@ import RecentCompletions from "./RecentCompletions";
 import Resumee from "./Resumee";
 import { FadeSlide } from "@/components/animation/FadeSlide";
 import Link from "next/link";
-import html2PDF from 'jspdf-html2canvas-pro';
+import ExportDialog from "./ExportDialog";
+import { useExportPDF } from "../hooks/useExportPDF";
+
 
 type PeriodOption = { value: FilterPeriod; label: string };
+type QualityOption = { label: string; dpi: number; scale: number };
+
+const QUALITY_OPTIONS: QualityOption[] = [
+    { label: "Tela (96 DPI)", dpi: 96, scale: 1 },
+    { label: "Boa (150 DPI)", dpi: 150, scale: 2 },
+    { label: "Muito Boa (200 DPI)", dpi: 200, scale: 2.5 },
+    { label: "Alta (300 DPI)", dpi: 300, scale: 3 },
+];
 
 export default function ReportClient() {
     const { user } = useAuthUser();
@@ -30,6 +40,10 @@ export default function ReportClient() {
     const [status, setStatus] = useState<FilterStatus>("all");
     const reportRef = useRef<HTMLDivElement>(null);
     const [forceExpandCourses, setForceExpandCourses] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [selectedQuality, setSelectedQuality] = useState<QualityOption>(QUALITY_OPTIONS[2]);
+    const { exportPDF } = useExportPDF(reportRef as React.RefObject<HTMLDivElement>, user?.firstName);
+
 
     const getStartDate = (period: FilterPeriod) => {
         const now = new Date();
@@ -72,37 +86,21 @@ export default function ReportClient() {
 
     if (!user) return null;
 
-    const handleExportPDF = async () => {
-        if (!reportRef.current) return;
-
+    const handleConfirmExport = () => {
         setForceExpandCourses(true);
-        await new Promise((resolve) => requestAnimationFrame(resolve));
 
-        const filterElement = reportRef.current.querySelector('#report-filter-select') as HTMLElement | null;
-        if (filterElement) filterElement.style.display = 'none';
-
-        setIsExporting(true);
-        const contentWidth = reportRef.current.scrollWidth;
-        const contentHeight = reportRef.current.scrollHeight;
-
-        const prevBackground = reportRef.current.style.backgroundColor;
-        reportRef.current.style.backgroundColor = '#23272f';
-
-        await html2PDF(reportRef.current, {
-            jsPDF: {
-                unit: 'px',
-                format: [contentWidth, contentHeight],
-            },
-            html2canvas: {
-                backgroundColor: "#23272f",
-                scale: 2,
-            }
+        requestAnimationFrame(() => {
+            exportPDF(
+                selectedQuality,
+                () => setIsExporting(true),
+                () => {
+                    setIsExporting(false);
+                    setForceExpandCourses(false);
+                }
+            );
         });
 
-        setIsExporting(false);
-        setForceExpandCourses(false);
-        reportRef.current.style.backgroundColor = prevBackground;
-        if (filterElement) filterElement.style.display = '';
+        setIsDialogOpen(false);
     };
 
     const periods: PeriodOption[] = [
@@ -131,8 +129,13 @@ export default function ReportClient() {
     }
 
     return (
-        <div ref={reportRef} className="max-w-7xl mx-auto px-4 py-8 flex flex-col text-[color:var(--report-page-text,#fff)]">
-            <ReportHeader onExport={handleExportPDF} isExporting={isExporting} />
+        <div
+            ref={reportRef}
+            className="max-w-7xl mx-auto px-4 py-8 flex flex-col text-[color:var(--report-page-text,#fff)]">
+            <ReportHeader
+                onExport={() => setIsDialogOpen(true)}
+                isExporting={isExporting}
+            />
 
             <UserInformation
                 name={`${user?.firstName} ${user?.lastName}`}
@@ -220,6 +223,16 @@ export default function ReportClient() {
                     </p>
                 </div>
             )}
+
+            <ExportDialog
+                isOpen={isDialogOpen}
+                onClose={setIsDialogOpen}
+                isExporting={isExporting}
+                qualityOptions={QUALITY_OPTIONS}
+                selectedQuality={selectedQuality}
+                setSelectedQuality={setSelectedQuality}
+                onConfirm={handleConfirmExport}
+            />
         </div>
     );
 
