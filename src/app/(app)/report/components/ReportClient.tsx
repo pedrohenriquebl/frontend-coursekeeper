@@ -147,7 +147,7 @@ export default function ReportClient() {
                 userImg={user?.profileImage}
             />
 
-            <div id="report-filter-select">
+            <div id="report-filter-select" className="sticky top-0 z-50">
                 <ReportFilterSelect
                     period={period}
                     topic={topic}
