@@ -59,7 +59,7 @@ export default function SubscriptionDialog({
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent className="max-w-md space-y-6 bg-gray-900 text-white rounded-2xl border border-gray-700">
+            <DialogContent className="max-w-md space-y-6 bg-[color:var(--modal-bg,#111827)] text-white rounded-2xl border-[color:var(--modal-border,#374151)]">
                 <DialogHeader>
                     <DialogTitle className={cn(
                         "text-2xl font-bold",
@@ -67,7 +67,7 @@ export default function SubscriptionDialog({
                     )}>
                         {getPlanFriendlyName(selectedPlan)}
                     </DialogTitle>
-                    <DialogDescription className="text-gray-300">
+                    <DialogDescription className="text-[color:var(--authform-muted,#9ca3af)]">
                         Finalize a assinatura escolhendo a forma de pagamento.
                     </DialogDescription>
                 </DialogHeader>

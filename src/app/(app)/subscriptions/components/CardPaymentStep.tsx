@@ -74,22 +74,22 @@ export default function CardPaymentStep({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-gray-300">Dados do Cartão</h3>
+      <h3 className="text-sm font-medium text-[color:var(--authform-muted,#9ca3af)]">Dados do Cart3o</h3>
       <div>
         <Input
-          placeholder="Número do Cartão"
+          placeholder="N3mero do Cart3o"
           value={cardData.number}
           onChange={e => handleCardChange("number", e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white"
+          className="bg-[color:var(--authform-card-bg,rgba(55,65,81,0.5))] border-[color:var(--authform-muted,#9ca3af)] text-[color:var(--authform-primary,#059669)]"
         />
         {errors.number && <p className="text-red-500 text-sm mt-1">{errors.number}</p>}
       </div>
       <div>
         <Input
-          placeholder="Nome no Cartão"
+          placeholder="Nome no Cart3o"
           value={cardData.name}
           onChange={e => handleCardChange("name", e.target.value)}
-          className="bg-gray-800 border-gray-700 text-white"
+          className="bg-[color:var(--authform-card-bg,rgba(55,65,81,0.5))] border-[color:var(--authform-muted,#9ca3af)] text-[color:var(--authform-primary,#059669)]"
         />
         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
       </div>
@@ -116,14 +116,28 @@ export default function CardPaymentStep({
       <p className="text-gray-300 font-semibold">Subtotal: R$ {subtotal}</p>
 
       <div className="flex justify-between mt-4">
-        <Button 
-          className="bg-gray-800 text-white border border-gray-700 hover:bg-emerald-600 hover:text-white" 
+        <Button
+          className="
+    bg-[color:var(--authform-secondary-bg)]
+    text-[color:var(--authform-secondary-text)]
+    border border-[color:var(--authform-secondary-border)]
+    hover:bg-[color:var(--authform-secondary-hover-bg)]
+    hover:text-[color:var(--authform-secondary-hover-text)]
+  "
           onClick={onBack}
         >
           Voltar
         </Button>
+
         <Button
-          className="bg-emerald-600 hover:bg-emerald-700"
+          className="
+    bg-[color:var(--authform-primary-bg)]
+    text-[color:var(--authform-primary-text)]
+    hover:bg-[color:var(--authform-primary-hover-bg)]
+    hover:text-[color:var(--authform-primary-hover-text)]
+    disabled:bg-[color:var(--authform-disabled-bg)]
+    disabled:text-[color:var(--authform-disabled-text)]
+  "
           onClick={onNext}
           disabled={!isCardDataValid()}
         >

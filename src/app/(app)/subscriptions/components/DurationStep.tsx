@@ -22,35 +22,32 @@ export default function DurationStep({
 }: DurationStepProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-gray-300">Duração</h3>
-      <RadioGroup 
-        value={duration} 
-        onValueChange={(val: Duration) => onDurationChange(val)} 
+      <h3 className="text-sm font-medium text-[color:var(--authform-muted,#9ca3af)]">Duração</h3>
+      <RadioGroup
+        value={duration}
+        onValueChange={(val: Duration) => onDurationChange(val)}
         className="space-y-2"
       >
         {["MONTHLY", "ANNUAL"].map(d => (
           <div key={d} className="flex items-center space-x-2">
-            <RadioGroupItem 
-              id={d} 
-              value={d} 
-              className="data-[state=checked]:bg-white data-[state=checked]:border-white" 
+            <RadioGroupItem
+              id={d}
+              value={d}
+              className="data-[state=checked]:bg-[color:var(--authform-primary,#059669)] data-[state=checked]:border-[color:var(--authform-primary-dark,#047857)]"
             />
-            <Label htmlFor={d} className="text-gray-200 cursor-pointer">
+            <Label htmlFor={d} className="text-[color:var(--authform-muted,#9ca3af)] cursor-pointer">
               {d === "MONTHLY" ? "Mensal" : "Anual"}
             </Label>
           </div>
         ))}
       </RadioGroup>
 
-      <h3 className="text-sm font-medium text-gray-300 mt-4">Método de Pagamento</h3>
+      <h3 className="text-sm font-medium text-[color:var(--authform-muted,#9ca3af)] mt-4">Método de Pagamento</h3>
       <div className="flex gap-3">
         {["CREDIT", "DEBIT", "PIX"].map(m => (
           <Button
             key={m}
-            className={cn(
-              "bg-gray-800 text-white border border-gray-700 hover:bg-emerald-600 hover:text-white",
-              paymentMethod === m && "bg-emerald-600 text-white border-emerald-600"
-            )}
+            className={cn("btn-payment", paymentMethod === m && "btn-payment-active")}
             onClick={() => onPaymentMethodChange(m as PaymentMethod)}
           >
             {m === "CREDIT" ? "Crédito" : m === "DEBIT" ? "Débito" : "Pix"}
@@ -61,7 +58,7 @@ export default function DurationStep({
       <div className="flex justify-between mt-4">
         <div />
         <Button
-          className={cn("bg-emerald-600 hover:bg-emerald-700", !paymentMethod && "opacity-50 cursor-not-allowed")}
+          className={cn("bg-[color:var(--authform-primary,#059669)] hover:bg-[color:var(--authform-primary-dark,#047857)]", !paymentMethod && "opacity-50 cursor-not-allowed")}
           onClick={onNext}
           disabled={!paymentMethod}
         >

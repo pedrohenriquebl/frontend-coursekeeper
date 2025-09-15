@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useAuthUser } from "@/context/authUserContext";
+import ThemeToggle from "../ThemeToggle";
 
 export default function NavBar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -55,7 +56,7 @@ export default function NavBar() {
                         </Link>
 
                         {/* Desktop Navigation */}
-                        <div className="hidden md:flex space-x-1">
+                        <div className="hidden lg:flex space-x-1">
                             {navigation.map((item) => {
                                 const Icon = item.icon;
                                 const active = isActive(item.href);
@@ -75,10 +76,11 @@ export default function NavBar() {
                                     </Link>
                                 );
                             })}
+                            <ThemeToggle />
                         </div>
 
                         {/* User Menu / Login */}
-                        <div className="hidden md:flex items-center space-x-4">
+                        <div className="hidden lg:flex items-center space-x-4">
                             <button
                                 onClick={() => {
                                     setIsMobileMenuOpen(false);
@@ -94,7 +96,7 @@ export default function NavBar() {
                         {/* Mobile menu button */}
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="md:hidden p-2 rounded-lg text-[color:var(--navbar-link-text,#d1d5db)] hover:bg-[color:var(--navbar-link-hover-bg,#1f2937)] transition-colors duration-200"
+                            className="lg:hidden p-2 rounded-lg text-[color:var(--navbar-link-text,#d1d5db)] hover:bg-[color:var(--navbar-link-hover-bg,#1f2937)] transition-colors duration-200"
                         >
                             {isMobileMenuOpen ? (
                                 <X className="h-6 w-6" />
@@ -107,7 +109,7 @@ export default function NavBar() {
 
                 {/* Mobile Navigation */}
                 {isMobileMenuOpen && (
-                    <div className="md:hidden bg-[color:var(--navbar-header-bg-mobile,#1f2937)]/95 backdrop-blur-md border-t border-[color:var(--navbar-header-border-mobile,#374151)]/60">
+                    <div className="lg:hidden bg-[color:var(--navbar-header-bg-mobile,#1f2937)]/95 backdrop-blur-md border-t border-[color:var(--navbar-header-border-mobile,#374151)]/60">
                         <div className="px-4 py-2 space-y-1">
                             {navigation.map((item) => {
                                 const Icon = item.icon;
@@ -129,6 +131,7 @@ export default function NavBar() {
                                     </Link>
                                 );
                             })}
+                            <ThemeToggle />
                             <button
                                 onClick={() => {
                                     setIsMobileMenuOpen(false);

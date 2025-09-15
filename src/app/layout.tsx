@@ -3,7 +3,6 @@ import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthUserProvider } from "@/context/authUserContext";
 import { Toaster } from "react-hot-toast";
-import ThemeToggle from "@/components/ThemeToggle";
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito-sans",
@@ -30,7 +29,6 @@ export default function RootLayout({
         <AuthUserProvider>
           <Toaster position="top-right" reverseOrder={false} />
           <div className="min-h-screen w-full">
-            <ThemeToggle /> 
             {children}
           </div>
         </AuthUserProvider>

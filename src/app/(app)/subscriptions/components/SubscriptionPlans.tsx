@@ -19,34 +19,34 @@ export default function SubscriptionPlans({ currentPlan, onSelectPlan }: Subscri
                         key={plan.name}
                         className={cn(
                             "relative flex flex-col rounded-2xl border p-6 shadow-lg transition-all duration-200",
-                            plan.popular ? "border-yellow-500 bg-yellow-500/10" : "border-gray-700 bg-gray-800/60",
-                            isCurrent ? "border-emerald-500 ring-2 ring-emerald-500" : "hover:border-emerald-500 hover:ring-2 hover:ring-emerald-500"
+                            plan.popular ? "border-[color:var(--plan-popular-border,#fbbf24)] bg-[color:var(--plan-popular-bg,rgba(251,191,36,0.1))]" : "border-[color:var(--plan-card-border,#374151)] bg-[color:var(--plan-card-bg,#1f2937)]",
+                            isCurrent ? "border-[color:var(--plan-card-active,#059669)] ring-2 ring-[color:var(--plan-card-active,#059669)]" : "hover:border-[color:var(--plan-card-active,#059669)] hover:ring-2 hover:ring-[color:var(--plan-card-active,#059669)]"
                         )}
                     >
                         {plan.popular && (
-                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs px-3 py-1 bg-yellow-500 text-black rounded-full shadow font-bold">
+                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs px-3 py-1 bg-[color:var(--plan-popular-border,#fbbf24)] text-[color:var(--plan-popular-text,#000)] rounded-full shadow font-bold">
                                 Mais Popular
                             </span>
                         )}
                         <h2 className={cn(
                             "text-xl font-bold text-center",
-                            isCurrent ? "text-emerald-400" : "text-white"
+                            isCurrent ? "text-[color:var(--plan-card-active,#059669)]" : "text-[color:var(--plan-card-title,#fff)]"
                         )}>{plan.title}</h2>
-                        <p className="text-gray-400 mt-2 text-center">
-                            <span className="font-bold text-lg text-white">R$ {plan.priceMonthly}</span> / mês <br />
-                            <span className="font-bold text-lg text-white">R$ {plan.priceAnnual}</span> / ano
+                        <p className="text-[color:var(--plan-card-muted,#9ca3af)] mt-2 text-center">
+                            <span className="font-bold text-lg text-[color:var(--plan-card-title,#fff)]">R$ {plan.priceMonthly}</span> / mês <br />
+                            <span className="font-bold text-lg text-[color:var(--plan-card-title,#fff)]">R$ {plan.priceAnnual}</span> / ano
                         </p>
-                        <ul className="mt-4 space-y-2 text-gray-300 text-sm flex-1">
+                        <ul className="mt-4 space-y-2 text-[color:var(--plan-card-muted,#9ca3af)] text-sm flex-1">
                             {plan.features.map((f, idx) => <li key={idx}>• {f}</li>)}
                         </ul>
                         {isCurrent ? (
-                            <Button disabled className="mt-6 bg-emerald-700 text-white cursor-default opacity-80">
+                            <Button disabled className="mt-6 bg-[color:var(--plan-card-active,#059669)] text-[color:var(--plan-card-title,#fff)] cursor-default opacity-80">
                                 Plano Atual
                             </Button>
                         ) : (
                             <Button
                                 onClick={() => onSelectPlan(plan.name)}
-                                className="mt-6 bg-emerald-600 hover:bg-emerald-700"
+                                className="mt-6 bg-[color:var(--plan-card-active,#059669)] hover:bg-[color:var(--plan-card-active-dark,#047857)] text-[color:var(--plan-card-title,#fff)]"
                             >
                                 Assinar
                             </Button>

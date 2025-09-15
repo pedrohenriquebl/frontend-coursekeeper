@@ -59,11 +59,11 @@ export default function PixPaymentStep({
 
     return (
         <div className="text-center space-y-4">
-            <h3 className="text-sm font-medium text-gray-300">Pagamento via Pix</h3>
+            <h3 className="text-sm font-medium text-[color:var(--authform-muted,#9ca3af)]">Pagamento via Pix</h3>
 
             {/* QR Code Real */}
             {qrCodeDataUrl ? (
-                <div className="w-48 h-48 bg-white mx-auto p-4 rounded-lg border-2 border-gray-300 flex items-center justify-center">
+                <div className="w-48 h-48 bg-[color:var(--authform-card-bg,#fff)] mx-auto p-4 rounded-lg border-2 border-[color:var(--authform-muted,#9ca3af)] flex items-center justify-center">
                     <Image
                         src={qrCodeDataUrl}
                         alt="QR Code PIX"
@@ -74,26 +74,40 @@ export default function PixPaymentStep({
                     />
                 </div>
             ) : (
-                <div className="w-48 h-48 bg-gray-200 mx-auto rounded-lg animate-pulse flex items-center justify-center">
-                    <span className="text-gray-500">Gerando QR Code...</span>
+                <div className="w-48 h-48 bg-[color:var(--authform-card-bg,#e5e7eb)] mx-auto rounded-lg animate-pulse flex items-center justify-center">
+                    <span className="text-[color:var(--authform-muted,#6b7280)]">Gerando QR Code...</span>
                 </div>
             )}
 
-            <p className="text-gray-400 text-sm">
+            <p className="text-[color:var(--authform-muted,#9ca3af)] text-sm">
                 Escaneie o QR code com seu app bancário para pagar
             </p>
 
-            <p className="text-gray-300 font-semibold">Valor: R$ {subtotal}</p>
+            <p className="text-[color:var(--authform-secondary-text,#fff)] font-semibold">Valor: R$ {subtotal}</p>
 
             <div className="flex justify-between mt-4">
                 <Button
-                    className="bg-gray-800 text-white border border-gray-700 hover:bg-emerald-600 hover:text-white"
+                    className="
+    bg-[color:var(--authform-secondary-bg)]
+    text-[color:var(--authform-secondary-text)]
+    border border-[color:var(--authform-secondary-border)]
+    hover:bg-[color:var(--authform-secondary-hover-bg)]
+    hover:text-[color:var(--authform-secondary-hover-text)]
+  "
                     onClick={onBack}
                 >
                     Voltar
                 </Button>
+
                 <Button
-                    className="bg-emerald-600 hover:bg-emerald-700"
+                    className="
+    bg-[color:var(--authform-primary-bg)]
+    text-[color:var(--authform-primary-text)]
+    hover:bg-[color:var(--authform-primary-hover-bg)]
+    hover:text-[color:var(--authform-primary-hover-text)]
+    disabled:bg-[color:var(--authform-disabled-bg)]
+    disabled:text-[color:var(--authform-disabled-text)]
+  "
                     onClick={onNext}
                 >
                     Próximo

@@ -64,7 +64,7 @@ export default function SubscriptionsPageClient() {
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold text-white mt-8 mb-16 text-center">
+            <h1 className="text-3xl font-bold text-[color:var(--goal-card-title,#fff)] mt-8 mb-16 text-center">
                 Gerenciar Assinatura
             </h1>
 

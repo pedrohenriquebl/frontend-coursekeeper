@@ -7,6 +7,16 @@ input::placeholder {
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Subscription Plan Card Variables */
+  --plan-card-bg: #1f2937;
+  --plan-card-border: #374151;
+  --plan-card-title: #fff;
+  --plan-card-muted: #9ca3af;
+  --plan-card-active: #059669;
+  --plan-card-active-dark: #047857;
+  --plan-popular-border: #fbbf24;
+  --plan-popular-bg: rgba(251, 191, 36, 0.1);
+  --plan-popular-text: #000;
   --root-bg: rgba(31, 41, 55, 0.9);
   --goal-preview-bg: #23272f;
   --goal-preview-title: #fff;
@@ -266,11 +276,46 @@ input::placeholder {
   --report-tooltip-meta: #e5e7eb;
   --report-month-from: #059669;
   --report-month-to: #22c55e;
+
+  --payment-btn-bg: rgba(31, 41, 55, 0.6);
+  --payment-btn-text: #fff;
+  --payment-btn-border: #9ca3af;
+
+  --payment-btn-hover-bg: #059669;
+  --payment-btn-hover-text: #fff;
+
+  --payment-btn-active-bg: #059669;
+  --payment-btn-active-text: #fff;
+  --payment-btn-active-border: #047857;
+
+  --authform-secondary-bg: #1f2937;
+  --authform-secondary-text: #ffffff;
+  --authform-secondary-border: #9ca3af;
+  --authform-secondary-hover-bg: #059669;
+  --authform-secondary-hover-text: #ffffff;
+
+  --authform-primary-bg: #059669;
+  --authform-primary-text: #ffffff;
+  --authform-primary-hover-bg: #047857;
+  --authform-primary-hover-text: #ffffff;
+
+  --authform-disabled-bg: #4b5563;
+  --authform-disabled-text: #9ca3af;
 }
 /* Light Theme */
 [data-theme="light"] {
+  /* Subscription Plan Card Variables - Light */
+  --plan-card-bg: #fff;
+  --plan-card-border: #e5e7eb;
+  --plan-card-title: #18181b;
+  --plan-card-muted: #71717a;
+  --plan-card-active: #059669;
+  --plan-card-active-dark: #047857;
+  --plan-popular-border: #fbbf24;
+  --plan-popular-bg: rgba(251, 191, 36, 0.15);
+  --plan-popular-text: #18181b;
   --root-bg: rgba(255, 255, 255, 0.9);
-  
+
   --authform-bg-gradient: linear-gradient(
     to bottom right,
     #f9fafb,
@@ -526,6 +571,49 @@ input::placeholder {
   --profile-header-cancel-bg: #e5e7eb;
   --profile-header-cancel-hover-bg: #d4d4d8;
   --profile-header-cancel: #18181b;
+
+  --payment-btn-bg: rgba(255, 255, 255, 0.7);
+  --payment-btn-text: #111827;
+  --payment-btn-border: #d1d5db;
+
+  --payment-btn-hover-bg: #059669;
+  --payment-btn-hover-text: #fff;
+
+  --payment-btn-active-bg: #059669;
+  --payment-btn-active-text: #fff;
+  --payment-btn-active-border: #047857;
+
+  --authform-secondary-bg: #f9fafb;
+  --authform-secondary-text: #111827;
+  --authform-secondary-border: #d1d5db;
+  --authform-secondary-hover-bg: #059669;
+  --authform-secondary-hover-text: #ffffff;
+
+  --authform-primary-bg: #059669;
+  --authform-primary-text: #ffffff;
+  --authform-primary-hover-bg: #047857;
+  --authform-primary-hover-text: #ffffff;
+
+  --authform-disabled-bg: #e5e7eb;
+  --authform-disabled-text: #9ca3af;
+}
+
+.btn-payment {
+  background: var(--payment-btn-bg);
+  color: var(--payment-btn-text);
+  border: 1px solid var(--payment-btn-border);
+  transition: all 0.2s ease;
+}
+
+.btn-payment:hover {
+  background: var(--payment-btn-hover-bg);
+  color: var(--payment-btn-hover-text);
+}
+
+.btn-payment-active {
+  background: var(--payment-btn-active-bg);
+  color: var(--payment-btn-active-text);
+  border: 1px solid var(--payment-btn-active-border);
 }
 
 .dark {
