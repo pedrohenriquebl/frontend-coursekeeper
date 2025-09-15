@@ -155,69 +155,57 @@ input::placeholder {
   --authform-accent-light: #bbf7d0;
   --authform-disabled-bg: #4b5563;
   --authform-disabled-text: #9ca3af;
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  --card: var(--dashboard-card-bg);
+  --card-foreground: var(--dashboard-card-title);
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
+  --popover: var(--modal-bg);
+  --popover-foreground: var(--modal-title);
 
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: var(--authform-primary);
+  --primary-foreground: #fff;
 
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: var(--dashboard-card-meta);
+  --secondary-foreground: var(--dashboard-card-title);
 
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
+  --muted: var(--dashboard-card-meta);
+  --muted-foreground: var(--dashboard-card-title);
 
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  --accent: var(--dashboard-card-meta);
+  --accent-foreground: var(--dashboard-card-title);
 
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: 0 85.7% 97.3%;
+  --destructive: #ef4444;
+  --destructive-foreground: #fff;
 
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
+  --border: var(--dashboard-card-border);
+  --input: var(--goal-modal-input-border);
+  --ring: var(--authform-primary);
 
   --radius: 0.625rem;
 
-  --sidebar-background: 0 0% 98%;
+  --sidebar-background: var(--dashboard-sidebar-bg);
+  --sidebar-foreground: var(--dashboard-card-title);
+  --sidebar-primary: var(--authform-primary);
+  --sidebar-primary-foreground: #fff;
+  --sidebar-accent: var(--dashboard-card-meta);
+  --sidebar-accent-foreground: var(--dashboard-card-title);
+  --sidebar-border: var(--dashboard-card-border);
+  --sidebar-ring: var(--authform-primary);
 
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --background: var(--root-bg);
+  --foreground: var(--dashboard-card-title);
 
-  --sidebar-primary: oklch(0.21 0.006 285.885);
+  --chart-1: #60a5fa;
+  --chart-2: #22c55e;
+  --chart-3: #a78bfa;
+  --chart-4: #fb923c;
+  --chart-5: #f87171;
 
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-
-  --sidebar-border: oklch(0.92 0.004 286.32);
-
-  --sidebar-ring: oklch(0.705 0.015 286.067);
-
-  --background: oklch(0.141 0.005 285.823);
-
-  --foreground: oklch(0.985 0 0);
-
-  --chart-1: oklch(0.646 0.222 41.116);
-
-  --chart-2: oklch(0.6 0.118 184.704);
-
-  --chart-3: oklch(0.398 0.07 227.392);
-
-  --chart-4: oklch(0.828 0.189 84.429);
-
-  --chart-5: oklch(0.769 0.188 70.08);
-
-  --sidebar: oklch(0.985 0 0);
+  --sidebar: var(--dashboard-sidebar-bg);
   /* Report Module Variables */
   --report-card-bg: #23272f;
   --report-card-border: #52525b;
   --report-card-title: #fff;
-  --report-card-item-bg: #23272f;
+  --report-card-item-bg: #374151;
   --report-card-item-title: #fff;
   --report-card-item-meta: #a3a3a3;
   --report-card-item-star: #facc15;
@@ -234,7 +222,7 @@ input::placeholder {
   --report-resumee-meta: #a3a3a3;
   --report-resumee-section-title: #fff;
   --report-resumee-label: #fff;
-  --report-platform-bg: #23272f;
+  --report-platform-bg: #374151;
   --report-platform-title: #fff;
   --report-platform-meta: #a3a3a3;
   --report-platform-hours: #34d399;
@@ -596,6 +584,40 @@ input::placeholder {
 
   --authform-disabled-bg: #e5e7eb;
   --authform-disabled-text: #9ca3af;
+
+  --card: var(--dashboard-card-bg);
+  --card-foreground: var(--dashboard-card-title);
+
+  --popover: var(--modal-bg);
+  --popover-foreground: var(--modal-title);
+
+  --primary: var(--authform-primary);
+  --primary-foreground: #fff;
+
+  --secondary: var(--dashboard-card-meta);
+  --secondary-foreground: var(--dashboard-card-title);
+
+  --muted: var(--dashboard-card-meta);
+  --muted-foreground: var(--dashboard-card-title);
+
+  --accent: var(--dashboard-card-meta);
+  --accent-foreground: var(--dashboard-card-title);
+
+  --destructive: #ef4444;
+  --destructive-foreground: #fff;
+
+  --border: var(--dashboard-card-border);
+  --input: var(--goal-modal-input-border);
+  --ring: var(--authform-primary);
+
+  --sidebar-background: var(--dashboard-sidebar-bg);
+  --sidebar-foreground: var(--dashboard-card-title);
+  --sidebar-primary: var(--authform-primary);
+  --sidebar-primary-foreground: #fff;
+  --sidebar-accent: var(--dashboard-card-meta);
+  --sidebar-accent-foreground: var(--dashboard-card-title);
+  --sidebar-border: var(--dashboard-card-border);
+  --sidebar-ring: var(--authform-primary);
 }
 
 .btn-payment {
@@ -617,47 +639,42 @@ input::placeholder {
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
+  --background: var(--root-bg);
+  --foreground: var(--dashboard-card-title);
 
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.985 0 0);
+  --card: var(--dashboard-card-bg);
+  --card-foreground: var(--dashboard-card-title);
 
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.985 0 0);
+  --popover: var(--modal-bg);
+  --popover-foreground: var(--modal-title);
 
-  --primary: oklch(0.92 0.004 286.32);
-  --primary-foreground: oklch(0.21 0.006 285.885);
+  --primary: var(--authform-primary);
+  --primary-foreground: #fff;
 
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
+  --secondary: var(--dashboard-card-meta);
+  --secondary-foreground: var(--dashboard-card-title);
 
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
+  --muted: var(--dashboard-card-meta);
+  --muted-foreground: var(--dashboard-card-title);
 
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: var(--dashboard-card-meta);
+  --accent-foreground: var(--dashboard-card-title);
 
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: 0 85.7% 97.3%;
+  --destructive: #ef4444;
+  --destructive-foreground: #fff;
 
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.552 0.016 285.938);
-  --sidebar-background: 240 5.9% 10%;
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.006 285.885);
+  --border: var(--dashboard-card-border);
+  --input: var(--goal-modal-input-border);
+  --ring: var(--authform-primary);
+
+  --sidebar-background: var(--dashboard-sidebar-bg);
+  --sidebar-foreground: var(--dashboard-card-title);
+  --sidebar-primary: var(--authform-primary);
+  --sidebar-primary-foreground: #fff;
+  --sidebar-accent: var(--dashboard-card-meta);
+  --sidebar-accent-foreground: var(--dashboard-card-title);
+  --sidebar-border: var(--dashboard-card-border);
+  --sidebar-ring: var(--authform-primary);
 }
 
 html,
@@ -681,6 +698,17 @@ button,
 textarea,
 select {
   font: inherit;
+}
+
+select {
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="gray" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 8l5 5 5-5H5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
 }
 
 ::-webkit-scrollbar {

@@ -11,13 +11,14 @@ type FilteredCoursesProps = {
     platform: FilterPlatform;
     period: FilterPeriod;
     periods: { value: FilterPeriod; label: string }[];
+    forceExpand?: boolean
 };
 
-export default function FilteredCourses({ courses, topic, platform, period, periods }: FilteredCoursesProps) {
+export default function FilteredCourses({ courses, topic, platform, period, periods, forceExpand }: FilteredCoursesProps) {
     const [expanded, setExpanded] = useState(false);
     const isMobile = useMediaQuery("(max-width: 768px)");
     const sliceCount = isMobile ? 4 : 8;
-    const visibleCourses = expanded ? courses : courses.slice(0, sliceCount);
+    const visibleCourses = forceExpand ? courses : (expanded ? courses : courses.slice(0, sliceCount));
 
     return (
         <>
@@ -145,7 +146,7 @@ export default function FilteredCourses({ courses, topic, platform, period, peri
                                 </div>
 
                                 {/* Botão Mostrar mais/menos */}
-                                {courses.length > sliceCount && (
+                                {courses.length > sliceCount && !forceExpand &&(
                                     <div className="flex justify-center mt-6">
                                         <button
                                             onClick={() => setExpanded(!expanded)}

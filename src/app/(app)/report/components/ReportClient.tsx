@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import ReportHeader from "./ReportHeader";
 import UserInformation from "./UserInformation";
 import ReportFilterSelect from "./ReportFilterSelect";
@@ -16,6 +16,7 @@ import RecentCompletions from "./RecentCompletions";
 import Resumee from "./Resumee";
 import { FadeSlide } from "@/components/animation/FadeSlide";
 import Link from "next/link";
+import html2PDF from 'jspdf-html2canvas-pro';
 
 type PeriodOption = { value: FilterPeriod; label: string };
 
@@ -27,6 +28,8 @@ export default function ReportClient() {
     const [topic, setTopic] = useState<FilterTopic>("all");
     const [platform, setPlatform] = useState<FilterPlatform>("all");
     const [status, setStatus] = useState<FilterStatus>("all");
+    const reportRef = useRef<HTMLDivElement>(null);
+    const [forceExpandCourses, setForceExpandCourses] = useState(false);
 
     const getStartDate = (period: FilterPeriod) => {
         const now = new Date();
@@ -70,12 +73,36 @@ export default function ReportClient() {
     if (!user) return null;
 
     const handleExportPDF = async () => {
-        setIsExporting(true);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setIsExporting(false);
+        if (!reportRef.current) return;
 
-        // In a real implementation, this would generate and download a PDF
-        alert("Relatório exportado com sucesso! (funcionalidade simulada)");
+        setForceExpandCourses(true);
+        await new Promise((resolve) => requestAnimationFrame(resolve));
+
+        const filterElement = reportRef.current.querySelector('#report-filter-select') as HTMLElement | null;
+        if (filterElement) filterElement.style.display = 'none';
+
+        setIsExporting(true);
+        const contentWidth = reportRef.current.scrollWidth;
+        const contentHeight = reportRef.current.scrollHeight;
+
+        const prevBackground = reportRef.current.style.backgroundColor;
+        reportRef.current.style.backgroundColor = '#23272f';
+
+        await html2PDF(reportRef.current, {
+            jsPDF: {
+                unit: 'px',
+                format: [contentWidth, contentHeight],
+            },
+            html2canvas: {
+                backgroundColor: "#23272f",
+                scale: 2,
+            }
+        });
+
+        setIsExporting(false);
+        setForceExpandCourses(false);
+        reportRef.current.style.backgroundColor = prevBackground;
+        if (filterElement) filterElement.style.display = '';
     };
 
     const periods: PeriodOption[] = [
@@ -104,7 +131,7 @@ export default function ReportClient() {
     }
 
     return (
-    <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col text-[color:var(--report-page-text,#fff)]">
+        <div ref={reportRef} className="max-w-7xl mx-auto px-4 py-8 flex flex-col text-[color:var(--report-page-text,#fff)]">
             <ReportHeader onExport={handleExportPDF} isExporting={isExporting} />
 
             <UserInformation
@@ -117,19 +144,21 @@ export default function ReportClient() {
                 userImg={user?.profileImage}
             />
 
-            <ReportFilterSelect
-                period={period}
-                topic={topic}
-                platform={platform}
-                periods={periods}
-                status={status}
-                setReportFilters={({ period, topic, platform, status }) => {
-                    if (period) setPeriod(period);
-                    if (topic) setTopic(topic);
-                    if (platform) setPlatform(platform);
-                    if (status) setStatus(status);
-                }}
-            />
+            <div id="report-filter-select">
+                <ReportFilterSelect
+                    period={period}
+                    topic={topic}
+                    platform={platform}
+                    periods={periods}
+                    status={status}
+                    setReportFilters={({ period, topic, platform, status }) => {
+                        if (period) setPeriod(period);
+                        if (topic) setTopic(topic);
+                        if (platform) setPlatform(platform);
+                        if (status) setStatus(status);
+                    }}
+                />
+            </div>
 
             {filteredCourses.length > 0 ? (
                 <>
@@ -144,6 +173,7 @@ export default function ReportClient() {
                             platform={platform}
                             periods={periods}
                             courses={filteredCourses}
+                            forceExpand={forceExpandCourses}
                         />
                     </FadeSlide>
 
