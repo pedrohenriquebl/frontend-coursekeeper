@@ -1,4 +1,4 @@
-import { getGoalProgress, getStatusColor, getStatusIcon } from "@/components/courses/CourseModals/CourseIcons";
+import { getGoalProgress, getStatusIcon } from "@/components/courses/CourseModals/CourseIcons";
 import { cn } from "@/lib/utils";
 import { Goal } from "@/types";
 import { Trash2, TrendingUp, Trophy, XCircle } from "lucide-react";
@@ -10,6 +10,19 @@ type GoalCardProps = {
 
 
 export default function GoalCard({ goal, onDelete }: GoalCardProps) {
+    const getGoalStatusColor = (status: string) => {
+        switch (status) {
+            case "concluida":
+                return "bg-[color:var(--modal-completed-bg,rgba(22,163,74,0.2))] text-[color:var(--modal-completed-icon,#22c55e)]";
+            case "ativa":
+                return "bg-[color:var(--modal-progress-bg,rgba(16,185,129,0.2))] text-[color:var(--modal-progress-bar,#10b981)]";
+            case "vencida":
+                return "bg-[color:var(--modal-delete-bg,rgba(220,38,38,0.2))] text-[color:var(--modal-delete-bg,#dc2626)]";
+            default:
+                return "bg-[color:var(--modal-preview-bg,rgba(55,65,81,0.2))] text-[color:var(--modal-preview-meta,#a3a3a3)]";
+        }
+    };
+
     return (
         <div
             key={goal.id}
@@ -39,11 +52,11 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
                         <div className="min-h-[24px]" />
                     )}
                 </div>
-                <div className="flex items-center gap-2">    
+                <div className="flex items-center gap-2">
                     <span
                         className={cn(
                             "flex items-center gap-1 text-xs px-2 py-1 rounded-full",
-                            getStatusColor(goal.status),
+                            getGoalStatusColor(goal.status.toLocaleLowerCase()),
                         )}
                     >
                         {getStatusIcon(goal.status)}
@@ -65,7 +78,7 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
                 <div className="flex justify-between text-sm text-[color:var(--goal-card-meta,#a3a3a3)] mb-2">
                     <span>Progresso</span>
                     <span>
-                        {goal.current}/{goal.target} {goal.unit}
+                        {goal.current}/{goal.target} {goal.unit.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
                     </span>
                 </div>
                 <div className="bg-[color:var(--goal-card-progress-bg,#52525b)] rounded-full h-3">

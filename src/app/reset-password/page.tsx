@@ -46,8 +46,8 @@ export default function ResetPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-gray-700/50 p-6 rounded-lg">
+        <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "var(--authform-bg-gradient)" }}>
+            <div className="w-full max-w-md backdrop-blur-sm rounded-xl p-6 shadow-lg" >
                 <h1 className="text-2xl font-bold text-white mb-4 text-center">Redefinir Senha</h1>
 
                 {errors.general && <p className="text-red-400 mb-2 text-center">{errors.general}</p>}

@@ -43,8 +43,8 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 flex items-center justify-center p-4">
-      <div className="w-full max-w-md lg:min-h-[400px]">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "var(--authform-bg-gradient)" }}>
+      <div className="w-full max-w-md lg:min-h-[400px] backdrop-blur-sm rounded-xl p-6 shadow-lg">
         <div className="text-center mb-8">
           <div className="bg-gradient-to-r from-emerald-600 to-green-600 p-3 rounded-xl inline-block mb-4">
             <Mail className="h-8 w-8 text-white" />

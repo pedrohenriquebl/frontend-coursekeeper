@@ -10,7 +10,7 @@ function AuthContent() {
     const success = params.get("success");
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 flex items-center justify-center p-4">
+        <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "var(--authform-bg-gradient)" }}>
             <div className="w-full max-w-md bg-gray-800/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-gray-700/50 flex flex-col items-center">
                 {success === "senha-resetada" && (
                     <div className="mb-6">

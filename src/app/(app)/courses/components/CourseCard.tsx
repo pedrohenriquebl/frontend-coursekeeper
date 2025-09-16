@@ -44,11 +44,13 @@ export function CourseCard({ course, onEdit, onDelete, onViewDetails }: CourseCa
                             {course.name}
                         </h3>
                         <div className="flex items-center gap-4 text-sm text-[color:var(--modal-preview-meta,#a3a3a3)] mb-3">
-                            <span>{course.platform}</span>
+                            <span>{course.platform.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</span>
                             <span>•</span>
                             <span>{course.duration}h</span>
                             <span>•</span>
-                            <span className="bg-[color:var(--modal-preview-bg,#52525b)]/50 px-2 py-1 rounded text-xs text-[color:var(--modal-preview-comment,#d4d4d8)]">{course.topic}</span>
+                            <span className="bg-[color:var(--modal-preview-bg,#52525b)]/50 px-2 py-1 rounded text-xs text-[color:var(--modal-preview-comment,#d4d4d8)]">
+                                {course.topic.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}
+                            </span>
                         </div>
                     </div>
                 </div>
