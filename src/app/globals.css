@@ -17,7 +17,7 @@ input::placeholder {
   --plan-popular-border: #fbbf24;
   --plan-popular-bg: rgba(251, 191, 36, 0.1);
   --plan-popular-text: #000;
-  --root-bg: rgba(31, 41, 55, 0.9);
+  --root-bg: var(--authform-bg-gradient);
   --goal-preview-bg: #23272f;
   --goal-preview-title: #fff;
   --goal-modal-input-bg: #23272f;
@@ -191,7 +191,7 @@ input::placeholder {
   --sidebar-border: var(--dashboard-card-border);
   --sidebar-ring: var(--authform-primary);
 
-  --background: var(--root-bg);
+  --background: var(--authform-bg-gradient);
   --foreground: var(--dashboard-card-title);
 
   --chart-1: #60a5fa;
@@ -302,7 +302,7 @@ input::placeholder {
   --plan-popular-border: #fbbf24;
   --plan-popular-bg: rgba(251, 191, 36, 0.15);
   --plan-popular-text: #18181b;
-  --root-bg: rgba(255, 255, 255, 0.9);
+  --root-bg: var(--authform-bg-gradient);
 
   --authform-bg-gradient: linear-gradient(
     to bottom right,
@@ -639,7 +639,7 @@ input::placeholder {
 }
 
 .dark {
-  --background: var(--root-bg);
+  --background: var(--authform-bg-gradient);
   --foreground: var(--dashboard-card-title);
 
   --card: var(--dashboard-card-bg);
@@ -683,7 +683,7 @@ body {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  background: var(--root-bg);
+  background: var(--authform-bg-gradient);
 }
 body {
   text-rendering: optimizeSpeed;

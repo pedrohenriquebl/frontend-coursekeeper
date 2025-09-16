@@ -9,6 +9,7 @@ import { GoalModal } from "./components/GoalModal";
 import GoalsTab from "./components/GoalsTab";
 import GoalsList from "./components/GoalsList";
 import { FadeSlide } from "@/components/animation/FadeSlide";
+import { List, Grid2x2, Grid3x3, LayoutGrid } from "lucide-react";
 
 export default function PageGoals() {
     const {
@@ -23,6 +24,7 @@ export default function PageGoals() {
 
     const [showAddModal, setShowAddModal] = useState(false);
     const [selectedTab, setSelectedTab] = useState<TabType>("ATIVA");
+    const [gridView, setGridView] = useState<1 | 2 | 3 | 4>(2);
 
     const handleChangeSelect = (tab: TabType) => {
         setSelectedTab(tab);
@@ -50,7 +52,7 @@ export default function PageGoals() {
     const hasGoals = Array.isArray(allGoals) && allGoals.length > 0;
 
     return (
-    <div className="max-w-7xl mx-auto px-4 py-8 text-[color:var(--goals-page-text,#fff)]">
+        <div className="max-w-7xl mx-auto px-4 py-8 text-[color:var(--goals-page-text,#fff)]">
             <div className="flex items-center justify-between mb-8">
                 <div>
                     <h1 className="text-3xl font-bold text-[color:var(--goals-page-title,#fff)] mb-2">Metas de Estudo</h1>
@@ -70,20 +72,55 @@ export default function PageGoals() {
             <GoalsOverviewCard {...goalStats} />
 
             <FadeSlide>
-                <GoalsTab
-                    selectedTab={selectedTab}
-                    setSelectedTab={handleChangeSelect}
-                    activeGoals={activeGoalsSize}
-                    completedGoals={completedGoalsSize}
-                    allGoals={allGoalsSize}
-                    missedGoals={missedGoals}
-                />
+                <div className="flex items-center justify-between gap-2">
+                    <GoalsTab
+                        selectedTab={selectedTab}
+                        setSelectedTab={handleChangeSelect}
+                        activeGoals={activeGoalsSize}
+                        completedGoals={completedGoalsSize}
+                        allGoals={allGoalsSize}
+                        missedGoals={missedGoals}
+                    />
+                    <div className="hidden lg:flex justify-end gap-2 mb-4">
+                        <button
+                            onClick={() => setGridView(1)}
+                            className={`p-2 rounded-md transition ${gridView === 1 ? "bg-emerald-600 text-white" : "text-gray-400 hover:text-white"
+                                }`}
+                        >
+                            <List className="w-5 h-5" />
+                        </button>
+
+                        <button
+                            onClick={() => setGridView(2)}
+                            className={`p-2 rounded-md transition ${gridView === 2 ? "bg-emerald-600 text-white" : "text-gray-400 hover:text-white"
+                                }`}
+                        >
+                            <Grid2x2 className="w-5 h-5" />
+                        </button>
+
+                        <button
+                            onClick={() => setGridView(3)}
+                            className={`p-2 rounded-md transition ${gridView === 3 ? "bg-emerald-600 text-white" : "text-gray-400 hover:text-white"
+                                }`}
+                        >
+                            <Grid3x3 className="w-5 h-5" />
+                        </button>
+
+                        <button
+                            onClick={() => setGridView(4)}
+                            className={`p-2 rounded-md transition ${gridView === 4 ? "bg-emerald-600 text-white" : "text-gray-400 hover:text-white"
+                                }`}
+                        >
+                            <LayoutGrid className="w-5 h-5" />
+                        </button>
+                    </div>
+                </div>
             </FadeSlide>
 
-            <div className="h-[600px]">
+            <div>
                 {hasGoals ? (
                     <FadeSlide>
-                        <GoalsList filteredGoals={filteredGoals} onDelete={deleteGoal} />
+                        <GoalsList filteredGoals={filteredGoals} onDelete={deleteGoal} gridView={gridView}/>
                     </FadeSlide>
                 ) : (
                     <div className="text-center py-12">

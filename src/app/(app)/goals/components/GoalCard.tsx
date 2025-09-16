@@ -27,6 +27,7 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
         <div
             key={goal.id}
             className={cn(
+                "h-full flex flex-col justify-between",
                 "bg-[color:var(--goal-card-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border transition-all hover:scale-105 duration-200",
                 goal.status === "CONCLUIDA"
                     ? "border-[color:var(--goal-card-border-success,#22c55e)]/50"
@@ -36,12 +37,15 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
             )}
         >
             {/* Goal Header */}
-            <div className="flex items-start justify-between mb-4 flex-wrap sm:no-wrap">
+            <div className="flex items-start justify-between mb-4 flex-wrap flex-col-reverse gap-2">
                 <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-[color:var(--goal-card-title,#fff)] mb-2">
+                    <h3 title={goal.title} className="text-lg font-semibold text-[color:var(--goal-card-title,#fff)] mb-2">
                         {goal.title}
                     </h3>
-                    <p className="text-sm text-[color:var(--goal-card-meta,#a3a3a3)] mb-2">
+                    <p
+                        title={goal.description}
+                        className="text-sm text-[color:var(--goal-card-meta,#a3a3a3)] mb-2"
+                    >
                         {goal.description}
                     </p>
                     {goal.topic ? (
@@ -52,7 +56,7 @@ export default function GoalCard({ goal, onDelete }: GoalCardProps) {
                         <div className="min-h-[24px]" />
                     )}
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full justify-end">
                     <span
                         className={cn(
                             "flex items-center gap-1 text-xs px-2 py-1 rounded-full",

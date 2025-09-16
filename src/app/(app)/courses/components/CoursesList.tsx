@@ -6,6 +6,7 @@ import { Course } from "@/types";
 import { Spinner } from "@/components/ui/Spinner";
 import ConfirmDeleteModal from "@/components/courses/CourseModals/ConfirmDeleteModal";
 import { CourseCard } from "./CourseCard";
+import { List, Grid2x2, Grid3x3, LayoutGrid } from "lucide-react";
 
 interface CoursesListProps {
     courses: Course[];
@@ -21,6 +22,7 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
     const [selectedPlatform, setSelectedPlatform] = useState("all");
     const [selectedStatus, setSelectedStatus] = useState("all");
     const [courseToDelete, setCourseToDelete] = useState<Course | null>(null);
+    const [viewMode, setViewMode] = useState<"list" | "grid2" | "grid3" | "grid4">("grid2");
 
     const topics = ["all", "Frontend", "Backend", "Design", "Mobile", "Data Science", "DevOps", "Database"];
     const platforms = ["all", "Udemy", "Coursera", "YouTube", "Alura", "edX", "Pluralsight"];
@@ -53,7 +55,7 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
         <div className="mt-8">
             {/* Filtros */}
             <div className="bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
                         <input
@@ -76,11 +78,49 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
                     <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
                         {statuses.map(s => <option key={s} value={s}>{s === "all" ? "Todos os status" : s}</option>)}
                     </select>
+                    <div className="hidden lg:flex items-center gap-2 justify-end">
+                        <button
+                            onClick={() => setViewMode("list")}
+                            className={`p-2 rounded-lg ${viewMode === "list" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}
+                        >
+                            <List className="h-5 w-5" />
+                        </button>
+                        <button
+                            onClick={() => setViewMode("grid2")}
+                            className={`p-2 rounded-lg ${viewMode === "grid2" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}
+                        >
+                            <Grid2x2 className="h-5 w-5" />
+                        </button>
+                        <button
+                            onClick={() => setViewMode("grid3")}
+                            className={`p-2 rounded-lg ${viewMode === "grid3" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}
+                        >
+                            <Grid3x3 className="h-5 w-5" />
+                        </button>
+                        <button
+                            onClick={() => setViewMode("grid4")}
+                            className={`p-2 rounded-lg ${viewMode === "grid4"
+                                ? "bg-[color:var(--modal-submit-bg,#059669)] text-white"
+                                : "text-[color:var(--modal-preview-meta,#a3a3a3)]"
+                                }`}
+                        >
+                            <LayoutGrid className="h-5 w-5" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
             {/* Lista de Cursos */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div
+                className={`grid gap-6 ${viewMode === "list"
+                        ? "grid-cols-1"
+                        : viewMode === "grid2"
+                            ? "grid-cols-1 sm:grid-cols-2"
+                            : viewMode === "grid3"
+                                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                                : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+                    }`}
+            >
                 {filteredCourses.map(course => (
                     <CourseCard
                         key={course.id}

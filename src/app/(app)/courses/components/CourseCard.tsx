@@ -101,7 +101,7 @@ export function CourseCard({ course, onEdit, onDelete, onViewDetails }: CourseCa
             </div>
 
             {/* Status e datas */}
-            <div className="flex items-center justify-between gap-4 sm:gap-0">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
                 <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(course.status || "Não Iniciado")}`}>
                     {handleStatusLabel(course.status)}
                 </span>

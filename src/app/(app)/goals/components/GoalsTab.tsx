@@ -21,7 +21,7 @@ export default function GoalsTab({
     
 
     return (
-    <div className="flex space-x-1 mb-6 bg-[color:var(--goals-tab-bg,#23272f)]/60 backdrop-blur-sm rounded-lg p-1 flex-wrap">
+    <div className="flex flex-1 space-x-1 mb-6 bg-[color:var(--goals-tab-bg,#23272f)]/60 backdrop-blur-sm rounded-lg p-1 flex-wrap">
             <button
                 onClick={() => setSelectedTab("ATIVA")}
                 className={cn(

@@ -5,13 +5,15 @@ import GoalCard from "./GoalCard";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import ConfirmDeleteModal from "@/components/courses/CourseModals/ConfirmDeleteModal";
+import { cn } from "@/lib/utils";
 
 interface GoalsListProps {
     filteredGoals: Goal[];
     onDelete: (goalId: number) => void;
+    gridView: 1 | 2 | 3 | 4;
 }
 
-export default function GoalsList({ filteredGoals, onDelete }: GoalsListProps) {
+export default function GoalsList({ filteredGoals, onDelete, gridView }: GoalsListProps) {
     const hasFilteredGoals = filteredGoals && filteredGoals.length > 0;
     const [goalToDelete, setGoalToDelete] = useState<Goal | null>(null);
     const handleDeleteClick = (goal: Goal) => setGoalToDelete(goal);
@@ -27,7 +29,16 @@ export default function GoalsList({ filteredGoals, onDelete }: GoalsListProps) {
 
     return (
         <>
-            <div className={`grid grid-cols-1 lg:grid-cols-${hasFilteredGoals ? 2 : 1} gap-6 pb-4`}>
+            <div
+                className={cn(
+                    "grid gap-6 pb-4",
+                    !hasFilteredGoals && "grid-cols-1",
+                    hasFilteredGoals && gridView === 1 && "grid-cols-1",
+                    hasFilteredGoals && gridView === 2 && "grid-cols-1 sm:grid-cols-2",
+                    hasFilteredGoals && gridView === 3 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+                    hasFilteredGoals && gridView === 4 && "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                )}
+            >
                 {hasFilteredGoals ? (
                     filteredGoals.map((goal: Goal) => (
                         <GoalCard
