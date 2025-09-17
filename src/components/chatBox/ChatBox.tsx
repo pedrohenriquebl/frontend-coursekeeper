@@ -33,7 +33,7 @@ export default function ChatBox() {
 
     function confirmClear() {
         setMessages([]);
-        localStorage.removeItem("chat_messages");
+        localStorage.removeItem("chat-messages");
         setShowConfirm(false);
     }
 

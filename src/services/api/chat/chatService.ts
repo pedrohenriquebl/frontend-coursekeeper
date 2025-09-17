@@ -1,4 +1,3 @@
-import { isAxiosError } from "axios";
 import { apiInstance } from "../axios/instance";
 
 export const chatService = {
@@ -13,11 +12,8 @@ export const chatService = {
         message: message,
       });
       return response.data;
-    } catch (error) {
-      if (isAxiosError(error)) {
-        const message = error.response?.data?.message || "Erro desconhecido";
-        throw new Error(message);
-      }
+    } catch {
+      return null;
     }
   },
 };

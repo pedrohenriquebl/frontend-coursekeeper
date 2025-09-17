@@ -58,13 +58,21 @@ export default function useChat() {
 
       const assistantMessage: ChatMessage = {
         role: "assistant",
-        content: response.response,
+        content: response?.response || "🤖 IA indisponível no momento. Por favor, tente novamente mais tarde.",
         side: "left",
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("Error adding message:", error);
-      throw error;
+      setMessages((prev) => [
+        ...prev.filter((msg) => msg.content !== "..."),
+        {
+          role: "assistant",
+          content:
+            "🤖 IA indisponível no momento. Por favor, tente novamente mais tarde.",
+          side: "left",
+        },
+      ]);
     } finally {
       setIsLoadingChat(false);
     }
