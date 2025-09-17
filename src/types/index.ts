@@ -96,11 +96,11 @@ export interface LoginResponse {
 export interface Course {
   id: number;
   name: string;
-  platform: Platform | string; // permite custom
+  platform: Platform | string;
   platformCustom?: string;
   duration: number;
   studiedHours: number;
-  topic: Topic | string; // permite custom
+  topic: Topic | string;
   topicCustom?: string;
   progress: number;
   rating?: number;
