@@ -74,10 +74,10 @@ export default function CardPaymentStep({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-[color:var(--authform-muted,#9ca3af)]">Dados do Cart3o</h3>
+      <h3 className="text-sm font-medium text-[color:var(--authform-muted,#9ca3af)]">Dados do Cartão</h3>
       <div>
         <Input
-          placeholder="N3mero do Cart3o"
+          placeholder="Número do Cartão"
           value={cardData.number}
           onChange={e => handleCardChange("number", e.target.value)}
           className="bg-[color:var(--authform-card-bg,rgba(55,65,81,0.5))] border-[color:var(--authform-muted,#9ca3af)] text-[color:var(--authform-primary,#059669)]"
@@ -86,7 +86,7 @@ export default function CardPaymentStep({
       </div>
       <div>
         <Input
-          placeholder="Nome no Cart3o"
+          placeholder="Nome no Cartão"
           value={cardData.name}
           onChange={e => handleCardChange("name", e.target.value)}
           className="bg-[color:var(--authform-card-bg,rgba(55,65,81,0.5))] border-[color:var(--authform-muted,#9ca3af)] text-[color:var(--authform-primary,#059669)]"
