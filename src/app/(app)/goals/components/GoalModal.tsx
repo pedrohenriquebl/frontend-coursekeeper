@@ -57,12 +57,14 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("Submitting goal data:", goalData);
+
     const newErrors: { [key: string]: string } = {};
     if (!goalData.title) newErrors.title = "Título é obrigatório";
     if (goalData.target <= 0) newErrors.target = "Objetivo deve ser maior que zero";
     if (!goalData.deadline) newErrors.deadline = "Prazo é obrigatório";
     if (!goalData.description) newErrors.description = "Descrição é obrigatória";
-    if (goalData.type === "HORAS_TOPICO" || (goalData.type === "CURSOS_CONCLUIDOS" && !goalData.topic)) {
+    if ((goalData.type === "HORAS_TOPICO" && !goalData.topic) || (goalData.type === "CURSOS_CONCLUIDOS" && !goalData.topic)) {
       newErrors.topic = "Tópico é obrigatório";
     }
 
