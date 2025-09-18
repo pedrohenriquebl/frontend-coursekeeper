@@ -47,7 +47,7 @@ export default function Footer() {
                                     "flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border border-transparent group",
                                     active
                                         ? "bg-[color:var(--navbar-link-active-bg,#022c22)] text-[color:var(--navbar-link-active-text,#34d399)] shadow-sm border-[color:var(--navbar-link-active-border,#022c22)]"
-                                        : "text-[color:var(--navbar-link-text,#d1d5db)] hover:text-[color:var(--navbar-link-hover-text,#34d399)] hover:bg-[color:var(--navbar-link-hover-bg,#1f2937)]"
+                                        : "text-[color:var(--plan-card-title,#d1d5db)] hover:text-[color:var(--navbar-link-hover-text,#34d399)] hover:bg-[color:var(--navbar-link-hover-bg,#1f2937)]"
                                 )}
                                 style={pathname !== link.href ? { textDecorationColor: "var(--authform-primary)" } : {}}
                             >
