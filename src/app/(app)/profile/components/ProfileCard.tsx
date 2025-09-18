@@ -59,7 +59,8 @@ export function ProfileCard({ icon: Icon, iconColor, gradientFrom, gradientTo, v
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-2xl font-bold text-white"
+            className="text-2xl font-bold"
+            style={{ color: 'var(--goal-card-title)' }}
           >
             {value}
           </motion.span>
