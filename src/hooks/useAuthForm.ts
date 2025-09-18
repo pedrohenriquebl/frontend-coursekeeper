@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { userService } from "@/services/api/user/userService";
 import { useAuthUser } from "@/context/authUserContext";
+import { validateCPF } from "@/utils/validateCPF";
 
 type AuthMode = "login" | "register";
 
@@ -127,6 +128,10 @@ export function useAuthForm(initialMode: AuthMode = "login") {
 
       const lastNameError = validateName(formData.lastName);
       if (lastNameError) newErrors.lastName = lastNameError;
+
+      const cpfError = validateCPF(formData.cpf);
+      if (!formData.cpf) newErrors.cpf = "CPF é obrigatório";
+      else if (!cpfError) newErrors.cpf = "CPF inválido";
 
       const acceptedTermsError = validateTerms(formData.acceptedTerms);
       if (acceptedTermsError) newErrors.acceptedTerms = acceptedTermsError;
