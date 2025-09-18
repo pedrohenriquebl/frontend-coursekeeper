@@ -20,6 +20,7 @@ export function Auth() {
     setShowConfirmPassword,
     toggleMode,
     handleSubmit,
+    handleCheckboxChange,
   } = useAuthForm();
 
   const onSubmit = (e: React.FormEvent) => {
@@ -43,6 +44,7 @@ export function Auth() {
       setShowConfirmPassword={setShowConfirmPassword}
       onSubmit={onSubmit}
       toggleMode={toggleMode}
+      handleCheckboxChange={handleCheckboxChange}
     />
   );
 }

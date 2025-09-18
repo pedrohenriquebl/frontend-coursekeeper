@@ -11,6 +11,7 @@ interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
+  acceptedTerms: boolean;
 }
 
 interface Errors {
@@ -27,6 +28,7 @@ export function useAuthForm(initialMode: AuthMode = "login") {
     email: "",
     password: "",
     confirmPassword: "",
+    acceptedTerms: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -66,7 +68,6 @@ export function useAuthForm(initialMode: AuthMode = "login") {
     if (attemptCount < 5) return false;
     const now = Date.now();
     if (now - lastAttempt >= BLOCK_DURATION) {
-      // Reset após 20 minutos
       setBlockData(0, 0);
       return false;
     }
@@ -96,6 +97,12 @@ export function useAuthForm(initialMode: AuthMode = "login") {
     return null;
   };
 
+  const validateTerms = (accepted: boolean) => {
+    if (!accepted)
+      return "Você deve aceitar os termos e a política de privacidade";
+    return null;
+  };
+
   const validateConfirmPassword = (
     password: string,
     confirmPassword: string
@@ -121,6 +128,9 @@ export function useAuthForm(initialMode: AuthMode = "login") {
       const lastNameError = validateName(formData.lastName);
       if (lastNameError) newErrors.lastName = lastNameError;
 
+      const acceptedTermsError = validateTerms(formData.acceptedTerms);
+      if (acceptedTermsError) newErrors.acceptedTerms = acceptedTermsError;
+
       const confirmPasswordError = validateConfirmPassword(
         formData.password,
         formData.confirmPassword
@@ -131,6 +141,14 @@ export function useAuthForm(initialMode: AuthMode = "login") {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handleCheckboxChange = (checked: boolean) => {
+    setFormData((prev) => ({ ...prev, acceptedTerms: checked }));
+    setErrors((prev) => {
+      const { acceptedTerms: _, ...rest } = prev; /*eslint-disable-line*/
+      return rest;
+    });
   };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
@@ -152,6 +170,7 @@ export function useAuthForm(initialMode: AuthMode = "login") {
       cpf: "",
       password: "",
       confirmPassword: "",
+      acceptedTerms: false,
     });
     setErrors({});
     setIsLoading(false);
@@ -203,6 +222,8 @@ export function useAuthForm(initialMode: AuthMode = "login") {
           cpf: onlyNumbersCpf,
           password: formData.password,
           profileImage: "/api/placeholder/120/120",
+          acceptedTerms: formData.acceptedTerms,
+          acceptedPrivacy: formData.acceptedTerms,
         });
 
         if (!newUser)
@@ -241,5 +262,6 @@ export function useAuthForm(initialMode: AuthMode = "login") {
     setShowConfirmPassword,
     toggleMode,
     handleSubmit,
+    handleCheckboxChange,
   };
 }

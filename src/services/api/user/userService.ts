@@ -18,6 +18,8 @@ export const userService = {
     password: string;
     profileImage?: string;
     description?: string;
+    acceptedTerms: boolean;
+    acceptedPrivacy: boolean;
   }): Promise<User | undefined> => {
     try {
       const response = await apiInstance.post("/users/register", data);

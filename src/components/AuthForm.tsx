@@ -2,7 +2,7 @@
 
 import React from "react";
 import { maskCPF } from "@/lib/mask";
-import { User, Mail } from "lucide-react";
+import { User, Mail, Check } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +21,7 @@ interface FormData {
     cpf: string;
     password: string;
     confirmPassword: string;
+    acceptedTerms: boolean;
 }
 
 interface Errors {
@@ -40,6 +41,7 @@ interface AuthFormProps {
     setShowConfirmPassword: React.Dispatch<React.SetStateAction<boolean>>;
     onSubmit: (e: React.FormEvent) => void;
     toggleMode: () => void;
+    handleCheckboxChange: (checked: boolean) => void;
 }
 
 export function AuthForm({
@@ -55,6 +57,7 @@ export function AuthForm({
     setShowConfirmPassword,
     onSubmit,
     toggleMode,
+    handleCheckboxChange
 }: AuthFormProps) {
     return (
         <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "var(--authform-bg-gradient)" }}>
@@ -63,18 +66,18 @@ export function AuthForm({
                     <div className="p-3 rounded-xl inline-block mb-4" style={{ background: "var(--authform-primary-gradient)" }}>
                         <User className="h-8 w-8" style={{ color: "#fff" }} />
                     </div>
-                                        <h1
-                                            className="text-2xl font-bold mb-2"
-                                            style={{
-                                                background: "linear-gradient(to right, var(--authform-primary-light), var(--authform-accent-light))",
-                                                WebkitBackgroundClip: "text",
-                                                WebkitTextFillColor: "transparent",
-                                                backgroundClip: "text",
-                                                color: "transparent"
-                                            }}
-                                        >
-                                            CourseKeeper
-                                        </h1>
+                    <h1
+                        className="text-2xl font-bold mb-2"
+                        style={{
+                            background: "linear-gradient(to right, var(--authform-primary-light), var(--authform-accent-light))",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            backgroundClip: "text",
+                            color: "transparent"
+                        }}
+                    >
+                        CourseKeeper
+                    </h1>
                     <p style={{ color: "var(--authform-muted)" }}>
                         {mode === "login"
                             ? "Entre na sua conta para continuar"
@@ -178,15 +181,44 @@ export function AuthForm({
                     />
 
                     {mode === "register" && (
-                        <PasswordInput
-                            value={formData.confirmPassword}
-                            onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                            placeholder="Confirme sua senha"
-                            error={errors.confirmPassword}
-                            disabled={isLoading}
-                            showPassword={showConfirmPassword}
-                            toggleShowPassword={() => setShowConfirmPassword(!showConfirmPassword)}
-                        />
+                        <>
+                            <PasswordInput
+                                value={formData.confirmPassword}
+                                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                                placeholder="Confirme sua senha"
+                                error={errors.confirmPassword}
+                                disabled={isLoading}
+                                showPassword={showConfirmPassword}
+                                toggleShowPassword={() => setShowConfirmPassword(!showConfirmPassword)}
+                            />
+                            <div className="flex items-center gap-2 relative">
+                                <input
+                                    type="checkbox"
+                                    id="acceptedTerms"
+                                    checked={formData.acceptedTerms}
+                                    onChange={(e) => handleCheckboxChange(e.target.checked)}
+                                    disabled={isLoading}
+                                    className="peer appearance-none w-5 h-5 rounded-md border border-[color:var(--goal-modal-input-border)] bg-[color:var(--goal-modal-input-bg)] checked:bg-[color:var(--authform-primary)] checked:border-[color:var(--authform-primary)] focus:ring-2 focus:ring-[color:var(--authform-primary)] transition-colors duration-150 cursor-pointer relative"
+                                />
+                                {formData.acceptedTerms && (
+                                    <span className="pointer-events-none absolute left-0 top-0 w-5 h-5 flex items-center justify-center">
+                                        <Check size={16} className="text-white" strokeWidth={3} />
+                                    </span>
+                                )}
+                                <label htmlFor="acceptedTerms" className="text-sm select-none cursor-pointer ml-1">
+                                    Aceito os{' '} 
+                                        <Link target="_blank" className="text-[color:var(--authform-primary)]" href="/terms">
+                                            Termos de uso
+                                        </Link> e a{' '}
+                                        <Link className="text-[color:var(--authform-primary)]" href="/privacy">
+                                             Política de Privacidade
+                                        </Link>
+                                </label>
+                            </div>
+                            {errors.acceptedTerms && (
+                                <ErrorMessage message={errors.acceptedTerms} isBlocked={isBlocked} />
+                            )}
+                        </>
                     )}
 
                     {errors.general && (
