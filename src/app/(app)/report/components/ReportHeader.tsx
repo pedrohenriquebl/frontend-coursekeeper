@@ -17,6 +17,7 @@ export default function ReportHeader({ onExport, isExporting }: ReportHeaderProp
                 </p>
             </div>
             <button
+                id="report-btn"
                 onClick={onExport}
                 disabled={isExporting}
                 className="flex items-center gap-2 bg-[color:var(--report-header-action-bg,#059669)] text-[color:var(--report-header-action,#fff)] px-6 py-3 rounded-lg hover:bg-[color:var(--report-header-action-hover-bg,#059669)] transition-colors duration-200 font-medium disabled:opacity-50"

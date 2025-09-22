@@ -14,9 +14,20 @@ export function useExportPDF(
   ) => {
     if (!reportRef.current) return;
 
+    const buttonExport = reportRef.current.querySelector(
+      "#report-btn"
+    ) as HTMLElement | null;
+
     const filterElement = reportRef.current.querySelector(
       "#report-filter-select"
     ) as HTMLElement | null;
+
+    const topicBreakdownElement = reportRef.current.querySelector(
+      "#topic-chart-type"
+    ) as HTMLElement | null;
+
+    if (topicBreakdownElement) topicBreakdownElement.style.display = "none";
+    if (buttonExport) buttonExport.style.display = "none";
     if (filterElement) filterElement.style.display = "none";
 
     before?.();
@@ -108,6 +119,8 @@ export function useExportPDF(
       console.error("Erro ao gerar PDF:", err);
     } finally {
       if (filterElement) filterElement.style.display = "";
+      if (buttonExport) buttonExport.style.display = "";
+      if (topicBreakdownElement) topicBreakdownElement.style.display = "";
       after?.();
     }
   };
