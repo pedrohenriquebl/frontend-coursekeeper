@@ -1,21 +1,27 @@
 import { useCallback, useState, useEffect } from "react";
 import { courseService } from "@/services/api/courses/courseService";
-import { Course, CreateCourseData, FilterPlatform, FilterStatus, FilterTopic, UpdateCoursePayload } from "@/types";
+import {
+  Course,
+  CreateCourseData,
+  FilterPlatform,
+  FilterStatus,
+  FilterTopic,
+  UpdateCoursePayload,
+} from "@/types";
 import { useAuthUser } from "@/context/authUserContext";
 import { userService } from "@/services/api/user/userService";
-
 export function useCourse() {
   const { user, setUser } = useAuthUser();
   const userId = Number(user?.id);
   const [isLoadingCourse, setIsLoadingCourse] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(true); // ← NOVO ESTADO
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [recentCourses, setRecentCourses] = useState<Course[]>([]);
   const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [totalCourses, setTotalCourses] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(6);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   const refreshUser = useCallback(async () => {
     if (!userId) return;
@@ -92,7 +98,7 @@ export function useCourse() {
         setError((error as Error).message || "Erro ao obter cursos");
       } finally {
         setIsLoadingCourse(false);
-        setIsInitialLoading(false); // ← DESATIVAR LOADING INICIAL
+        setIsInitialLoading(false);
       }
     },
     [userId, itemsPerPage]
@@ -133,7 +139,6 @@ export function useCourse() {
     [userId, refreshUser]
   );
 
-  // CARREGAR CURSOS INICIAIS QUANDO O USERID ESTIVER DISPONÍVEL
   useEffect(() => {
     if (userId) {
       getAllCourses(1, itemsPerPage, "", "all", "all", "all");
@@ -142,10 +147,15 @@ export function useCourse() {
 
   const resetSuccess = useCallback(() => setSuccess(false), []);
 
+  const changeItemsPerPage = useCallback((newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  }, []);
+
   return {
     createCourse,
     isLoadingCourse,
-    isInitialLoading, // ← EXPORTAR O NOVO ESTADO
+    isInitialLoading,
     error,
     success,
     resetSuccess,
@@ -159,5 +169,6 @@ export function useCourse() {
     currentPage,
     setCurrentPage,
     itemsPerPage,
+    changeItemsPerPage,
   };
 }

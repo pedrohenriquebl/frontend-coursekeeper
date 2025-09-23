@@ -25,7 +25,8 @@ export default function CoursesPage() {
         itemsPerPage,
         totalCourses,
         isLoadingCourse,
-        isInitialLoading
+        isInitialLoading,
+        changeItemsPerPage
     } = useCourse();
 
     const [showAddModal, setShowAddModal] = useState(false);
@@ -39,6 +40,7 @@ export default function CoursesPage() {
         platform: "all" as FilterPlatform,
         status: "all" as FilterStatus
     });
+    const itemsPerPageOptions = [6, 12, 24, 48];
 
     const closeAddModal = () => setShowAddModal(false);
     const totalPages = Math.ceil(totalCourses / itemsPerPage);
@@ -166,34 +168,61 @@ export default function CoursesPage() {
                     </FadeSlide>
                 )}
 
-                {totalCourses > itemsPerPage && (
-                    <div className="mt-6 pt-6">
-                        <div className="flex justify-center items-center gap-2">
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                                className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
-                            >
-                                Anterior
-                            </button>
-
-                            {Array.from({ length: totalPages }, (_, i) => (
-                                <button
-                                    key={i + 1}
-                                    onClick={() => handlePageChange(i + 1)}
-                                    className={`px-4 py-2 rounded-lg ${currentPage === i + 1 ? "bg-green-600 text-white" : "bg-gray-700 text-white hover:bg-gray-600"} transition-colors`}
+                {totalCourses > 6 && (
+                    <div className="mt-6 pt-6 border-t border-gray-700">
+                        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">                            
+                            <div className="flex items-center gap-3">
+                                <span className="text-sm text-gray-300">
+                                    Itens por página:
+                                </span>
+                                <select
+                                    value={itemsPerPage}
+                                    onChange={(e) => changeItemsPerPage(Number(e.target.value))}
+                                    className="px-3 py-1 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-green-500 focus:ring-1 focus:ring-green-500"
                                 >
-                                    {i + 1}
+                                    {itemsPerPageOptions.map(option => (
+                                        <option key={option} value={option}>
+                                            {option}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                    disabled={currentPage === 1}
+                                    className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
+                                >
+                                    Anterior
                                 </button>
-                            ))}
 
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                                className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
-                            >
-                                Próximo
-                            </button>
+                                {Array.from({ length: totalPages }, (_, i) => (
+                                    <button
+                                        key={i + 1}
+                                        onClick={() => handlePageChange(i + 1)}
+                                        className={`px-4 py-2 rounded-lg ${currentPage === i + 1
+                                                ? "bg-green-600 text-white"
+                                                : "bg-gray-700 text-white hover:bg-gray-600"
+                                            } transition-colors`}
+                                    >
+                                        {i + 1}
+                                    </button>
+                                ))}
+
+                                <button
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                    disabled={currentPage === totalPages}
+                                    className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
+                                >
+                                    Próximo
+                                </button>
+                            </div>
+                            
+                            <div className="text-sm text-gray-300">
+                                Mostrando {Math.min((currentPage - 1) * itemsPerPage + 1, totalCourses)}-
+                                {Math.min(currentPage * itemsPerPage, totalCourses)} de {totalCourses} cursos
+                            </div>
                         </div>
                     </div>
                 )}

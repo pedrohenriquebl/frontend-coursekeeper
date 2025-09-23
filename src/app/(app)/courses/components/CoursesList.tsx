@@ -101,7 +101,7 @@ export function CoursesList({
     return (
         <div className="mt-8">
             <div className="bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 mb-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-center">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
                         <input
@@ -134,10 +134,10 @@ export function CoursesList({
                     </select>
 
                     <div className="hidden lg:flex items-center gap-2 justify-end">
-                        <button onClick={() => setViewMode("list")} className={`p-2 rounded-lg ${viewMode === "list" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><List className="h-5 w-5" /></button>
-                        <button onClick={() => setViewMode("grid2")} className={`p-2 rounded-lg ${viewMode === "grid2" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><Grid2x2 className="h-5 w-5" /></button>
-                        <button onClick={() => setViewMode("grid3")} className={`p-2 rounded-lg ${viewMode === "grid3" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><Grid3x3 className="h-5 w-5" /></button>
-                        <button onClick={() => setViewMode("grid4")} className={`p-2 rounded-lg ${viewMode === "grid4" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><LayoutGrid className="h-5 w-5" /></button>
+                        <button aria-label="Visualização em lista grid-1" onClick={() => setViewMode("list")} className={`p-2 rounded-lg ${viewMode === "list" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><List className="h-5 w-5" /></button>
+                        <button aria-label="Visualização em lista grid-2" onClick={() => setViewMode("grid2")} className={`p-2 rounded-lg ${viewMode === "grid2" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><Grid2x2 className="h-5 w-5" /></button>
+                        <button aria-label="Visualização em lista grid-3" onClick={() => setViewMode("grid3")} className={`p-2 rounded-lg ${viewMode === "grid3" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><Grid3x3 className="h-5 w-5" /></button>
+                        <button aria-label="Visualização em lista grid-4" onClick={() => setViewMode("grid4")} className={`p-2 rounded-lg ${viewMode === "grid4" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><LayoutGrid className="h-5 w-5" /></button>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@ export function CoursesList({
                     <Spinner size="lg" />
                 </div>
             ) : isEmpty ? (
-                <div className="text-center py-12 min-h-[600px] flex flex-col justify-center">
+                <div className="text-center py-12 min-h-[15rem] flex flex-col justify-center">
                     <div className="bg-[color:var(--modal-preview-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                         <BookAlertIcon className="h-8 w-8 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
                     </div>
@@ -160,7 +160,7 @@ export function CoursesList({
                 </div>
             ) : (
                 <div
-                    className={`grid gap-6 min-h-[20rem] ${viewMode === "list"
+                    className={`grid gap-6 min-h-[15rem] ${viewMode === "list"
                         ? "grid-cols-1"
                         : viewMode === "grid2"
                             ? "grid-cols-1 sm:grid-cols-2"
