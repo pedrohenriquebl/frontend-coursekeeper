@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from "react";
@@ -87,16 +86,73 @@ export function CoursesList({
 
     const handleCancelDelete = useCallback(() => setCourseToDelete(null), []);
 
-    const displayedCourses = courses || [];
-    const isEmpty = courses.length === 0;
+    if (isLoading) {
+        return (
+            <div className="mt-8">
+                <div className="bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-center">
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
+                            <input
+                                type="text"
+                                placeholder="Buscar cursos..."
+                                value={localSearch}
+                                onChange={e => setLocalSearch(e.target.value)}
+                                className="w-full pl-10 pr-4 py-2 bg-[color:var(--modal-input-bg,rgba(55,65,81,0.5))] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] placeholder-[color:var(--modal-input-placeholder,#a3a3a3)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
+                                disabled
+                            />
+                        </div>
 
-    const statusLabels: Record<FilterStatus, string> = {
-        all: "Todos os status",
-        NAO_INICIADO: "Não iniciado",
-        EM_PROGRESSO: "Em progresso",
-        CONCLUIDO: "Concluído",
-        NAO_CONCLUIDO: "Não concluído",
-    };
+                        <select 
+                            value={selectedTopic} 
+                            onChange={e => handleTopicChange(e.target.value)} 
+                            className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
+                            disabled
+                        >
+                            {topics.map(t => <option key={t} value={t}>{t === "all" ? "Todos os tópicos" : t.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</option>)}
+                        </select>
+
+                        <select 
+                            value={selectedPlatform} 
+                            onChange={e => handlePlatformChange(e.target.value)} 
+                            className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
+                            disabled
+                        >
+                            {platforms.map(p => <option key={p} value={p}>{p === "all" ? "Todas as plataformas" : p.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</option>)}
+                        </select>
+
+                        <select
+                            value={selectedStatus}
+                            onChange={e => handleStatusChange(e.target.value)}
+                            className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
+                            disabled
+                        >
+                            {statuses.map(s => (
+                                <option key={s} value={s}>
+                                    {s === "all" ? "Todos os status" : 
+                                     s === "NAO_INICIADO" ? "Não iniciado" :
+                                     s === "EM_PROGRESSO" ? "Em progresso" :
+                                     s === "CONCLUIDO" ? "Concluído" : "Não concluído"}
+                                </option>
+                            ))}
+                        </select>
+
+                        <div className="hidden lg:flex items-center gap-2 justify-end">
+                            <button aria-label="Visualização em lista grid-1" className="p-2 rounded-lg text-[color:var(--modal-preview-meta,#a3a3a3)] opacity-50 cursor-not-allowed"><List className="h-5 w-5" /></button>
+                            <button aria-label="Visualização em lista grid-2" className="p-2 rounded-lg text-[color:var(--modal-preview-meta,#a3a3a3)] opacity-50 cursor-not-allowed"><Grid2x2 className="h-5 w-5" /></button>
+                            <button aria-label="Visualização em lista grid-3" className="p-2 rounded-lg text-[color:var(--modal-preview-meta,#a3a3a3)] opacity-50 cursor-not-allowed"><Grid3x3 className="h-5 w-5" /></button>
+                            <button aria-label="Visualização em lista grid-4" className="p-2 rounded-lg text-[color:var(--modal-preview-meta,#a3a3a3)] opacity-50 cursor-not-allowed"><LayoutGrid className="h-5 w-5" /></button>
+                        </div>
+                    </div>
+                </div>
+                <div className="flex justify-center items-center h-96">
+                    <Spinner size="lg" />
+                </div>
+            </div>
+        );
+    }
+
+    const isEmpty = courses.length === 0;
 
     return (
         <div className="mt-8">
@@ -128,7 +184,10 @@ export function CoursesList({
                     >
                         {statuses.map(s => (
                             <option key={s} value={s}>
-                                {statusLabels[s]}
+                                {s === "all" ? "Todos os status" : 
+                                 s === "NAO_INICIADO" ? "Não iniciado" :
+                                 s === "EM_PROGRESSO" ? "Em progresso" :
+                                 s === "CONCLUIDO" ? "Concluído" : "Não concluído"}
                             </option>
                         ))}
                     </select>
@@ -142,11 +201,7 @@ export function CoursesList({
                 </div>
             </div>
 
-            {isLoading ? (
-                <div className="flex justify-center items-center h-96">
-                    <Spinner size="lg" />
-                </div>
-            ) : isEmpty ? (
+            {isEmpty ? (
                 <div className="text-center py-12 min-h-[15rem] flex flex-col justify-center">
                     <div className="bg-[color:var(--modal-preview-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                         <BookAlertIcon className="h-8 w-8 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
@@ -168,7 +223,7 @@ export function CoursesList({
                                 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                                 : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"}`}
                 >
-                    {displayedCourses.map(course => (
+                    {courses.map(course => (
                         <CourseCard
                             key={course.id}
                             course={course}
@@ -187,5 +242,5 @@ export function CoursesList({
                 </div>
             )}
         </div>
-    )
+    );
 }

@@ -11,7 +11,6 @@ import { Course, FilterPlatform, FilterStatus, FilterTopic, UpdateCoursePayload 
 import { userService } from "@/services/api/user/userService";
 import { FadeSlide } from "@/components/animation/FadeSlide";
 import debounce from "lodash/debounce";
-import { Spinner } from "@/components/ui/Spinner";
 
 export default function CoursesPage() {
     const { user } = useAuthUser();
@@ -24,7 +23,6 @@ export default function CoursesPage() {
         setCurrentPage,
         itemsPerPage,
         totalCourses,
-        isLoadingCourse,
         isInitialLoading,
         changeItemsPerPage
     } = useCourse();
@@ -148,29 +146,23 @@ export default function CoursesPage() {
             <StatsCards {...stats} />
 
             <div className="min-h-[700px] flex flex-col">
-                {isInitialLoading ? (
-                    <div className="flex-1 flex justify-center items-center">
-                        <Spinner size="lg" />
-                    </div>
-                ) : (
-                    <FadeSlide className="flex-1">
-                        <CoursesList
-                            courses={allCourses}
-                            onEdit={handleEditCourse}
-                            onDelete={handleDeleteCourse}
-                            onViewDetails={handleViewDetails}
-                            searchTerm={searchTerm}
-                            setSearchTerm={handleSearchChange}
-                            isLoading={isLoadingCourse && allCourses.length === 0}
-                            filters={filters}
-                            onFilterChange={handleFilterChange}
-                        />
-                    </FadeSlide>
-                )}
+                <FadeSlide className="flex-1">
+                    <CoursesList
+                        courses={allCourses}
+                        onEdit={handleEditCourse}
+                        onDelete={handleDeleteCourse}
+                        onViewDetails={handleViewDetails}
+                        searchTerm={searchTerm}
+                        setSearchTerm={handleSearchChange}
+                        isLoading={isInitialLoading} 
+                        filters={filters}
+                        onFilterChange={handleFilterChange}
+                    />
+                </FadeSlide>
 
                 {totalCourses > 6 && (
                     <div className="mt-6 pt-6 border-t border-gray-700">
-                        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">                            
+                        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                             <div className="flex items-center gap-3">
                                 <span className="text-sm text-gray-300">
                                     Itens por página:
@@ -187,7 +179,7 @@ export default function CoursesPage() {
                                     ))}
                                 </select>
                             </div>
-                            
+
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={() => handlePageChange(currentPage - 1)}
@@ -202,8 +194,8 @@ export default function CoursesPage() {
                                         key={i + 1}
                                         onClick={() => handlePageChange(i + 1)}
                                         className={`px-4 py-2 rounded-lg ${currentPage === i + 1
-                                                ? "bg-green-600 text-white"
-                                                : "bg-gray-700 text-white hover:bg-gray-600"
+                                            ? "bg-green-600 text-white"
+                                            : "bg-gray-700 text-white hover:bg-gray-600"
                                             } transition-colors`}
                                     >
                                         {i + 1}
@@ -218,7 +210,7 @@ export default function CoursesPage() {
                                     Próximo
                                 </button>
                             </div>
-                            
+
                             <div className="text-sm text-gray-300">
                                 Mostrando {Math.min((currentPage - 1) * itemsPerPage + 1, totalCourses)}-
                                 {Math.min(currentPage * itemsPerPage, totalCourses)} de {totalCourses} cursos
