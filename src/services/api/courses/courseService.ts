@@ -102,4 +102,20 @@ export const courseService = {
       }
     }
   },
+
+  getAllCourses: async (userId: number) => {
+    if (!userId) {
+      throw new Error("User ID is required");
+    }
+
+    try {
+      const response = await apiInstance.get(`/courses/${userId}/all`);
+      return response.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const message = error.response?.data?.message || "Erro desconhecido";
+        throw new Error(message);
+      }
+    }
+  },
 };

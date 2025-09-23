@@ -103,18 +103,18 @@ export function CoursesList({
                             />
                         </div>
 
-                        <select 
-                            value={selectedTopic} 
-                            onChange={e => handleTopicChange(e.target.value)} 
+                        <select
+                            value={selectedTopic}
+                            onChange={e => handleTopicChange(e.target.value)}
                             className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
                             disabled
                         >
                             {topics.map(t => <option key={t} value={t}>{t === "all" ? "Todos os tópicos" : t.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</option>)}
                         </select>
 
-                        <select 
-                            value={selectedPlatform} 
-                            onChange={e => handlePlatformChange(e.target.value)} 
+                        <select
+                            value={selectedPlatform}
+                            onChange={e => handlePlatformChange(e.target.value)}
                             className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
                             disabled
                         >
@@ -129,10 +129,10 @@ export function CoursesList({
                         >
                             {statuses.map(s => (
                                 <option key={s} value={s}>
-                                    {s === "all" ? "Todos os status" : 
-                                     s === "NAO_INICIADO" ? "Não iniciado" :
-                                     s === "EM_PROGRESSO" ? "Em progresso" :
-                                     s === "CONCLUIDO" ? "Concluído" : "Não concluído"}
+                                    {s === "all" ? "Todos os status" :
+                                        s === "NAO_INICIADO" ? "Não iniciado" :
+                                            s === "EM_PROGRESSO" ? "Em progresso" :
+                                                s === "CONCLUIDO" ? "Concluído" : "Não concluído"}
                                 </option>
                             ))}
                         </select>
@@ -156,7 +156,7 @@ export function CoursesList({
 
     return (
         <div className="mt-8">
-            <div className="bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 mb-8">
+            <div className="min-h-[] bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-center">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
@@ -184,10 +184,10 @@ export function CoursesList({
                     >
                         {statuses.map(s => (
                             <option key={s} value={s}>
-                                {s === "all" ? "Todos os status" : 
-                                 s === "NAO_INICIADO" ? "Não iniciado" :
-                                 s === "EM_PROGRESSO" ? "Em progresso" :
-                                 s === "CONCLUIDO" ? "Concluído" : "Não concluído"}
+                                {s === "all" ? "Todos os status" :
+                                    s === "NAO_INICIADO" ? "Não iniciado" :
+                                        s === "EM_PROGRESSO" ? "Em progresso" :
+                                            s === "CONCLUIDO" ? "Concluído" : "Não concluído"}
                             </option>
                         ))}
                     </select>
@@ -214,15 +214,12 @@ export function CoursesList({
                     </p>
                 </div>
             ) : (
-                <div
-                    className={`grid gap-6 min-h-[15rem] ${viewMode === "list"
-                        ? "grid-cols-1"
-                        : viewMode === "grid2"
-                            ? "grid-cols-1 sm:grid-cols-2"
-                            : viewMode === "grid3"
-                                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                                : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"}`}
-                >
+                <div className={`grid gap-6 
+                    ${viewMode === "list" ? "grid-cols-1" : 
+                    viewMode === "grid2" ? "grid-cols-1 sm:grid-cols-2" : 
+                    viewMode === "grid3" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : 
+                    "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+                }`}>
                     {courses.map(course => (
                         <CourseCard
                             key={course.id}

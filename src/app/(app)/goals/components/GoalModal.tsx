@@ -57,8 +57,6 @@ export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Submitting goal data:", goalData);
-
     const newErrors: { [key: string]: string } = {};
     if (!goalData.title) newErrors.title = "Título é obrigatório";
     if (goalData.target <= 0) newErrors.target = "Objetivo deve ser maior que zero";

@@ -32,7 +32,7 @@ const QUALITY_OPTIONS: QualityOption[] = [
 
 export default function ReportClient() {
     const { user } = useAuthUser();
-    const { allCourses } = useCourse();
+    const { coursesReported } = useCourse();
     const [isExporting, setIsExporting] = useState(false);
     const [period, setPeriod] = useState<FilterPeriod>("7days");
     const [topic, setTopic] = useState<FilterTopic>("all");
@@ -64,11 +64,11 @@ export default function ReportClient() {
     };
 
     const filteredCourses = useMemo(() => {
-        if (!allCourses) return [];
+        if (!coursesReported) return [];
 
         const startDate = getStartDate(period);
 
-        return allCourses.filter(course => {
+        return coursesReported.filter(course => {
             const courseDate = course.endDate
                 ? new Date(course.endDate)
                 : (course.startDate ? new Date(course.startDate) : null);
@@ -82,7 +82,7 @@ export default function ReportClient() {
 
             return matchesPeriod && matchesTopic && matchesPlatform && matchesStatus;
         });
-    }, [allCourses, period, topic, platform, status]);
+    }, [coursesReported, period, topic, platform, status]);
 
     if (!user) return null;
 

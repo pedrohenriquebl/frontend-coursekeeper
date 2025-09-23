@@ -19,6 +19,7 @@ export function useCourse() {
   const [success, setSuccess] = useState(false);
   const [recentCourses, setRecentCourses] = useState<Course[]>([]);
   const [allCourses, setAllCourses] = useState<Course[]>([]);
+  const [coursesReported, setCoursesReported] = useState<Course[]>([]);
   const [totalCourses, setTotalCourses] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -139,11 +140,31 @@ export function useCourse() {
     [userId, refreshUser]
   );
 
+  const getAllCoursesReport = useCallback(async() => {
+    if (!userId) return null;
+    
+    try {
+      setIsLoadingCourse(true);
+      const courses = await courseService.getAllCourses(userId);
+      setCoursesReported(courses as Course[]);
+    } catch (error) {
+      setError((error as Error).message || "Erro ao obter todos os cursos");
+    } finally {
+      setIsLoadingCourse(false);
+    }
+  }, [userId]);
+
   useEffect(() => {
     if (userId) {
       getAllCourses(1, itemsPerPage, "", "all", "all", "all");
     }
   }, [userId, getAllCourses, itemsPerPage]);
+
+  useEffect(() => {
+    if (userId) {
+      getAllCoursesReport();
+    }
+  }, [userId, getAllCoursesReport]);
 
   const resetSuccess = useCallback(() => setSuccess(false), []);
 
@@ -170,5 +191,7 @@ export function useCourse() {
     setCurrentPage,
     itemsPerPage,
     changeItemsPerPage,
+    getAllCoursesReport,
+    coursesReported,
   };
 }
