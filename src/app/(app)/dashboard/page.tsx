@@ -6,7 +6,7 @@ import { DashboardHeader } from "./components/DashboardHeader";
 import { StatsCards } from "./components/StatsCards";
 import { RecentCourses } from "./components/RecentCourses";
 import { Sidebar } from "./components/Sidebar";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useAuthUser } from "@/context/authUserContext";
 import { userService } from "@/services/api/user/userService";
 import { GoalModal } from "../goals/components/GoalModal";
@@ -14,11 +14,17 @@ import { CreateGoalData } from "@/types";
 import { useGoals } from "../goals/hooks/useGoals";
 
 export default function DashboardPage() {
-    const { recentCourses, getRecentCourses } = useCourse();
+    const { recentCourses, getRecentCourses, isInitialLoading } = useCourse();
     const { createGoal } = useGoals();
     const [showAddModal, setShowAddModal] = useState(false);
     const [showGoalModal, setShowGoalModal] = useState(false);
     const { user } = useAuthUser();
+
+    useEffect(() => {
+        if (user?.id) {
+            getRecentCourses();
+        }
+    }, [user?.id, getRecentCourses]);
 
     const handleCreateGoal = async (goalData: CreateGoalData) => {
         try {
@@ -52,6 +58,17 @@ export default function DashboardPage() {
 
     const hasRecentCourses = Array.isArray(recentCourses) && recentCourses.length > 0;
 
+    if (isInitialLoading) {
+        return (
+            <div className="max-w-7xl mx-auto px-4 py-8">
+                <DashboardHeader />
+                <div className="flex justify-center items-center h-64">
+                    <p className="text-gray-400">Carregando cursos...</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
             <DashboardHeader />
@@ -65,7 +82,7 @@ export default function DashboardPage() {
                             onAddCourse={addCourse}
                         />
                     ) : (
-                        <div className="flex justify-center align-center h-full">
+                        <div className="flex justify-center items-center h-64">
                             <p className="text-gray-400">Nenhum curso recente encontrado.</p>
                         </div>
                     )}

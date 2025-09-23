@@ -1,55 +1,118 @@
 'use client'
 
-import { BookAlertIcon, Plus } from "lucide-react";
-import { useCallback, useState } from "react";
+import { Plus } from "lucide-react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { StatsCards } from "../dashboard/components/StatsCards";
 import { useAuthUser } from "@/context/authUserContext";
 import { CourseModals } from "@/components/courses/CourseModals/CourseModals";
 import { useCourse } from "@/components/courses/CourseModals/hooks/useCourse";
 import { CoursesList } from "./components/CoursesList";
-import { Course, UpdateCoursePayload } from "@/types";
+import { Course, FilterPlatform, FilterStatus, FilterTopic, UpdateCoursePayload } from "@/types";
 import { userService } from "@/services/api/user/userService";
 import { FadeSlide } from "@/components/animation/FadeSlide";
+import debounce from "lodash/debounce";
+import { Spinner } from "@/components/ui/Spinner";
 
 export default function CoursesPage() {
     const { user } = useAuthUser();
-    const { allCourses, getAllCourses, deleteCourse, updateCourse } = useCourse();
+    const {
+        allCourses,
+        getAllCourses,
+        deleteCourse,
+        updateCourse,
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        totalCourses,
+        isLoadingCourse,
+        isInitialLoading
+    } = useCourse();
+
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [editingCourse, setEditingCourse] = useState<Course | null>(null);
     const [detailsCourse, setDetailsCourse] = useState<Course | null>(null);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filters, setFilters] = useState({
+        topic: "all" as FilterTopic,
+        platform: "all" as FilterPlatform,
+        status: "all" as FilterStatus
+    });
 
     const closeAddModal = () => setShowAddModal(false);
-    const hasCourses = Array.isArray(allCourses) && allCourses.length > 0;
+    const totalPages = Math.ceil(totalCourses / itemsPerPage);
+
+    const debouncedFetch = useMemo(
+        () => debounce((page: number, term: string, currentFilters: typeof filters) => {
+            getAllCourses(page, itemsPerPage, term, currentFilters.topic, currentFilters.platform, currentFilters.status);
+        }, 500),
+        [getAllCourses, itemsPerPage]
+    );
+
+    useEffect(() => {
+        if (!isInitialLoading) {
+            debouncedFetch(currentPage, searchTerm, filters);
+        }
+        return () => debouncedFetch.cancel();
+    }, [currentPage, searchTerm, filters, debouncedFetch, isInitialLoading]);
 
     const refreshCourses = useCallback(async () => {
         try {
-            await getAllCourses();
+            await getAllCourses(currentPage, itemsPerPage, searchTerm, filters.topic, filters.platform, filters.status);
             await userService.getMe();
         } catch (error) {
             console.error("Erro ao atualizar cursos:", error);
         }
-    }, [getAllCourses]);
+    }, [getAllCourses, currentPage, itemsPerPage, searchTerm, filters]);
 
-    const handleEditCourse = (course: Course) => {
+    const handleFilterChange = useCallback((newFilters: Partial<typeof filters>) => {
+        setFilters(prev => ({ ...prev, ...newFilters }));
+        setCurrentPage(1);
+    }, [setCurrentPage]);
+
+    const handleSearchChange = useCallback((term: string) => {
+        setSearchTerm(term);
+        setCurrentPage(1);
+    }, [setCurrentPage]);
+
+    const handleEditCourse = useCallback((course: Course) => {
         setEditingCourse(course);
         setShowEditModal(true);
-    };
+    }, []);
 
-    const handleDeleteCourse = async (courseId: number) => {
+    const handleDeleteCourse = useCallback(async (courseId: number) => {
         try {
             await deleteCourse(courseId);
             await refreshCourses();
         } catch (error) {
             console.error("Erro ao deletar curso:", error);
         }
-    };
+    }, [deleteCourse, refreshCourses]);
 
-    const handleViewDetails = (course: Course) => {
+    const handleViewDetails = useCallback((course: Course) => {
         setDetailsCourse(course);
         setShowDetailsModal(true);
-    };
+    }, []);
+
+    const handlePageChange = useCallback((page: number) => {
+        setCurrentPage(page);
+    }, [setCurrentPage]);
+
+    const handleUpdateCourse = useCallback(async (updatedCourse: UpdateCoursePayload) => {
+        try {
+            await updateCourse(updatedCourse);
+            await refreshCourses();
+            setShowEditModal(false);
+        } catch (error) {
+            console.error("Erro ao atualizar curso:", error);
+        }
+    }, [updateCourse, refreshCourses]);
+
+    const handleCourseCreated = useCallback(async () => {
+        await refreshCourses();
+        setShowAddModal(false);
+    }, [refreshCourses]);
 
     const stats = {
         totalCourses: user?.generalCoursesInfo?.totalCourses || 0,
@@ -82,26 +145,59 @@ export default function CoursesPage() {
 
             <StatsCards {...stats} />
 
-            {hasCourses ? (
-                <>
-                    <FadeSlide>
+            <div className="min-h-[700px] flex flex-col">
+                {isInitialLoading ? (
+                    <div className="flex-1 flex justify-center items-center">
+                        <Spinner size="lg" />
+                    </div>
+                ) : (
+                    <FadeSlide className="flex-1">
                         <CoursesList
                             courses={allCourses}
                             onEdit={handleEditCourse}
                             onDelete={handleDeleteCourse}
                             onViewDetails={handleViewDetails}
+                            searchTerm={searchTerm}
+                            setSearchTerm={handleSearchChange}
+                            isLoading={isLoadingCourse && allCourses.length === 0}
+                            filters={filters}
+                            onFilterChange={handleFilterChange}
                         />
                     </FadeSlide>
-                </>
+                )}
 
-            ) : (
-                <div className="text-center py-12">
-                    <div className="bg-[color:var(--modal-preview-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <BookAlertIcon className="h-8 w-8 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
+                {totalCourses > itemsPerPage && (
+                    <div className="mt-6 pt-6">
+                        <div className="flex justify-center items-center gap-2">
+                            <button
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
+                            >
+                                Anterior
+                            </button>
+
+                            {Array.from({ length: totalPages }, (_, i) => (
+                                <button
+                                    key={i + 1}
+                                    onClick={() => handlePageChange(i + 1)}
+                                    className={`px-4 py-2 rounded-lg ${currentPage === i + 1 ? "bg-green-600 text-white" : "bg-gray-700 text-white hover:bg-gray-600"} transition-colors`}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+
+                            <button
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
+                            >
+                                Próximo
+                            </button>
+                        </div>
                     </div>
-                    <h3 className="text-lg font-medium text-[color:var(--modal-title,#fff)] mb-2">Nenhum curso cadatrado</h3>
-                </div>
-            )}
+                )}
+            </div>
 
             <CourseModals
                 showAddModal={showAddModal}
@@ -110,22 +206,11 @@ export default function CoursesPage() {
                 editingCourse={editingCourse}
                 detailsCourse={detailsCourse}
                 onCloseAdd={closeAddModal}
-                onCloseEdit={() => {
-                    setShowEditModal(false);
-                    setEditingCourse(null);
-                }}
-                onCloseDetails={() => {
-                    setShowDetailsModal(false);
-                    setDetailsCourse(null);
-                }}
-                onUpdateCourse={async (updatedCourse: UpdateCoursePayload) => {
-                    updateCourse(updatedCourse);
-                    await refreshCourses();
-                    setShowEditModal(false);
-                }}
-                onCourseCreated={refreshCourses}
+                onCloseEdit={() => { setShowEditModal(false); setEditingCourse(null); }}
+                onCloseDetails={() => { setShowDetailsModal(false); setDetailsCourse(null); }}
+                onUpdateCourse={handleUpdateCourse}
+                onCourseCreated={handleCourseCreated}
             />
-
         </div>
     );
 }

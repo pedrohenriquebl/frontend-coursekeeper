@@ -1,4 +1,8 @@
-import { CreateCourseData, UpdateCoursePayload } from "@/types";
+import {
+  CreateCourseData,
+  GetCoursesParams,
+  UpdateCoursePayload,
+} from "@/types";
 import { apiInstance, isAxiosError } from "../axios/instance";
 
 export const courseService = {
@@ -22,21 +26,27 @@ export const courseService = {
     }
   },
 
-  getCourses: async (userId: number) => {
+  getCourses: async (userId: number, params?: GetCoursesParams) => {
+    const {
+      page = 1,
+      limit = 10,
+      query = "",
+      topic = "all",
+      platform = "all",
+      status = "all",
+    } = params || {};
+
     if (!userId) {
       throw new Error("User ID is required");
     }
 
     try {
-      const response = await apiInstance.get(`/courses/${userId}`);
+      const response = await apiInstance.get(`/courses/${userId}`, {
+        params: { page, limit, query, topic, platform, status },
+      });
       return response.data || [];
-      
     } catch (error) {
       if (isAxiosError(error)) {
-        if (error.response?.status === 404) {
-          return [];
-        }
-
         const message = error.response?.data?.message || "Erro desconhecido";
         throw new Error(message);
       }

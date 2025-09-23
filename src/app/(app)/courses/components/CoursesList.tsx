@@ -1,12 +1,12 @@
+
 'use client'
 
-import { useState } from "react";
-import { Search } from "lucide-react";
-import { Course } from "@/types";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { Search, List, Grid2x2, Grid3x3, LayoutGrid, BookAlertIcon } from "lucide-react";
+import { Course, FilterPlatform, FilterStatus, FilterTopic } from "@/types";
 import { Spinner } from "@/components/ui/Spinner";
 import ConfirmDeleteModal from "@/components/courses/CourseModals/ConfirmDeleteModal";
 import { CourseCard } from "./CourseCard";
-import { List, Grid2x2, Grid3x3, LayoutGrid } from "lucide-react";
 
 interface CoursesListProps {
     courses: Course[];
@@ -14,46 +14,92 @@ interface CoursesListProps {
     onDelete: (courseId: number) => void;
     onViewDetails: (course: Course) => void;
     isLoading?: boolean;
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
+    filters: {
+        topic: FilterTopic;
+        platform: FilterPlatform;
+        status: FilterStatus;
+    };
+    onFilterChange: (filters: Partial<{
+        topic: FilterTopic;
+        platform: FilterPlatform;
+        status: FilterStatus;
+    }>) => void;
 }
 
-export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoading = false }: CoursesListProps) {
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedTopic, setSelectedTopic] = useState("all");
-    const [selectedPlatform, setSelectedPlatform] = useState("all");
-    const [selectedStatus, setSelectedStatus] = useState("all");
+export function CoursesList({
+    courses,
+    onEdit,
+    onDelete,
+    onViewDetails,
+    isLoading = false,
+    searchTerm,
+    setSearchTerm,
+    filters,
+    onFilterChange
+}: CoursesListProps) {
     const [courseToDelete, setCourseToDelete] = useState<Course | null>(null);
     const [viewMode, setViewMode] = useState<"list" | "grid2" | "grid3" | "grid4">("grid2");
+    const [localSearch, setLocalSearch] = useState(searchTerm);
 
-    const topics = ["all", "Frontend", "Backend", "Design", "Mobile", "Data Science", "DevOps", "Database"];
-    const platforms = ["all", "Udemy", "Coursera", "YouTube", "Alura", "edX", "Pluralsight"];
-    const statuses = ["all", "Não Iniciado", "Em Progresso", "Concluído", "Não Concluída"];
+    const topics = useMemo<FilterTopic[]>(() =>
+        ["all", "FRONTEND", "BACKEND", "DESIGN", "MOBILE", "DATA SCIENCE", "DEVOPS", "DATABASE", "OUTROS"],
+        []
+    );
 
-    const statusMap: Record<string, string> = {
-        "Não Iniciado": "NAO_INICIADO",
-        "Em Progresso": "EM_PROGRESSO",
-        "Concluído": "CONCLUIDO",
-        "Não Concluída": "NAO_CONCLUIDO",
-        "all": "all"
+    const platforms = useMemo<FilterPlatform[]>(() =>
+        ["all", "UDEMY", "COURSERA", "YOUTUBE", "ALURA", "EDX"],
+        []
+    );
+
+    const statuses = useMemo<FilterStatus[]>(() =>
+        ["all", "NAO_INICIADO", "EM_PROGRESSO", "CONCLUIDO", "NAO_CONCLUIDO"],
+        []
+    );
+
+    const { topic: selectedTopic, platform: selectedPlatform, status: selectedStatus } = filters;
+
+    const handleTopicChange = useCallback((value: string) => {
+        if (topics.includes(value as FilterTopic)) onFilterChange({ topic: value as FilterTopic });
+    }, [onFilterChange, topics]);
+
+    const handlePlatformChange = useCallback((value: string) => {
+        if (platforms.includes(value as FilterPlatform)) onFilterChange({ platform: value as FilterPlatform });
+    }, [onFilterChange, platforms]);
+
+    const handleStatusChange = useCallback((value: string) => {
+        if (statuses.includes(value as FilterStatus)) onFilterChange({ status: value as FilterStatus });
+    }, [onFilterChange, statuses]);
+
+    useEffect(() => {
+        const handler = setTimeout(() => setSearchTerm(localSearch), 400);
+        return () => clearTimeout(handler);
+    }, [localSearch, setSearchTerm]);
+
+    const handleDeleteClick = useCallback((course: Course) => setCourseToDelete(course), []);
+    const handleConfirmDelete = useCallback(() => {
+        if (courseToDelete) {
+            onDelete(courseToDelete.id);
+            setCourseToDelete(null);
+        }
+    }, [courseToDelete, onDelete]);
+
+    const handleCancelDelete = useCallback(() => setCourseToDelete(null), []);
+
+    const displayedCourses = courses || [];
+    const isEmpty = courses.length === 0;
+
+    const statusLabels: Record<FilterStatus, string> = {
+        all: "Todos os status",
+        NAO_INICIADO: "Não iniciado",
+        EM_PROGRESSO: "Em progresso",
+        CONCLUIDO: "Concluído",
+        NAO_CONCLUIDO: "Não concluído",
     };
-
-    const filteredCourses = courses.filter((course) => {
-        const matchesSearch = course.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesTopic = selectedTopic === "all" || course.topic === selectedTopic.toUpperCase();
-        const matchesPlatform = selectedPlatform === "all" || course.platform === selectedPlatform.toUpperCase();
-        const matchesStatus = selectedStatus === "all" || course.status === statusMap[selectedStatus];
-
-        return matchesSearch && matchesTopic && matchesPlatform && matchesStatus;
-    });
-
-    const handleDeleteClick = (course: Course) => setCourseToDelete(course);
-    const handleConfirmDelete = () => { if (courseToDelete) { onDelete(courseToDelete.id); setCourseToDelete(null); } };
-    const handleCancelDelete = () => setCourseToDelete(null);
-
-    if (isLoading) return <div className="flex justify-center items-center h-64"><Spinner size="lg" /></div>;
 
     return (
         <div className="mt-8">
-            {/* Filtros */}
             <div className="bg-[color:var(--modal-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-[color:var(--modal-preview-bg,#52525b)]/50 mb-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
                     <div className="relative">
@@ -61,93 +107,85 @@ export function CoursesList({ courses, onEdit, onDelete, onViewDetails, isLoadin
                         <input
                             type="text"
                             placeholder="Buscar cursos..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            value={localSearch}
+                            onChange={e => setLocalSearch(e.target.value)}
                             className="w-full pl-10 pr-4 py-2 bg-[color:var(--modal-input-bg,rgba(55,65,81,0.5))] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] placeholder-[color:var(--modal-input-placeholder,#a3a3a3)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
                         />
                     </div>
 
-                    <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
-                        {topics.map(t => <option key={t} value={t}>{t === "all" ? "Todos os tópicos" : t}</option>)}
+                    <select value={selectedTopic} onChange={e => handleTopicChange(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
+                        {topics.map(t => <option key={t} value={t}>{t === "all" ? "Todos os tópicos" : t.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</option>)}
                     </select>
 
-                    <select value={selectedPlatform} onChange={(e) => setSelectedPlatform(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
-                        {platforms.map(p => <option key={p} value={p}>{p === "all" ? "Todas as plataformas" : p}</option>)}
+                    <select value={selectedPlatform} onChange={e => handlePlatformChange(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
+                        {platforms.map(p => <option key={p} value={p}>{p === "all" ? "Todas as plataformas" : p.toLowerCase().replace(/^\w/, (char) => char.toUpperCase())}</option>)}
                     </select>
 
-                    <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)} className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]">
-                        {statuses.map(s => <option key={s} value={s}>{s === "all" ? "Todos os status" : s}</option>)}
+                    <select
+                        value={selectedStatus}
+                        onChange={e => handleStatusChange(e.target.value)}
+                        className="w-full px-4 py-2 bg-[color:var(--modal-bg,#23272f)] border border-[color:var(--modal-input-border,#52525b)] rounded-lg text-[color:var(--modal-input-text,#fff)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
+                    >
+                        {statuses.map(s => (
+                            <option key={s} value={s}>
+                                {statusLabels[s]}
+                            </option>
+                        ))}
                     </select>
+
                     <div className="hidden lg:flex items-center gap-2 justify-end">
-                        <button
-                            onClick={() => setViewMode("list")}
-                            className={`p-2 rounded-lg ${viewMode === "list" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}
-                        >
-                            <List className="h-5 w-5" />
-                        </button>
-                        <button
-                            onClick={() => setViewMode("grid2")}
-                            className={`p-2 rounded-lg ${viewMode === "grid2" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}
-                        >
-                            <Grid2x2 className="h-5 w-5" />
-                        </button>
-                        <button
-                            onClick={() => setViewMode("grid3")}
-                            className={`p-2 rounded-lg ${viewMode === "grid3" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}
-                        >
-                            <Grid3x3 className="h-5 w-5" />
-                        </button>
-                        <button
-                            onClick={() => setViewMode("grid4")}
-                            className={`p-2 rounded-lg ${viewMode === "grid4"
-                                ? "bg-[color:var(--modal-submit-bg,#059669)] text-white"
-                                : "text-[color:var(--modal-preview-meta,#a3a3a3)]"
-                                }`}
-                        >
-                            <LayoutGrid className="h-5 w-5" />
-                        </button>
+                        <button onClick={() => setViewMode("list")} className={`p-2 rounded-lg ${viewMode === "list" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><List className="h-5 w-5" /></button>
+                        <button onClick={() => setViewMode("grid2")} className={`p-2 rounded-lg ${viewMode === "grid2" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><Grid2x2 className="h-5 w-5" /></button>
+                        <button onClick={() => setViewMode("grid3")} className={`p-2 rounded-lg ${viewMode === "grid3" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><Grid3x3 className="h-5 w-5" /></button>
+                        <button onClick={() => setViewMode("grid4")} className={`p-2 rounded-lg ${viewMode === "grid4" ? "bg-[color:var(--modal-submit-bg,#059669)] text-white" : "text-[color:var(--modal-preview-meta,#a3a3a3)]"}`}><LayoutGrid className="h-5 w-5" /></button>
                     </div>
                 </div>
             </div>
 
-            {/* Lista de Cursos */}
-            <div
-                className={`grid gap-6 ${viewMode === "list"
+            {isLoading ? (
+                <div className="flex justify-center items-center h-96">
+                    <Spinner size="lg" />
+                </div>
+            ) : isEmpty ? (
+                <div className="text-center py-12 min-h-[600px] flex flex-col justify-center">
+                    <div className="bg-[color:var(--modal-preview-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <BookAlertIcon className="h-8 w-8 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
+                    </div>
+                    <h3 className="text-lg font-medium text-[color:var(--modal-title,#fff)] mb-2">
+                        Nenhum curso cadastrado
+                    </h3>
+                    <p className="text-[color:var(--modal-preview-meta,#a3a3a3)]">
+                        Tente ajustar os filtros ou adicionar um novo curso
+                    </p>
+                </div>
+            ) : (
+                <div
+                    className={`grid gap-6 min-h-[20rem] ${viewMode === "list"
                         ? "grid-cols-1"
                         : viewMode === "grid2"
                             ? "grid-cols-1 sm:grid-cols-2"
                             : viewMode === "grid3"
                                 ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                                : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
-                    }`}
-            >
-                {filteredCourses.map(course => (
-                    <CourseCard
-                        key={course.id}
-                        course={course}
-                        onEdit={onEdit}
-                        onDelete={() => handleDeleteClick(course)}
-                        onViewDetails={onViewDetails}
+                                : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"}`}
+                >
+                    {displayedCourses.map(course => (
+                        <CourseCard
+                            key={course.id}
+                            course={course}
+                            onEdit={onEdit}
+                            onDelete={() => handleDeleteClick(course)}
+                            onViewDetails={onViewDetails}
+                        />
+                    ))}
+
+                    <ConfirmDeleteModal
+                        show={!!courseToDelete}
+                        courseName={courseToDelete?.name}
+                        onConfirm={handleConfirmDelete}
+                        onCancel={handleCancelDelete}
                     />
-                ))}
-
-                <ConfirmDeleteModal
-                    show={!!courseToDelete}
-                    courseName={courseToDelete?.name}
-                    onConfirm={handleConfirmDelete}
-                    onCancel={handleCancelDelete}
-                />
-            </div>
-
-            {filteredCourses.length === 0 && !isLoading && (
-                <div className="text-center py-12">
-                    <div className="bg-[color:var(--modal-preview-bg,#52525b)]/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Search className="h-8 w-8 text-[color:var(--modal-preview-meta,#a3a3a3)]" />
-                    </div>
-                    <h3 className="text-lg font-medium text-[color:var(--modal-title,#fff)] mb-2">Nenhum curso encontrado</h3>
-                    <p className="text-[color:var(--modal-preview-meta,#a3a3a3)]">Tente ajustar os filtros ou adicionar um novo curso</p>
                 </div>
             )}
         </div>
-    );
+    )
 }

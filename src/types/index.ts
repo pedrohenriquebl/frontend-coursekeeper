@@ -280,3 +280,12 @@ export interface UpdateSubscriptionPayload {
   subscriptionPlan: SubscriptionPlan;
   duration?: string;
 }
+
+export interface GetCoursesParams {
+  page?: number;
+  limit?: number;
+  query?: string;
+  topic?: FilterTopic;
+  platform?: FilterPlatform;
+  status?: FilterStatus;
+}
