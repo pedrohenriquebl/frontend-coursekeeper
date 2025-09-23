@@ -161,16 +161,16 @@ export default function CoursesPage() {
                 </FadeSlide>
 
                 {totalCourses > 6 && (
-                    <div className="mt-6 pt-6 border-t border-gray-700">
+                    <div className="mt-6 pt-6 border-t border-[color:var(--modal-preview-bg,#52525b)]/50">
                         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                             <div className="flex items-center gap-3">
-                                <span className="text-sm text-gray-300">
+                                <span className="text-sm text-[color:var(--modal-preview-meta,#a3a3a3)]">
                                     Itens por página:
                                 </span>
                                 <select
                                     value={itemsPerPage}
                                     onChange={(e) => changeItemsPerPage(Number(e.target.value))}
-                                    className="px-3 py-1 bg-gray-700 text-white rounded-lg border border-gray-600 focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                                    className="px-3 py-1 bg-[color:var(--modal-bg,#23272f)] text-[color:var(--modal-input-text,#fff)] rounded-lg border border-[color:var(--modal-input-border,#52525b)] focus:border-[color:var(--modal-input-focus,#059669)] focus:ring-1 focus:ring-[color:var(--modal-input-focus,#059669)]"
                                 >
                                     {itemsPerPageOptions.map(option => (
                                         <option key={option} value={option}>
@@ -181,37 +181,36 @@ export default function CoursesPage() {
                             </div>
 
                             <div className="flex items-center gap-2">
-                                <button
-                                    onClick={() => handlePageChange(currentPage - 1)}
-                                    disabled={currentPage === 1}
-                                    className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
-                                >
-                                    Anterior
-                                </button>
+                                        <button
+                                            onClick={() => handlePageChange(currentPage - 1)}
+                                            disabled={currentPage === 1}
+                                            className="px-4 py-2 rounded-lg bg-[color:var(--modal-bg,#23272f)] text-[color:var(--modal-input-text,#fff)] disabled:opacity-50 hover:bg-[color:var(--modal-preview-bg,#e5e7eb)] hover:text-[color:var(--modal-title,#18181b)] transition-colors border border-[color:var(--modal-input-border,#52525b)]"
+                                        >
+                                            Anterior
+                                        </button>
 
-                                {Array.from({ length: totalPages }, (_, i) => (
-                                    <button
-                                        key={i + 1}
-                                        onClick={() => handlePageChange(i + 1)}
-                                        className={`px-4 py-2 rounded-lg ${currentPage === i + 1
-                                            ? "bg-green-600 text-white"
-                                            : "bg-gray-700 text-white hover:bg-gray-600"
-                                            } transition-colors`}
-                                    >
-                                        {i + 1}
-                                    </button>
-                                ))}
+                                        {Array.from({ length: totalPages }, (_, i) => (
+                                            <button
+                                                key={i + 1}
+                                                onClick={() => handlePageChange(i + 1)}
+                                                className={`px-4 py-2 rounded-lg border transition-colors ${currentPage === i + 1
+                                                    ? "bg-[color:var(--modal-submit-bg,#059669)] text-[color:var(--modal-submit-text,#fff)] border-[color:var(--modal-submit-bg,#059669)]"
+                                                    : "bg-[color:var(--modal-bg,#23272f)] text-[color:var(--modal-input-text,#fff)] border-[color:var(--modal-input-border,#52525b)] hover:bg-[color:var(--modal-preview-bg,#e5e7eb)] hover:text-[color:var(--modal-title,#18181b)]"}`}
+                                            >
+                                                {i + 1}
+                                            </button>
+                                        ))}
 
-                                <button
-                                    onClick={() => handlePageChange(currentPage + 1)}
-                                    disabled={currentPage === totalPages}
-                                    className="px-4 py-2 rounded-lg bg-gray-700 text-white disabled:opacity-50 hover:bg-gray-600 transition-colors"
-                                >
-                                    Próximo
-                                </button>
+                                        <button
+                                            onClick={() => handlePageChange(currentPage + 1)}
+                                            disabled={currentPage === totalPages}
+                                            className="px-4 py-2 rounded-lg bg-[color:var(--modal-bg,#23272f)] text-[color:var(--modal-input-text,#fff)] disabled:opacity-50 hover:bg-[color:var(--modal-preview-bg,#e5e7eb)] hover:text-[color:var(--modal-title,#18181b)] transition-colors border border-[color:var(--modal-input-border,#52525b)]"
+                                        >
+                                            Próximo
+                                        </button>
                             </div>
 
-                            <div className="text-sm text-gray-300">
+                            <div className="text-sm text-[color:var(--modal-preview-meta,#a3a3a3)]">
                                 Mostrando {Math.min((currentPage - 1) * itemsPerPage + 1, totalCourses)}-
                                 {Math.min(currentPage * itemsPerPage, totalCourses)} de {totalCourses} cursos
                             </div>
