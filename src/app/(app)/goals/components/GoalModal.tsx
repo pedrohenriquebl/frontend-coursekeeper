@@ -25,7 +25,7 @@ const goalTypes = [
 
 const topics: Topic[] = [
   "FRONTEND", "BACKEND", "DESIGN", "DATA SCIENCE",
-  "DEVOPS", "MOBILE", "FULL STACK", "DATABASE", "OUTROS"
+  "DEVOPS", "MOBILE", "FULLSTACK", "DATABASE", "OUTROS"
 ];
 
 export function GoalModal({ showModal, onClose, onSave }: GoalModalProps) {

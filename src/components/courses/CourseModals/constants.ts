@@ -7,7 +7,7 @@ export const TOPICS: Topic[] = [
   "DATA SCIENCE",
   "DEVOPS",
   "MOBILE",
-  "FULL STACK",
+  "FULLSTACK",
   "DATABASE",
   "OUTROS"
 ];

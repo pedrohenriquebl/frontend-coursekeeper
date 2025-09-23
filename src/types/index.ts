@@ -22,7 +22,7 @@ export type Topic =
   | "DATA SCIENCE"
   | "DEVOPS"
   | "MOBILE"
-  | "FULL STACK"
+  | "FULLSTACK"
   | "DATABASE"
   | "OUTROS";
 

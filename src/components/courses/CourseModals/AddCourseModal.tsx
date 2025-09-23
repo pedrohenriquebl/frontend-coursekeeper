@@ -63,6 +63,7 @@ export default function AddCourseModal({
     const name = watch("name");
 
     const onSubmit = (data: AddCourseFormData) => {
+        console.log('data -> ',data);
         const payload: CreateCourseData = {
             name: data.name,
             duration: Number(data.duration),
@@ -79,29 +80,31 @@ export default function AddCourseModal({
             status: "NAO_INICIADO" as CourseStatus
         };
 
+        console.log('payload ->', payload);    
+
         createCourse(payload);
     };
 
     if (!show) return null;
 
     return (
-            <div className="fixed inset-0 bg-[color:var(--modal-overlay-bg,rgba(0,0,0,0.5))] flex items-center justify-center z-50 p-4">
-                <div className="bg-[color:var(--modal-bg,#23272f)] rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <div className="p-6">
-                        <div className="flex items-center justify-between mb-6 gap-1">
-                            <h2 className="text-xl font-semibold text-[color:var(--modal-title,#fff)]">
-                                Adicionar Novo Curso
-                            </h2>
-                            <button
-                                onClick={onClose}
-                                className="cursor-pointer text-[color:var(--modal-close,#a3a3a3)] hover:text-[color:var(--modal-close-hover,#fff)] transition-colors duration-200"
-                            >
-                                <X className="h-6 w-6" />
-                            </button>
-                        </div>
+        <div className="fixed inset-0 bg-[color:var(--modal-overlay-bg,rgba(0,0,0,0.5))] flex items-center justify-center z-50 p-4">
+            <div className="bg-[color:var(--modal-bg,#23272f)] rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                <div className="p-6">
+                    <div className="flex items-center justify-between mb-6 gap-1">
+                        <h2 className="text-xl font-semibold text-[color:var(--modal-title,#fff)]">
+                            Adicionar Novo Curso
+                        </h2>
+                        <button
+                            onClick={onClose}
+                            className="cursor-pointer text-[color:var(--modal-close,#a3a3a3)] hover:text-[color:var(--modal-close-hover,#fff)] transition-colors duration-200"
+                        >
+                            <X className="h-6 w-6" />
+                        </button>
+                    </div>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FormInput
                                 label="Nome do Curso *"
                                 {...register("name", { required: "Nome do curso é obrigatório" })}

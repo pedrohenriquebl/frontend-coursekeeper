@@ -34,7 +34,7 @@ export default function ReportFilterSelect({
         "DATA SCIENCE",
         "DEVOPS",
         "MOBILE",
-        "FULL STACK",
+        "FULLSTACK",
         "DATABASE",
         "OUTROS",
     ];
