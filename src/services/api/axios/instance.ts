@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosError, AxiosInstance } from 'axios';
 import { requestInterceptor, responseInterceptor } from './interceptors/request';
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function isAxiosError(error: unknown): error is AxiosError<{ message: string }> {
   return axios.isAxiosError(error);
