@@ -121,7 +121,7 @@ export default function ReportClient() {
                 <p className="text-gray-400 max-w-md">
                     Atualize para um plano pago para acessar recursos avançados de relatórios e obter insights detalhados sobre seu aprendizado.
                 </p>
-                <Link href="/subscription" className="mt-4 inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded">
+                <Link href="/subscriptions" className="mt-4 inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded">
                     Ver Planos
                 </Link>
             </div>
