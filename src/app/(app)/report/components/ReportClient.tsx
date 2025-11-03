@@ -149,7 +149,7 @@ export default function ReportClient() {
                 reportDate={new Date().toLocaleDateString("pt-BR")}
                 period={period}
                 periods={periods}
-                userImg={user?.profileImage || placeholderAvatar}
+                userImg={'/avatars/placeholder.png'}
             />
 
             <div id="report-filter-select" className="sticky top-0 z-50">
