@@ -6,7 +6,6 @@ import SubscriptionDialog from "./SubscriptionDialog";
 import { Duration, SubscriptionPlan } from "@/types";
 import ConfirmDowngradeModal from "./ConfirmDowngradeModal";
 import { useSubscription } from "../hooks/useSubscription";
-import { useAuthUser } from "@/context/authUserContext";
 
 export default function SubscriptionsPageClient() {
     const [open, setOpen] = useState(false);
@@ -14,9 +13,6 @@ export default function SubscriptionsPageClient() {
     const [showDowngradeModal, setShowDowngradeModal] = useState(false);
     const [downgradeTarget, setDowngradeTarget] = useState<SubscriptionPlan | null>(null);
     const { currentPlan, changeSubscription, isDowngrade } = useSubscription();
-    const { user } = useAuthUser();
-
-    console.log("User data in SubscriptionsPageClient:", user);
 
     const handlePlanSelection = (plan: SubscriptionPlan) => {
         if (isDowngrade(plan)) {

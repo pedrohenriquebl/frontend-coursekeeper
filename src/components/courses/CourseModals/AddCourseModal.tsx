@@ -63,7 +63,6 @@ export default function AddCourseModal({
     const name = watch("name");
 
     const onSubmit = (data: AddCourseFormData) => {
-        console.log('data -> ',data);
         const payload: CreateCourseData = {
             name: data.name,
             duration: Number(data.duration),
@@ -79,8 +78,6 @@ export default function AddCourseModal({
             startDate: data.startDate || new Date().toISOString().split("T")[0],
             status: "NAO_INICIADO" as CourseStatus
         };
-
-        console.log('payload ->', payload);    
 
         createCourse(payload);
     };
