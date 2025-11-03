@@ -38,22 +38,28 @@ export default function ProfileHeader({
     };
 
     const planColors: Record<string, string> = {
-    FREE: "bg-gray-700 text-[color:var(--profile-header-meta,#a3a3a3)] border border-gray-500",
+        FREE: "bg-gray-700 text-[color:var(--profile-header-meta,#a3a3a3)] border border-gray-500",
         GOLD: "bg-yellow-500/20 text-yellow-400 border border-yellow-500/40",
         PLATINUM: "bg-emerald-600/20 text-emerald-400 border border-emerald-500/40",
     };
 
     const planStyle =
-    planColors[profile.subscriptionPlan] ||
-    "bg-gray-700 text-[color:var(--profile-header-meta,#a3a3a3)] border border-gray-500";
+        planColors[profile.subscriptionPlan] ||
+        "bg-gray-700 text-[color:var(--profile-header-meta,#a3a3a3)] border border-gray-500";
+
+    const placeholderAvatar = '/avatars/placeholder.png';
 
     return (
-    <div className="bg-[color:var(--profile-header-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-[color:var(--profile-header-border,#52525b)]/50 mb-8">
+        <div className="bg-[color:var(--profile-header-bg,#23272f)]/60 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-[color:var(--profile-header-border,#52525b)]/50 mb-8">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                 {/* Avatar Section */}
                 <div className="relative flex flex-row flex-wrap align-center">
                     <AvatarUpload
-                        currentImage={`${process.env.NEXT_PUBLIC_IMAGE_URL}${profile.profileImage}`}
+                        currentImage={
+                            profile.profileImage
+                                ? `${process.env.NEXT_PUBLIC_IMAGE_URL}${profile.profileImage}`
+                                : placeholderAvatar
+                        }
                         onSave={onAvatarChange}
                     />
                 </div>

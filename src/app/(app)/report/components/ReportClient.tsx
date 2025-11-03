@@ -112,6 +112,11 @@ export default function ReportClient() {
         { value: "all", label: "Todo o período" },
     ];
 
+    const placeholderAvatar =
+        process.env.NODE_ENV === 'production'
+            ? 'https://meu-dominio.com/avatars/placeholder.png'
+            : '/avatars/placeholder.png';
+
     if (user.subscriptionPlan === "FREE") {
         return (
             <div className="flex flex-col items-center justify-center h-[60vh] px-4 text-center">
@@ -144,7 +149,7 @@ export default function ReportClient() {
                 reportDate={new Date().toLocaleDateString("pt-BR")}
                 period={period}
                 periods={periods}
-                userImg={user?.profileImage || '/avatars/placeholder.png'}
+                userImg={user?.profileImage || placeholderAvatar}
             />
 
             <div id="report-filter-select" className="sticky top-0 z-50">
